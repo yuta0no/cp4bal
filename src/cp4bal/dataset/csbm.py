@@ -7,24 +7,34 @@ from jaxtyping import Float
 from scipy.stats import special_ortho_group
 from torch import Tensor
 
-from cp4bal.enums import EdgeProbabilityType
+from cp4bal.dataset import GraphDataset
+from cp4bal.util.configs import CommonDatasetConfig, CSBMConfig
+from cp4bal.util.enums import EdgeProbabilityType
 
 logger = getLogger(__name__)
 
 
-class CSBM:
-    def __init__(self):
+class CSBM(GraphDataset):
+    def __init__(
+        self,
+        common_config: CommonDatasetConfig,
+        csbm_config: CSBMConfig,
+    ):
         rg = torch.Generator()
-        num_classes = 7
-        num_nodes = num_classes * 20
-        dim_feature = 10
-        feature_sigma = 1.0
+
+        num_classes = common_config.num_classes
+        num_nodes = common_config.num_nodes
+        dim_features = common_config.dim_features
+
+        feature_sigma = csbm_config.feature_sigma
 
         # sample labels ~ p(y) and graph structure ~ p(A | y)
         p_edge_intra, p_edge_inter = self.__compute_edge_probabilities(
             type_=EdgeProbabilityType.BY_SNR_AND_DEGREE,
             num_classes=num_classes,
             num_nodes=num_nodes,
+            expected_degree=csbm_config.expected_degree,
+            edge_p_snr=csbm_config.edge_p_snr,
         )
         affiliation_matrix: Float[np.ndarray, "n_classes n_nodes"] = np.full(
             (num_classes, num_classes),
@@ -56,32 +66,39 @@ class CSBM:
         edge_indices = torch.cat((edge_indices, edge_indices.flip(0)), dim=-1)
 
         # sample node features ~ p(x | y)
-        class_means = self._sample_class_means(torch_rng=rg, num_classes=num_classes, dim_feature=dim_feature)
+        class_means = self._sample_class_means(torch_rng=rg, num_classes=num_classes, dim_features=dim_features)
         node_features = class_means[ys]
         node_features += torch.randn_like(node_features) * feature_sigma  # add noise
 
         # register instance variables
+        self.node_features = node_features
         self.labels = ys
+        self.edge_indices = edge_indices
         self.num_classes = num_classes
+        self.class_means = class_means
         self.affiliation_matrix = affiliation_matrix
         self.class_prior = torch.full(
             (num_classes,),
             1.0 / num_classes,
             dtype=torch.float,
         )
-        self.class_means = class_means
-        self.node_features = node_features
-        self.edge_indices = edge_indices
+
+        super().__init__(
+            node_features=node_features,
+            labels=ys,
+            edge_indices=edge_indices,
+            num_classes=num_classes,
+            mask_train=None,
+            mask_val=None,
+            mask_test=None,
+        )
 
     def __compute_edge_probabilities(
-        self, type_: EdgeProbabilityType, num_classes: int, num_nodes: int
+        self, type_: EdgeProbabilityType, num_classes: int, num_nodes: int, expected_degree: int, edge_p_snr: float
     ) -> tuple[float, float]:
         eps = 1e-8
         match type_:
             case EdgeProbabilityType.BY_SNR_AND_DEGREE:
-                expected_degree = 8
-                edge_p_snr = 10
-
                 edge_probability_inter = (
                     expected_degree * num_classes / (num_nodes - 1) / (edge_p_snr + num_classes - 1)
                 )  # q
@@ -111,8 +128,8 @@ class CSBM:
                 raise ValueError(f"Unsupported edge probability type: {type_}")
 
     def _sample_class_means(
-        self, torch_rng: torch.Generator, num_classes: int, dim_feature: int
-    ) -> Float[Tensor, "num_classes dim_feature"]:
+        self, torch_rng: torch.Generator, num_classes: int, dim_features: int
+    ) -> Float[Tensor, "num_classes dim_features"]:
         """Samples class means for the features based on the configuration.
 
         Parameters
@@ -121,26 +138,26 @@ class CSBM:
             The random number generator to use for sampling.
         num_classes : int
             Number of classes in graph
-        dim_feature : int
+        dim_features : int
             Dimensionality of the feature space.
 
         Returns
         -------
-        Float[Tensor, "num_classes dim_feature"]
-            A tensor of shape (num_classes, dim_feature) containing the sampled class means.
+        Float[Tensor, "num_classes dim_features"]
+            A tensor of shape (num_classes, dim_features) containing the sampled class means.
         """
         FEATURE_CLASS_MEAN_DISTANCE = 1.0
 
-        if num_classes > dim_feature:
+        if num_classes > dim_features:
             raise ValueError(
-                f"Number of classes {num_classes} must be less than or equal to the feature dimension {dim_feature}."
+                f"Number of classes {num_classes} must be less than or equal to the feature dimension {dim_features}."
             )
-        means = torch.zeros(num_classes, dim_feature)
+        means = torch.zeros(num_classes, dim_features)
         means[torch.arange(num_classes), torch.arange(num_classes)] = FEATURE_CLASS_MEAN_DISTANCE / np.sqrt(2)
         # random rotation
         rotation = torch.from_numpy(
             special_ortho_group.rvs(
-                dim_feature,
+                dim_features,
                 random_state=int(torch.randint(2**16, size=(1,), generator=torch_rng, dtype=torch.int).item()),
             )
         ).float()
