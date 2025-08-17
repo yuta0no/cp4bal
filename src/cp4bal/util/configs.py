@@ -1,12 +1,37 @@
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from cp4bal.util.enums import EdgeProbabilityType, ModelName, TrainerType
+from cp4bal.util.enums import AcquisitionType, EdgeProbabilityType, ModelName, TrainerType, UncertaintyType
 from cp4bal.util.paths import get_root_path
 
 
+# Acquisition
+@dataclass(kw_only=True)
+class AcquisitionConfig:
+    type_: AcquisitionType
+    requires_model_predictions: bool = False
+
+
+@dataclass(kw_only=True)
+class RandomAcquisitionConfig(AcquisitionConfig):
+    type_: AcquisitionType = AcquisitionType.RANDOM
+    requires_model_predictions: bool = False
+
+
+@dataclass(kw_only=True)
+class EntropyAcquisitionConfig(AcquisitionConfig):
+    type_: AcquisitionType = AcquisitionType.ENTROPY
+    requires_model_predictions: bool = True
+
+
+@dataclass(kw_only=True)
+class OracleUncertaintyAcquisitionConfig(AcquisitionConfig):
+    type_: AcquisitionType = AcquisitionType.ORACLE_UNCERTAINTY
+    uncertainty_type: UncertaintyType = UncertaintyType.EPISTEMIC
+
+
 # Dataset
-@dataclass
+@dataclass(kw_only=True)
 class CommonDatasetConfig:
     seed: int | None = None
 
@@ -20,7 +45,7 @@ class CommonDatasetConfig:
     test_size: float = 0.2  # How many nodes to use as test
 
 
-@dataclass
+@dataclass(kw_only=True)
 class CSBMConfig:
     """
     Configuration for the CSBM dataset.
@@ -37,19 +62,19 @@ class CSBMConfig:
     expected_degree: float | None = None
 
 
-@dataclass
+@dataclass(kw_only=True)
 class DatasetConfig:
     common: CommonDatasetConfig
     detail: CSBMConfig | None = None
 
 
 # Model
-@dataclass
+@dataclass(kw_only=True)
 class ModelConfig:
     name: ModelName | None = None
 
 
-@dataclass
+@dataclass(kw_only=True)
 class MultipleSampleModelConfig(ModelConfig):
     """Configuration to support drawing from multiple samples."""
 
@@ -57,7 +82,7 @@ class MultipleSampleModelConfig(ModelConfig):
     num_samples_eval: int = 1
 
 
-@dataclass
+@dataclass(kw_only=True)
 class MCDropoutModelConfig(MultipleSampleModelConfig):
     """Configuration for models that sample using MC dropout."""
 
@@ -65,15 +90,10 @@ class MCDropoutModelConfig(MultipleSampleModelConfig):
     dropout_p: float = 0.0
 
 
-@dataclass
-class GCNConfig:
+@dataclass(kw_only=True)
+class GCNConfig(MCDropoutModelConfig):
     name: ModelName = ModelName.GCN
-    hidden_dims: list[int] = field(
-        default_factory=lambda: (
-            32,
-            32,
-        )
-    )
+    hidden_dims: list[int] = field(default_factory=lambda: (32,))
     add_self_loops: bool = True
     cached = True
     improved = False  # If True, sets self-weight to 2
@@ -81,7 +101,7 @@ class GCNConfig:
 
 
 # Trainer
-@dataclass
+@dataclass(kw_only=True)
 class TrainerConfig:
     """Base trainer configuration."""
 
@@ -92,7 +112,7 @@ class TrainerConfig:
     verbose: bool = False
 
 
-@dataclass
+@dataclass(kw_only=True)
 class EarlyStoppingConfig:
     """Early stopping configuration."""
 
@@ -102,18 +122,23 @@ class EarlyStoppingConfig:
     save_model_state: bool = False
 
 
+@dataclass(kw_only=True)
 class OracleTrainerConfig(TrainerConfig):
     """Configuration for the OracleTrainer."""
 
     name: TrainerType = TrainerType.ORACLE
 
 
-class SGDTrainerConfig(TrainerConfig):
-    """Configuration for the SGDTrainer."""
+@dataclass(kw_only=True)
+class AdamTrainerConfig(TrainerConfig):
+    """Configuration for the AdamTrainer."""
 
-    name: TrainerType = TrainerType.SGD
+    name: TrainerType = TrainerType.ADAM
 
-    max_epochs: int = 10000
+    lr: float = 0.001
+    weight_decay: float = 0.0
+
+    max_epochs: int = 100
     min_epochs: int = 0
 
     logits_propagated: bool = True
@@ -121,7 +146,7 @@ class SGDTrainerConfig(TrainerConfig):
 
 
 # Interface
-@dataclass
+@dataclass(kw_only=True)
 class SystemConfig:
     """Configuration for the system."""
 
@@ -134,14 +159,14 @@ class SystemConfig:
     num_workers: int = 4
 
 
-@dataclass
+@dataclass(kw_only=True)
 class ExperimentConfig:
     """Configuration for the experiment."""
 
     name: str = "auto"
 
 
-@dataclass
+@dataclass(kw_only=True)
 class ActiveLearningConfig:
     """
     Configuration for active learning experiments.
@@ -154,7 +179,7 @@ class ActiveLearningConfig:
     trainer_type: str = "oracle"
 
 
-@dataclass
+@dataclass(kw_only=True)
 class OverallConfig:
     """Configuration for the overall experiment."""
 
@@ -171,7 +196,7 @@ class OverallConfig:
         (self.system.out_dir / self.unique_name).mkdir(parents=True, exist_ok=True)
 
 
-@dataclass
+@dataclass(kw_only=True)
 class ArgConfig:
     """Configuration for the argument parser."""
 

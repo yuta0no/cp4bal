@@ -9,8 +9,10 @@ from jaxtyping import Float, Int
 from torch import Tensor
 
 from cp4bal.dataset import ActiveLearningDataset, GraphData
-from cp4bal.model import MCDropoutModel, Prediction
 from cp4bal.util.configs import GCNConfig
+
+from .base import MCDropoutModel
+from .prediction import Prediction
 
 logger = getLogger(__name__)
 
@@ -74,18 +76,10 @@ class GCN(MCDropoutModel):
         self, batch: GraphData, acquisition: bool = False
     ) -> Tuple[
         Float[Tensor, "num_nodes embedding_dim"] | None,
-        Float[Tensor, "num_nodes embedding_dim"] | None,
         Float[Tensor, "num_nodes num_classes"],
-        Float[Tensor, "num_nodes num_classes"] | None,
     ]:
         embeddings, logits = self.forward_impl(batch.x, batch.edge_index, batch.edge_attr, acquisition=acquisition)
-        if acquisition:
-            embeddings_unpropagated, logits_unpropagated = self.forward_impl(
-                batch.x, edge_index=None, edge_weight=None, acquisition=acquisition
-            )
-        else:
-            embeddings_unpropagated, logits_unpropagated = None, None
-        return embeddings, embeddings_unpropagated, logits, logits_unpropagated
+        return embeddings, logits
 
     def predict_multiple_iterative(self, batch: GraphData, num_samples: int, acquisition: bool = False) -> Prediction:
         """Predicts multiple samples by iteratively using `self.forward`"""

@@ -5,6 +5,21 @@ class EdgeProbabilityType(Enum):
     BY_SNR_AND_DEGREE = auto()
 
 
+# Acquisition
+@unique
+class AcquisitionType(Enum):
+    RANDOM = auto()
+    ENTROPY = auto()
+    ORACLE_UNCERTAINTY = auto()
+
+
+@unique
+class UncertaintyType(Enum):
+    EPISTEMIC = auto()
+    ALEATORIC = auto()
+    TOTAL = auto()
+
+
 # Dataset
 @unique
 class DatasetSplit(StrEnum):
@@ -26,5 +41,5 @@ class ModelName(StrEnum):
 # Trainer
 @unique
 class TrainerType(StrEnum):
-    SGD = "sgd"
+    ADAM = "adam"
     ORACLE = "oracle"

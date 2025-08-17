@@ -1,2 +1,3 @@
+from .adam import AdamTrainer as AdamTrainer
 from .base import Trainer as Trainer
-from .sgd import SGDTrainer as SGDTrainer
+from .factory import TrainerFactory as TrainerFactory

@@ -230,12 +230,12 @@ class ActiveLearningDataset(TorchDataset):
 
     def __init__(self, config: DatasetConfig, base: GraphDataset):
         self.base = base
-        self.val_size = config.val_size
+        self.val_size = config.common.val_size
 
         # Setup the test mask
         if self.base.mask_test is not None:
             mask_test = self.base.mask_test
-        elif config.test_size == 0:
+        elif config.common.test_size == 0:
             mask_test = torch.zeros(self.base.num_nodes, dtype=torch.bool)
         else:
             rng_test = torch.Generator()
@@ -244,7 +244,7 @@ class ActiveLearningDataset(TorchDataset):
             )  # A random test seed to keep test splits fixed among different calls of `self.split`
             mask_test = torch.zeros(self.base.num_nodes, dtype=torch.bool)
             for y in range(self.base.num_classes):
-                mask_test |= sample_from_mask(self.base.labels == y, config.test_size, generator=rng_test)
+                mask_test |= sample_from_mask(self.base.labels == y, config.common.test_size, generator=rng_test)
 
         # The base data instance is directly derived from `self.base` and serves as a "template"
         self.base_data = self.transform(
@@ -311,10 +311,12 @@ class ActiveLearningDataset(TorchDataset):
         """select initial pool"""
         index_pool = []
         for y in range(self.base.num_classes):
-            mask_pool = (self.data.y == y) & (~self.data.mask_train_u)
-            index_pool.append(sample_from_mask(mask_pool, count_per_class))
+            for _ in range(count_per_class):
+                mask_pool = (self.data.y == y) & (self.data.mask_train_u)
+                selected_idx = sample_from_mask(mask=mask_pool, size=1).nonzero(as_tuple=False).item()
+                self.add_to_train_labeled_indices(indices=[selected_idx])
+                index_pool.append(selected_idx)
         logger.info("initial pool: %s", index_pool)
-        self.add_to_train_labeled_indices(indices=index_pool)
         return self
 
     def cuda(self) -> Self:

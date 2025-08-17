@@ -1,7 +1,7 @@
 import torch
 
 from cp4bal.acquisition.base import Acquisition
-from cp4bal.acquisition.configs import RandomAcquisitionConfig
+from cp4bal.util.configs import RandomAcquisitionConfig
 
 
 class RandomAcquisition(Acquisition):
@@ -25,7 +25,8 @@ class RandomAcquisition(Acquisition):
         Returns:
             list: List of selected indices.
         """
-        candidate_indices = dataset.data.mask_train_u.nonzero().ravel()
+        _ = model
+        candidate_indices = dataset.data.mask_train_u.nonzero().ravel().cpu()
         p = torch.ones_like(candidate_indices) / len(candidate_indices)
         selected_indices = candidate_indices[p.multinomial(num_samples=budget, replacement=False, generator=generator)]
         return selected_indices.tolist()

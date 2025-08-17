@@ -1,4 +1,5 @@
-from cp4bal.acquisition import Acquisition, RandomAcquisition
+from .base import Acquisition
+from .random import RandomAcquisition
 
 
 class AcquisitionFactory:
