@@ -8,7 +8,7 @@ from cp4bal.acquisition import Acquisition
 from cp4bal.dataset import ActiveLearningDataset
 from cp4bal.model import Model, Prediction
 from cp4bal.model.trainer import Trainer, TrainerFactory
-from cp4bal.util.configs import ActiveLearningConfig, TrainerConfig
+from cp4bal.util.configs import TrainerConfig
 from cp4bal.util.enums import DatasetSplit
 
 logger = getLogger(__name__)
@@ -17,7 +17,7 @@ logger = getLogger(__name__)
 class ActiveLearning:
     @staticmethod
     def acquire_samples(
-        config: ActiveLearningConfig,
+        budget: int,
         model: Model,
         acquisition: Acquisition,
         dataset: ActiveLearningDataset,
@@ -25,7 +25,7 @@ class ActiveLearning:
         al_round: int = -1,
     ):
         num_nodes_before = dataset.num_train_labeled_nodes
-        selected = acquisition.select(model=model, dataset=dataset, budget=config.budget_per_round, generator=rg)
+        selected = acquisition.select(model=model, dataset=dataset, budget=budget, generator=rg)
         logger.info(f"Round {al_round + 1}: Selected samples {selected}")
         dataset.add_to_train_labeled_indices(selected)
         logger.info(

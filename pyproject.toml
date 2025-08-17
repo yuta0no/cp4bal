@@ -19,6 +19,7 @@ dependencies = [
     "omegaconf>=2.3.0",
     "pyg-lib>=0.4.0",
     "pyyaml>=6.0.2",
+    "scikit-learn>=1.7.1",
     "scipy>=1.16.1",
     "torch-cluster>=1.6.3",
     "torch-geometric>=2.6.1",

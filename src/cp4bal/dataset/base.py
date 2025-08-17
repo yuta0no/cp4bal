@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Self
 
 import torch
+import torch_geometric.nn as tgnn
 import torch_scatter
 from jaxtyping import Bool, Float, Int
 from torch import Tensor
@@ -222,6 +223,33 @@ class GraphData(TorchGeometricData):
                 return torch.ones_like(self.mask_train_l, dtype=torch.bool)
             case _:
                 raise ValueError(which)
+
+    def get_diffused_node_features(self, k: int, normalize: bool, improved: bool, add_self_loops: bool, cache: bool):
+        """Gets (and caches) nodes features after GCN convolutions"""
+        key = f"diffused_node_features_{k}_{normalize}_{improved}_{add_self_loops}"
+
+        diffused = getattr(self, key, None) if cache else None
+        if diffused is not None:
+            return diffused  # type: ignore
+        # Compute the diffused node features
+
+        edge_index, edge_weight = self.edge_index, getattr(self, "edge_weight", None)
+        x = self.x
+        if normalize:
+            edge_index, edge_weight = tgnn.conv.gcn_conv.gcn_norm(  # yapf: disable
+                edge_index, edge_weight, x.size(0), improved=improved, add_self_loops=add_self_loops
+            )
+        elif edge_weight is None:
+            edge_weight = torch.ones(edge_index.size(1), device=edge_index.device)
+
+        src, dst = edge_index
+        for _ in range(k):
+            # Perform message passing
+            messages = x[src] * edge_weight[:, None]  # type: ignore
+            x = torch_scatter.scatter_add(messages, dst, dim=0, dim_size=x.size(0))
+        if cache:
+            setattr(self, key, x)
+        return x
 
 
 class ActiveLearningDataset(TorchDataset):

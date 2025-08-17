@@ -34,8 +34,9 @@ class DatasetSplit(StrEnum):
 # Model
 @unique
 class ModelName(StrEnum):
-    GCN = "gcn"
     BAYES_OPTIMAL = "bayes_optimal"
+    GCN = "gcn"
+    SGC = "sgc"
 
 
 # Trainer
@@ -43,3 +44,4 @@ class ModelName(StrEnum):
 class TrainerType(StrEnum):
     ADAM = "adam"
     ORACLE = "oracle"
+    SGC = "sgc"

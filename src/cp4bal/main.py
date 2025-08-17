@@ -6,16 +6,14 @@ import torch
 from cp4bal.acquisition import AcquisitionFactory
 from cp4bal.active_learning import ActiveLearning as AL
 from cp4bal.dataset import CSBM, ActiveLearningDataset
-from cp4bal.model import GCN
+from cp4bal.model import ModelFactory
 from cp4bal.util.configs import (
-    ActiveLearningConfig,
-    AdamTrainerConfig,
     CommonDatasetConfig,
     CSBMConfig,
     DatasetConfig,
-    GCNConfig,
+    SGCTrainerConfig,
 )
-from cp4bal.util.enums import DatasetSplit, EdgeProbabilityType
+from cp4bal.util.enums import DatasetSplit, EdgeProbabilityType, ModelName
 from cp4bal.util.logger import init_logger
 from cp4bal.util.seed import set_seed
 
@@ -29,7 +27,7 @@ def main():
     # Dataset
     ds_config = DatasetConfig(
         common=CommonDatasetConfig(
-            seed=big_seed, name="csbm", num_nodes=240, num_classes=6, dim_features=10, val_size=0.1, test_size=0.1
+            seed=big_seed, name="csbm", num_nodes=240, num_classes=6, dim_features=10, val_size=0.0, test_size=0.3
         ),
         detail=CSBMConfig(
             feature_sigma=1.0,
@@ -50,25 +48,20 @@ def main():
     ds.select_initial_pool(count_per_class=1)
 
     # Model
-    model = GCN(config=GCNConfig(), dataset=ds)
-    logger.info(f"model: {model}")
+    model_name = ModelName.SGC
+    model = ModelFactory.create(name=model_name, dataset=ds)
+    trainer_config = SGCTrainerConfig()
 
     # Active Learning
     acquisition_method = AcquisitionFactory.create(acquisition_type="random")
 
     ds.select_initial_pool(count_per_class=1)
-    TOTAL_AL_ROUND = 5
+    TOTAL_AL_ROUND = 10
     for al_round in range(TOTAL_AL_ROUND):
         logger.info(f"Round {al_round + 1}/{TOTAL_AL_ROUND}")
 
         AL.train_model(
-            config=AdamTrainerConfig(
-                progress_bar=True,
-                use_gpu=True,
-                verbose=True,
-                lr=0.001,
-                weight_decay=0.001,
-            ),
+            config=trainer_config,
             model=model,
             dataset=ds,
             rg=generator,
@@ -91,13 +84,7 @@ def main():
         )
 
         ds = AL.acquire_samples(
-            config=ActiveLearningConfig(
-                acquisition_type="random",
-                num_rounds=TOTAL_AL_ROUND,
-                budget_per_round=3,  # TODO
-                num_epochs=100,
-                trainer_type="adam",
-            ),
+            budget=3,  # TODO
             model=model,
             acquisition=acquisition_method,
             dataset=ds,

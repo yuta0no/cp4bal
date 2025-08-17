@@ -13,13 +13,13 @@ logger = getLogger(__name__)
 
 
 class AdamTrainer(Trainer):
-    def __init__(self, config: AdamTrainerConfig, model: Model, dataset: ActiveLearningDataset, rg: torch.Generator):
-        super().__init__(config, model, dataset, rg)
+    def __init__(self, config: AdamTrainerConfig, model: Model, dataset: ActiveLearningDataset, generator: torch.Generator):
+        super().__init__(config, model, dataset, generator)
 
         self.dataset = dataset
         self.model = model
         self.config = config
-        self.rg = rg
+        self.rg = generator
 
         self.loss_fn = get_loss_function()
         self.optimizer = self._get_optimizer(config.lr, config.weight_decay)

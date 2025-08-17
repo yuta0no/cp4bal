@@ -91,13 +91,25 @@ class MCDropoutModelConfig(MultipleSampleModelConfig):
 
 
 @dataclass(kw_only=True)
-class GCNConfig(MCDropoutModelConfig):
-    name: ModelName = ModelName.GCN
-    hidden_dims: list[int] = field(default_factory=lambda: (32,))
+class BaseGCNConfig(ModelConfig):
+    hidden_dims: list[int] = field(default_factory=lambda: (64,))
     add_self_loops: bool = True
     cached = True
     improved = False  # If True, sets self-weight to 2
     inplace: bool = True  # If True, uses inplace ReLU
+
+
+@dataclass(kw_only=True)
+class GCNConfig(MCDropoutModelConfig, BaseGCNConfig):
+    name: ModelName = ModelName.GCN
+
+
+@dataclass(kw_only=True)
+class SGCConfig(BaseGCNConfig):
+    name: ModelName = ModelName.SGC
+    k: int = 2
+    inverse_regularization_strength: float = 1.0
+    balanced: bool = True
 
 
 # Trainer
@@ -110,6 +122,13 @@ class TrainerConfig:
     progress_bar: bool = False  # Progress bar for training a single model
     use_gpu: bool = True
     verbose: bool = False
+
+
+@dataclass(kw_only=True)
+class SGCTrainerConfig(TrainerConfig):
+    """Configuration for the SGCTrainer."""
+
+    name: TrainerType = TrainerType.SGC
 
 
 @dataclass(kw_only=True)
