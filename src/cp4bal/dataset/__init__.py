@@ -1,4 +1,9 @@
 from .base import ActiveLearningDataset as ActiveLearningDataset
 from .base import GraphData as GraphData
 from .base import GraphDataset as GraphDataset
+from .configs import CommonDatasetConfig as CommonDatasetConfig
+from .configs import CSBMConfig as CSBMConfig
+from .configs import DatasetConfig as DatasetConfig
 from .csbm import CSBM as CSBM
+from .enums import DatasetSplit as DatasetSplit
+from .enums import EdgeProbabilityType as EdgeProbabilityType

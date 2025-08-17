@@ -5,11 +5,9 @@ from jaxtyping import Float
 from torch import Tensor
 
 from cp4bal.acquisition import Acquisition
-from cp4bal.dataset import ActiveLearningDataset
+from cp4bal.dataset import ActiveLearningDataset, DatasetSplit
 from cp4bal.model import Model, Prediction
-from cp4bal.model.trainer import Trainer, TrainerFactory
-from cp4bal.util.configs import TrainerConfig
-from cp4bal.util.enums import DatasetSplit
+from cp4bal.model.trainer import Trainer, TrainerConfig, TrainerFactory
 
 logger = getLogger(__name__)
 

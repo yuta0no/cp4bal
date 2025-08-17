@@ -9,9 +9,9 @@ from jaxtyping import Float, Int
 from torch import Tensor
 
 from cp4bal.dataset import ActiveLearningDataset, GraphData
-from cp4bal.util.configs import GCNConfig
 
 from .base import MCDropoutModel
+from .configs import GCNConfig
 from .prediction import Prediction
 
 logger = getLogger(__name__)

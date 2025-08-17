@@ -1,5 +1,7 @@
 from .base import MCDropoutModel as MCDropoutModel
 from .base import Model as Model
+from .bayes_optimal import BayesOptimalModel as BayesOptimalModel
+from .enums import ModelName as ModelName
 from .factory import ModelFactory as ModelFactory
 from .gcn import GCN as GCN
 from .prediction import Prediction as Prediction

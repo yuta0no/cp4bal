@@ -8,8 +8,9 @@ from scipy.stats import special_ortho_group
 from torch import Tensor
 
 from cp4bal.dataset import GraphDataset
-from cp4bal.util.configs import CommonDatasetConfig, CSBMConfig
-from cp4bal.util.enums import EdgeProbabilityType
+
+from .configs import CommonDatasetConfig, CSBMConfig
+from .enums import EdgeProbabilityType
 
 logger = getLogger(__name__)
 

@@ -1,7 +1,7 @@
 import torch
 
-from cp4bal.acquisition.base import Acquisition
-from cp4bal.util.configs import RandomAcquisitionConfig
+from .base import Acquisition
+from .configs import RandomAcquisitionConfig
 
 
 class RandomAcquisition(Acquisition):

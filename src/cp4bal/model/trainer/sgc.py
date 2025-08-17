@@ -1,11 +1,10 @@
 import torch
 
-from cp4bal.dataset import ActiveLearningDataset, GraphData
-from cp4bal.model import SGC
-from cp4bal.util.configs import SGCTrainerConfig
-from cp4bal.util.enums import DatasetSplit
+from cp4bal.dataset import ActiveLearningDataset, DatasetSplit, GraphData
 
+from ..sgc import SGC
 from .base import Trainer
+from .configs import SGCTrainerConfig
 
 
 class SGCTrainer(Trainer):

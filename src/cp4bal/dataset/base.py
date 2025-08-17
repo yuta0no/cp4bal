@@ -10,8 +10,8 @@ from torch import Tensor
 from torch.utils.data import Dataset as TorchDataset
 from torch_geometric.data import Data as TorchGeometricData
 
-from cp4bal.util.configs import DatasetConfig
-from cp4bal.util.enums import DatasetSplit
+from .configs import DatasetConfig
+from .enums import DatasetSplit
 
 logger = getLogger(__name__)
 

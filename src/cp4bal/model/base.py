@@ -3,12 +3,12 @@ from abc import abstractmethod
 import torch.nn as nn
 
 from cp4bal.dataset import ActiveLearningDataset, GraphData
-from cp4bal.util.configs import (
+
+from .configs import (
     MCDropoutModelConfig,
     ModelConfig,
     MultipleSampleModelConfig,
 )
-
 from .prediction import Prediction
 
 

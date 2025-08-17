@@ -4,16 +4,19 @@ import torch
 import torch.optim as optim
 
 from cp4bal.dataset import ActiveLearningDataset
-from cp4bal.model import Model
-from cp4bal.model.trainer.base import Trainer
-from cp4bal.model.trainer.loss_fn import get_loss_function
-from cp4bal.util.configs import AdamTrainerConfig
+
+from ..base import Model
+from .base import Trainer
+from .configs import AdamTrainerConfig
+from .loss_fn import get_loss_function
 
 logger = getLogger(__name__)
 
 
 class AdamTrainer(Trainer):
-    def __init__(self, config: AdamTrainerConfig, model: Model, dataset: ActiveLearningDataset, generator: torch.Generator):
+    def __init__(
+        self, config: AdamTrainerConfig, model: Model, dataset: ActiveLearningDataset, generator: torch.Generator
+    ):
         super().__init__(config, model, dataset, generator)
 
         self.dataset = dataset

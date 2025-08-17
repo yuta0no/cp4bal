@@ -5,15 +5,17 @@ import torch
 
 from cp4bal.acquisition import AcquisitionFactory
 from cp4bal.active_learning import ActiveLearning as AL
-from cp4bal.dataset import CSBM, ActiveLearningDataset
-from cp4bal.model import ModelFactory
-from cp4bal.util.configs import (
+from cp4bal.dataset import (
+    CSBM,
+    ActiveLearningDataset,
     CommonDatasetConfig,
     CSBMConfig,
     DatasetConfig,
-    SGCTrainerConfig,
+    DatasetSplit,
+    EdgeProbabilityType,
 )
-from cp4bal.util.enums import DatasetSplit, EdgeProbabilityType, ModelName
+from cp4bal.model import ModelFactory, ModelName
+from cp4bal.model.trainer import SGCTrainerConfig
 from cp4bal.util.logger import init_logger
 from cp4bal.util.seed import set_seed
 

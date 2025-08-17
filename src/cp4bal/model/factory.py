@@ -1,7 +1,7 @@
 from cp4bal.dataset import ActiveLearningDataset
-from cp4bal.util.configs import GCNConfig, SGCConfig
-from cp4bal.util.enums import ModelName
 
+from .configs import GCNConfig, SGCConfig
+from .enums import ModelName
 from .gcn import GCN
 from .sgc import SGC
 

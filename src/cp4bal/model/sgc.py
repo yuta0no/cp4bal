@@ -7,9 +7,9 @@ from sklearn.exceptions import NotFittedError
 from sklearn.linear_model import LogisticRegression
 
 from cp4bal.dataset import ActiveLearningDataset, GraphData
-from cp4bal.util.configs import SGCConfig
 
 from .base import Model
+from .configs import SGCConfig
 from .prediction import Prediction
 
 logger = getLogger(__name__)

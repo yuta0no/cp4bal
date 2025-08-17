@@ -3,12 +3,12 @@ from logging import getLogger
 import torch
 
 from cp4bal.dataset import ActiveLearningDataset
-from cp4bal.model import Model
-from cp4bal.util.configs import AdamTrainerConfig, SGCTrainerConfig, TrainerConfig
-from cp4bal.util.enums import TrainerType
 
+from ..base import Model
 from .adam import AdamTrainer
 from .base import Trainer
+from .configs import AdamTrainerConfig, SGCTrainerConfig, TrainerConfig
+from .enums import TrainerType
 from .sgc import SGCTrainer
 
 logger = getLogger(__name__)

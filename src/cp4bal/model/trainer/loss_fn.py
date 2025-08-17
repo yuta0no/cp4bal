@@ -5,7 +5,7 @@ import torch
 from jaxtyping import Float, Int
 from torch import Tensor
 
-from cp4bal.model import Prediction
+from ..prediction import Prediction
 
 logger = getLogger(__name__)
 

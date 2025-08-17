@@ -5,7 +5,8 @@ from torch import Generator, Tensor
 
 from cp4bal.dataset import ActiveLearningDataset
 from cp4bal.model import Model
-from cp4bal.util.configs import AcquisitionConfig
+
+from .configs import AcquisitionConfig
 
 
 class Acquisition(ABC):

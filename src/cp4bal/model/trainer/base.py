@@ -3,8 +3,9 @@ from abc import abstractmethod
 import torch
 
 from cp4bal.dataset import ActiveLearningDataset
-from cp4bal.model import Model
-from cp4bal.util.configs import TrainerConfig
+
+from ..base import Model
+from .configs import TrainerConfig
 
 
 class Trainer:
