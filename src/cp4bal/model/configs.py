@@ -64,13 +64,13 @@ class BayesOptimalConfig(ModelConfig):
     cached: bool = True
 
     predict_train: bool = True  # if set, predicts with 100% confidence the true label for train nodes
-    prediction: BayesianPrediction = BayesianPrediction.JOINT
+    prediction: BayesianPrediction = BayesianPrediction.JOINT_BEAM_SEARCH
     prediction_likelihood: BayesianLikelihoodConfig = field(default_factory=BayesianLikelihoodConfig)
     confidence_likelihood: BayesianLikelihoodConfig = field(default_factory=BayesianLikelihoodConfig)
 
     # Beam search parameters
     beam_width: int = 1000
-    beam_search_num_iterations: int = 100
+    beam_search_num_iterations: int = 2
 
     # Variational inference parameters
     vi_max_iterations: int = 1000

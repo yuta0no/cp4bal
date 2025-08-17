@@ -1,7 +1,9 @@
 from .adam import AdamTrainer as AdamTrainer
 from .base import Trainer as Trainer
+from .configs import OracleTrainerConfig as OracleTrainerConfig
 from .configs import SGCTrainerConfig as SGCTrainerConfig
 from .configs import TrainerConfig as TrainerConfig
 from .enums import TrainerType as TrainerType
 from .factory import TrainerFactory as TrainerFactory
+from .gt_trainer import OracleTrainer as OracleTrainer
 from .sgc import SGCTrainer as SGCTrainer

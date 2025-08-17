@@ -13,3 +13,8 @@ class DatasetSplit(StrEnum):
     VAL = "val"
     TEST = "test"
     ALL = "all"
+
+@unique
+class ImplementationType(StrEnum):
+    VANILLA = "vanilla"
+    NUMBA = "numba"

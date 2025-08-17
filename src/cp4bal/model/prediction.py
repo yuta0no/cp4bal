@@ -50,7 +50,9 @@ class Prediction:
 
     def get_probabilities(self) -> Float[Tensor, "s n c"] | None:
         """Returns the probabilities, either propagated or unpropagated."""
-        logits = self.get_logits()
-        if logits is not None:
+        if self.probabilities is not None:
+            return self.probabilities
+
+        if (logits := self.get_logits()) is not None:
             return logits.softmax(dim=-1)
         return None

@@ -59,9 +59,14 @@ class ActiveLearning:
         _ = rg, al_round
         with torch.no_grad():
             prediction: Prediction = model.predict(dataset.data)
-            logits: Float[Tensor, "s n c"] = prediction.get_logits()
-            logits: Float[Tensor, "n c"] = logits.mean(dim=0)
             mask = dataset.data.get_mask(which=which)
-            acc = (logits[mask].argmax(dim=-1) == dataset.data.y[mask]).float().mean()
-        logger.info(f"Accuracy ({which.name}): {acc:.4f}")
+            acc = 0.0
+            if (logits := prediction.get_logits()) is not None:
+                logits: Float[Tensor, "n c"] = logits.mean(dim=0)
+                acc = (logits[mask].argmax(dim=-1) == dataset.data.y[mask]).float().mean()
+                logger.info(f"Accuracy ({which.name}): {acc:.4f}")
+            elif (probs := prediction.get_probabilities()) is not None:
+                probs: Float[Tensor, "n c"] = probs.mean(dim=0)
+                acc = (probs[mask].argmax(dim=-1) == dataset.data.y[mask]).float().mean()
+                logger.info(f"Accuracy ({which.name}): {acc:.4f}")
         return acc

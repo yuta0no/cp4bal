@@ -1,6 +1,7 @@
 from cp4bal.dataset import ActiveLearningDataset
 
-from .configs import GCNConfig, SGCConfig
+from .bayes_optimal import BayesOptimalModel
+from .configs import GCNConfig, SGCConfig, BayesOptimalConfig
 from .enums import ModelName
 from .gcn import GCN
 from .sgc import SGC
@@ -10,6 +11,8 @@ class ModelFactory:
     @staticmethod
     def create(name: ModelName, dataset: ActiveLearningDataset):
         match name:
+            case ModelName.BAYES_OPTIMAL:
+                return BayesOptimalModel(config=BayesOptimalConfig(), dataset=dataset)
             case ModelName.SGC:
                 return SGC(config=SGCConfig(), dataset=dataset)
             case ModelName.GCN:

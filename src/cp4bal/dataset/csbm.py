@@ -3,7 +3,7 @@ from logging import getLogger
 import networkx as nx
 import numpy as np
 import torch
-from jaxtyping import Float
+from jaxtyping import Float, Int
 from scipy.stats import special_ortho_group
 from torch import Tensor
 
@@ -11,6 +11,10 @@ from cp4bal.dataset import GraphDataset
 
 from .configs import CommonDatasetConfig, CSBMConfig
 from .enums import EdgeProbabilityType
+from .funcs import (
+    class_counts_by_node_to_affiliation_counts,
+    count_in_class_by_triangular_upper_adjacency,
+)
 
 logger = getLogger(__name__)
 
@@ -56,7 +60,6 @@ class CSBM(GraphDataset):
         for c, indices in enumerate(graph.graph["partition"]):
             ys[list(indices)] = c
 
-        logger.info(f"labels are {ys.tolist()}")
         assert (ys >= 0).all()
         if len(graph.edges) == 0:
             logger.warning("Graph does not have any edges.")
@@ -83,6 +86,7 @@ class CSBM(GraphDataset):
             1.0 / num_classes,
             dtype=torch.float,
         )
+        self.feature_sigma = feature_sigma
 
         super().__init__(
             node_features=node_features,
@@ -164,3 +168,93 @@ class CSBM(GraphDataset):
         ).float()
         means = means @ rotation
         return means
+
+    def _conditional_adjacency_log_likelihood(
+        self,
+        assignments: Int[np.ndarray, "num_assignments num_nodes"],
+        use_non_edges: bool = True,
+    ) -> Float[np.ndarray, " num_assignments"]:
+        edge_indices = self.edge_indices.numpy().astype(int)
+
+        # assume undirected edges
+        mask_upper_triangular = edge_indices[0] < edge_indices[1]
+        edge_indices = edge_indices[:, mask_upper_triangular]
+        _, class_counts_edges, class_counts_non_edges = (
+            count_in_class_by_triangular_upper_adjacency(
+                assignments, edge_indices, self.num_classes
+            )
+        )
+
+        counts_edges = class_counts_by_node_to_affiliation_counts(
+            class_counts_edges, assignments
+        )
+        counts_non_edges = class_counts_by_node_to_affiliation_counts(
+            class_counts_non_edges, assignments
+        )
+
+        log_likelihood = counts_edges * np.log(self.affiliation_matrix)[None, :, :]
+        if use_non_edges:
+            log_likelihood += (
+                counts_non_edges * np.log(1 - self.affiliation_matrix)[None, :, :]
+            )
+
+        log_likelihood = log_likelihood.sum(axis=(1, 2))  # sum over nodes and classes
+        return log_likelihood
+
+    def _feature_log_likelihood(
+        self, features: Float[np.ndarray, "num_nodes feature_dim"]
+    ) -> Float[np.ndarray, "num_nodes num_classes"]:
+        """Computes the feature log likelihood of each instance belonging to a certain class."""
+        means = self.class_means.numpy()
+        differences = features[:, None, :] - means[None, ...]
+        log_likelihood = -(differences**2).sum(-1) / (2 * self.feature_sigma**2)
+        log_likelihood -= (features.shape[-1] / 2) * np.log(
+            2 * np.pi * self.feature_sigma**2
+        )
+        return log_likelihood
+
+    def _conditional_feature_log_likelihood(
+        self,
+        assignments: Int[np.ndarray, "num_assignments num_nodes"],
+        x: Float[np.ndarray, "num_assignments num_nodes feature_dim"],
+    ) -> Float[np.ndarray, " num_assignments"]:
+        """Computes the feature log likelihood of each instance conditioned on c i.e. log p(X_i | y_i = c)"""
+        means = self.class_means.numpy()[assignments]
+        differences: Float[np.ndarray, "num_assignments num_nodes feature_dim"] = (
+            x - means
+        )
+        log_likelihood: Float[np.ndarray, "num_assignments num_nodes"] = (
+            -0.5 * np.sum(differences**2, axis=-1) / self.feature_sigma**2
+        )
+        log_likelihood -= 0.5 * np.log(2 * np.pi * self.feature_sigma**2) * x.shape[-1]
+        return np.sum(log_likelihood, axis=-1)
+
+    def conditional_log_likelihood(
+        self,
+        y: Float[np.ndarray, "num_assignments num_nodes"],
+        x: Float[np.ndarray, "num_assignments num_nodes feature_dim"],
+        use_adjacency: bool = True,
+        use_features: bool = True,
+        use_non_edges: bool = True,
+    ) -> Float[np.ndarray, "num_nodes num_classes"]:
+        """Computes the conditional log likelihood of the class labels given the features.
+
+        Args:
+            y (Float[np.ndarray, "num_nodes num_classes"]): The class labels for each node.
+        x (Float[np.ndarray, "num_nodes dim_feature"]): The features for each node.
+
+        Returns
+        -------
+        Float[np.ndarray, "num_nodes num_classes"]
+            The conditional log likelihood of the class labels given the features.
+        """
+        num_assignments, _ = y.shape
+        log_likelihood = np.zeros(num_assignments)
+        if use_adjacency:
+            log_likelihood += self._conditional_adjacency_log_likelihood(
+                assignments=y, use_non_edges=use_non_edges
+            )
+        if use_features:
+            log_likelihood += self._conditional_feature_log_likelihood(y, x)
+
+        return log_likelihood

@@ -15,7 +15,7 @@ from cp4bal.dataset import (
     EdgeProbabilityType,
 )
 from cp4bal.model import ModelFactory, ModelName
-from cp4bal.model.trainer import SGCTrainerConfig
+from cp4bal.model.trainer import OracleTrainerConfig
 from cp4bal.util.logger import init_logger
 from cp4bal.util.seed import set_seed
 
@@ -29,7 +29,7 @@ def main():
     # Dataset
     ds_config = DatasetConfig(
         common=CommonDatasetConfig(
-            seed=big_seed, name="csbm", num_nodes=240, num_classes=6, dim_features=10, val_size=0.0, test_size=0.3
+            seed=big_seed, name="csbm", num_nodes=24, num_classes=3, dim_features=10, val_size=0.0, test_size=0.3
         ),
         detail=CSBMConfig(
             feature_sigma=1.0,
@@ -49,15 +49,14 @@ def main():
     ds.split().print_masks()
     ds.select_initial_pool(count_per_class=1)
 
-    # Model
-    model_name = ModelName.SGC
+    # Model for Training
+    model_name = ModelName.BAYES_OPTIMAL
     model = ModelFactory.create(name=model_name, dataset=ds)
-    trainer_config = SGCTrainerConfig()
+    trainer_config = OracleTrainerConfig()
 
     # Active Learning
-    acquisition_method = AcquisitionFactory.create(acquisition_type="random")
+    acquisition_method = AcquisitionFactory.create(acquisition_type="oracle_uncertainty")
 
-    ds.select_initial_pool(count_per_class=1)
     TOTAL_AL_ROUND = 10
     for al_round in range(TOTAL_AL_ROUND):
         logger.info(f"Round {al_round + 1}/{TOTAL_AL_ROUND}")
@@ -86,7 +85,7 @@ def main():
         )
 
         ds = AL.acquire_samples(
-            budget=3,  # TODO
+            budget=1,  # TODO
             model=model,
             acquisition=acquisition_method,
             dataset=ds,
