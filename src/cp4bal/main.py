@@ -26,11 +26,13 @@ def main():
     # configs
     cb = ConfigBuilder().set_seed(big_seed)
     # config for dataset
-    cb.set_ds_name("csbm").set_n_nodes(140).set_n_classes(7).set_dim_features(10).set_val_size(0.0).set_test_size(
-        0.3
-    ).set_feature_sigma(1.0).set_feature_class_mean_distance(1.0).set_edge_p_type(
+    n_class = 7
+    budget = 1
+    cb.set_ds_name("csbm").set_n_nodes(n_class * 20).set_n_classes(n_class).set_dim_features(10).set_val_size(
+        0.0
+    ).set_test_size(0.3).set_feature_sigma(1.0).set_feature_class_mean_distance(1.0).set_edge_p_type(
         EdgeProbabilityType.BY_SNR_AND_DEGREE
-    ).set_expected_degree(8).set_edge_p_snr(10.0)
+    ).set_expected_degree(7).set_edge_p_snr(10.0)
 
     # config for trainer
     cb.set_trainer_name("sgc")
@@ -42,7 +44,7 @@ def main():
     cb.set_acquisition_name("random")
 
     # config for active learning
-    cb.set_budget(5).set_round(5)
+    cb.set_budget(budget).set_round(10)
 
     configs = cb.build(config_path=Path("configs/dataset.yaml"))
 

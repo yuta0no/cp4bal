@@ -59,7 +59,6 @@ class CSBM(GraphDataset):
         ys = torch.ones((num_nodes,), dtype=torch.int) * -1
         for c, indices in enumerate(graph.graph["partition"]):
             ys[list(indices)] = c
-
         assert (ys >= 0).all()
         if len(graph.edges) == 0:
             logger.warning("Graph does not have any edges.")

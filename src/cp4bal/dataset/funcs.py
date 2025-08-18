@@ -80,9 +80,7 @@ def class_counts_by_node_to_affiliation_counts(
     """
     match impl_type:
         case ImplementationType.NUMBA:
-            return class_counts_by_node_to_affiliation_counts_numba(
-                class_counts=class_counts, labels=labels
-            )
+            return class_counts_by_node_to_affiliation_counts_numba(class_counts=class_counts, labels=labels)
         case ImplementationType.VANILLA:
             return class_counts_by_node_to_affiliation_counts_py(class_counts=class_counts, labels=labels)
         case _:

@@ -10,8 +10,8 @@ from cp4bal.acquisition.configs import (
 )
 from cp4bal.dataset.configs import CommonDatasetConfig, CSBMConfig, DatasetConfig
 from cp4bal.dataset.enums import EdgeProbabilityType
-from cp4bal.model.configs import ModelConfig, SGCConfig
-from cp4bal.model.trainer.configs import SGCTrainerConfig, TrainerConfig
+from cp4bal.model.configs import BayesOptimalConfig, ModelConfig, SGCConfig
+from cp4bal.model.trainer.configs import OracleTrainerConfig, SGCTrainerConfig, TrainerConfig
 from cp4bal.util.configs import ActiveLearningConfig
 
 
@@ -103,6 +103,8 @@ class ConfigBuilder:
         match self._states.model_name.lower():
             case "sgc":
                 return SGCConfig(trainer=trainer_config)
+            case "bayes_optimal":
+                return BayesOptimalConfig(trainer=trainer_config)
             case _:
                 raise ValueError(f"Model {self._states.model_name} is not supported.")
 
@@ -112,6 +114,8 @@ class ConfigBuilder:
         match self._states.trainer_name.lower():
             case "sgc":
                 return SGCTrainerConfig()
+            case "oracle":
+                return OracleTrainerConfig()
             case _:
                 raise ValueError(f"Trainer {self._states.trainer_name} is not supported.")
 

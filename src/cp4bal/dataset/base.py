@@ -292,7 +292,7 @@ class ActiveLearningDataset(TorchDataset):
                 num_classes=self.base.num_classes,
             )
         )
-        self.data = self.base_data.clone()
+        self.data: GraphData = self.base_data.clone()
 
     def print_masks(self):
         self.data.print_masks()
