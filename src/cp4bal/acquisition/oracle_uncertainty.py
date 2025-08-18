@@ -40,6 +40,7 @@ class OracleUncertaintyAcquisition(Acquisition):
         Returns:
             list[int]: List of selected indices.
         """
+        _ = generator
         if not isinstance(dataset.base, CSBM):
             raise ValueError("OracleUncertaintyAcquisition works only with CSBM")
 

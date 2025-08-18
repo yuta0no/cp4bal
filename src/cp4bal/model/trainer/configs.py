@@ -7,7 +7,7 @@ from .enums import TrainerType
 class TrainerConfig:
     """Base trainer configuration."""
 
-    name: TrainerType
+    name: TrainerType = TrainerType.MISSING
     reset_parameter_before_training: bool = True
     progress_bar: bool = False  # Progress bar for training a single model
     use_gpu: bool = True

@@ -1,5 +1,6 @@
+from .approximate_uncertainty import ApproximateUncertaintyAcquisition
 from .base import Acquisition
-from .configs import OracleUncertaintyAcquisitionConfig
+from .configs import ApproximateUncertaintyAcquisitionConfig, OracleUncertaintyAcquisitionConfig
 from .oracle_uncertainty import OracleUncertaintyAcquisition
 from .random import RandomAcquisition
 
@@ -13,6 +14,13 @@ class AcquisitionFactory:
             case "oracle_uncertainty":
                 return OracleUncertaintyAcquisition(
                     config=OracleUncertaintyAcquisitionConfig(
+                        confidence_propagation=False,
+                    )
+                )
+            case "approximate_uncertainty":
+                return ApproximateUncertaintyAcquisition(
+                    config=ApproximateUncertaintyAcquisitionConfig(
+                        requires_model_predictions=True,
                         confidence_propagation=False,
                     )
                 )

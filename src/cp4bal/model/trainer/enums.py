@@ -7,3 +7,4 @@ class TrainerType(StrEnum):
     ADAM = "adam"
     ORACLE = "oracle"
     SGC = "sgc"
+    MISSING = "missing"

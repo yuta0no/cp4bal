@@ -155,6 +155,14 @@ class GraphData(TorchGeometricData):
         return int(self.mask_train_u.sum().item() + self.mask_train_l.sum().item())
 
     @property
+    def num_val(self) -> int:
+        return int(self.mask_val.sum().item())
+
+    @property
+    def num_test(self) -> int:
+        return int(self.mask_test.sum().item())
+
+    @property
     def num_train_labeled(self) -> int:
         return int(self.mask_train_l.sum().item())
 
@@ -383,6 +391,14 @@ class ActiveLearningDataset(TorchDataset):
     @property
     def num_train_nodes(self) -> int:
         return self.data.num_train
+
+    @property
+    def num_val_nodes(self) -> int:
+        return self.data.num_val
+
+    @property
+    def num_test_nodes(self) -> int:
+        return self.data.num_test
 
     @property
     def num_train_labeled_nodes(self) -> int:

@@ -27,6 +27,7 @@ class SGC(Model):
         self.add_self_loops = config.add_self_loops
         self.improved = config.improved
         self.k = config.k
+        self.solver = "liblinear"
 
         self.reset_cache()
         self._frozen_prediction = None
@@ -37,7 +38,7 @@ class SGC(Model):
 
     def reset_parameters(self):
         self.logistic_regression = LogisticRegression(
-            C=self.inverse_regularization_strength, solver="saga", class_weight="balanced"
+            C=self.inverse_regularization_strength, solver=self.solver, class_weight="balanced"
         )
         self._frozen_prediction = None
 

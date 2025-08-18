@@ -8,7 +8,9 @@ from .configs import OracleTrainerConfig
 
 
 class OracleTrainer(Trainer):
-    def __init__(self, config: OracleTrainerConfig, model: Model, dataset: ActiveLearningDataset, generator: torch.Generator):
+    def __init__(
+        self, config: OracleTrainerConfig, model: Model, dataset: ActiveLearningDataset, generator: torch.Generator
+    ):
         super().__init__(config=config, model=model, dataset=dataset, generator=generator)
 
     def fit(self):

@@ -1,3 +1,5 @@
+from logging import getLogger
+
 import torch
 
 from cp4bal.dataset import ActiveLearningDataset, DatasetSplit, GraphData
@@ -5,6 +7,8 @@ from cp4bal.dataset import ActiveLearningDataset, DatasetSplit, GraphData
 from ..sgc import SGC
 from .base import Trainer
 from .configs import SGCTrainerConfig
+
+logger = getLogger(__name__)
 
 
 class SGCTrainer(Trainer):
@@ -28,7 +32,7 @@ class SGCTrainer(Trainer):
         """
         batch: GraphData = self.dataset.data
         mask_train = batch.get_mask(DatasetSplit.TRAIN_L)
-
+        logger.info(f"SGC: {mask_train.sum().item()=}")
         x = self.model.get_diffused_node_features(batch)[mask_train]
         labels_in_mask_train = torch.unique(batch.y[mask_train])
         if labels_in_mask_train.size(0) == 1:

@@ -1,11 +1,13 @@
 from dataclasses import dataclass, field
 
 from .enums import ApproximationType, BayesianPrediction, ModelName
+from .trainer.configs import TrainerConfig
 
 
 @dataclass(kw_only=True)
 class ModelConfig:
-    name: ModelName | None = None
+    name: ModelName = ModelName.MISSING
+    trainer: TrainerConfig = field(default_factory=TrainerConfig)
 
 
 @dataclass(kw_only=True)

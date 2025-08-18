@@ -7,7 +7,8 @@ from torch import Tensor
 from cp4bal.acquisition import Acquisition
 from cp4bal.dataset import ActiveLearningDataset, DatasetSplit
 from cp4bal.model import Model, Prediction
-from cp4bal.model.trainer import Trainer, TrainerConfig, TrainerFactory
+from cp4bal.model.trainer.base import Trainer, TrainerConfig
+from cp4bal.model.trainer.factory import TrainerFactory
 
 logger = getLogger(__name__)
 

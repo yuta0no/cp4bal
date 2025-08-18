@@ -14,6 +14,7 @@ class DatasetSplit(StrEnum):
     TEST = "test"
     ALL = "all"
 
+
 @unique
 class ImplementationType(StrEnum):
     VANILLA = "vanilla"

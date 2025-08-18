@@ -6,6 +6,7 @@ class AcquisitionType(Enum):
     RANDOM = auto()
     ENTROPY = auto()
     ORACLE_UNCERTAINTY = auto()
+    APPROXIMATE_UNCERTAINTY = auto()
 
 
 @unique

@@ -11,7 +11,6 @@ logger = getLogger(__name__)
 impl_type = ImplementationType.VANILLA
 
 
-
 def count_in_class_by_triangular_upper_adjacency(
     labels: Int[np.ndarray, "num_assignments num_nodes"],
     edge_indices: Int[np.ndarray, "2 num_edges"],
@@ -23,17 +22,24 @@ def count_in_class_by_triangular_upper_adjacency(
 ]:
     """counts how often a label appears in the (non-)neighboring nodes of a node
 
-    Args:
-        labels (Int[np.ndarray, "num_assignments num_nodes"]): Labels of the nodes
-        edge_indices (Int[np.ndarray, "2 num_edges"]): Edge indices of the graph
-        num_classes (int): Number of classes in the dataset
+    Parameters
+    ----------
+    labels : Int[np.ndarray, "num_assignments num_nodes"]
+        Labels of the nodes
+    edge_indices : Int[np.ndarray, "2 num_edges"]
+        Edge indices of the graph
+    num_classes : int
+        Number of classes in the dataset
 
-    Returns:
-        counts (Int[np.ndarray, 'num_assignments num_nodes num_classes']): Counts of labels in the samples
-        counts_in_neighbors (Int[np.ndarray, 'num_assignments num_nodes num_classes']): Counts of labels in the neighboring nodes
-        counts_in_non_neighbors (Int[np.ndarray, 'num_assignments num_nodes num_classes']): Counts of labels in the non-neighboring nodes. Does not count self-loops as a non-neighbor.
+    Returns
+    -------
+    counts : Int[np.ndarray, 'num_assignments num_nodes num_classes']
+        Counts of labels in the samples
+    counts_in_neighbors : Int[np.ndarray, 'num_assignments num_nodes num_classes']
+        Counts of labels in the neighboring nodes
+    counts_in_non_neighbors : Int[np.ndarray, 'num_assignments num_nodes num_classes']
+        Counts of labels in the non-neighboring nodes. Does not count self-loops as a non-neighbor.
     """
-    # logger.info("start (tri count)")
     match impl_type:
         # case ImplementationType.NUMBA:
         #     ret = count_in_class_by_triangular_upper_adjacency_numba(
@@ -59,14 +65,17 @@ def class_counts_by_node_to_affiliation_counts(
 ) -> Int[np.ndarray, "num_assignments num_classes num_classes"]:
     """Transforms class counts per node to affiliation counts, i.e. counting how often a class links to a class.
 
-    Args:
-        class_counts (Int[np.ndarray, 'num_assignments num_nodes num_classes']):
-            For each node in each assignment, how often it counts a class
-        labels (Int[np.ndarray, 'num_assignments num_nodes']):
-            For each `num_assignments` samples, what the node class assignments are (i.e. row corresponds to assignment)
+    Parameters
+    ----------
+    class_counts : Int[np.ndarray, 'num_assignments num_nodes num_classes']
+        For each node in each assignment, how often it counts a class
+    labels : Int[np.ndarray, 'num_assignments num_nodes']
+        For each `num_assignments` samples, what the node class assignments are (i.e. row corresponds to assignment)
 
     Returns
-        affiliation_counts (Int[np.ndarray, 'num_assignments num_classes num_classes']): For each assignment, how often classes are affilated
+    -------
+    affiliation_counts : Int[np.ndarray, 'num_assignments num_classes num_classes']
+        For each assignment, how often classes are affilated
     """
     match impl_type:
         # case ImplementationType.NUMBA:
@@ -74,9 +83,7 @@ def class_counts_by_node_to_affiliation_counts(
         #         class_counts=class_counts, labels=labels
         #     )
         case ImplementationType.VANILLA:
-            return class_counts_by_node_to_affiliation_counts_py(
-                class_counts=class_counts, labels=labels
-            )
+            return class_counts_by_node_to_affiliation_counts_py(class_counts=class_counts, labels=labels)
         case _:
             raise ValueError(f"Unknown implementation type: {impl_type}")
 
@@ -101,9 +108,7 @@ def count_in_class_by_triangular_upper_adjacency_py(
     # Per sample, count the number of nodes in each class per row of the upper triangular adjacency
     for s in range(S):
         for v in range(N):
-            for u in range(
-                v
-            ):  # all the rows for which v is counted (we only count the upper triangular part)
+            for u in range(v):  # all the rows for which v is counted (we only count the upper triangular part)
                 counts[s, u, labels[s, v]] += 1
 
     # Per sample, per node, count the number adjacent nodes in each class
@@ -124,7 +129,8 @@ def class_counts_by_node_to_affiliation_counts_py(
     class_counts: Int[np.ndarray, "num_assignments num_nodes num_classes"],
     labels: Int[np.ndarray, "num_assignments num_nodes"],
 ) -> Int[np.ndarray, "num_assignments num_classes num_classes"]:
-    """Python implementation of transforming class counts per node to affiliation counts, i.e. counting how often a class links to a class."""
+    """Python implementation of transforming class counts per node to affiliation counts,
+    i.e. counting how often a class links to a class."""
     S, N, C = class_counts.shape
 
     affiliation_counts = np.zeros([S, C, C], dtype=int)
@@ -191,7 +197,8 @@ def class_counts_by_node_to_affiliation_counts_py(
 #     Int[np.ndarray, "num_assignments num_nodes num_classes"],
 #     Int[np.ndarray, "num_assignments num_nodes num_classes"],
 # ]:
-#     """Numba implementation of counting how often a label appears in the (non-)neighboring nodes of a node"""
+#     """Numba implementation of counting how often a label appears
+#     in the (non-)neighboring nodes of a node"""
 #     S = int(labels.shape[0])
 #     N = int(labels.shape[1])
 #     E = int(edge_indices.shape[1])
@@ -209,7 +216,8 @@ def class_counts_by_node_to_affiliation_counts_py(
 #     class_counts: Int[np.ndarray, "num_assignments num_nodes num_classes"],
 #     labels: Int[np.ndarray, "num_assignments num_nodes"],
 # ) -> Int[np.ndarray, "num_assignments num_classes num_classes"]:
-#     """Numba implementation of transforming class counts per node to affiliation counts, i.e. counting how often a class links to a class."""
+#     """Numba implementation of transforming class counts per node to affiliation counts,
+#     i.e. counting how often a class links to a class."""
 #     S, N, C = class_counts.shape
 #     S = int(S)
 #     N = int(N)

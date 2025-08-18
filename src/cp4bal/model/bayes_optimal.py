@@ -121,7 +121,11 @@ class BayesOptimalModel(Model):
             Float[np.ndarray, "num_nodes num_classes"]: Aleatoric confidence
         """
         log_likelihood = np.zeros((self.graph.num_nodes, self.graph.num_classes))
-        iterator = tqdm(list(product(range(self.graph.num_nodes), range(self.graph.num_classes))), desc="Alea", disable=not self.verbose)
+        iterator = tqdm(
+            list(product(range(self.graph.num_nodes), range(self.graph.num_classes))),
+            desc="Alea",
+            disable=not self.verbose,
+        )
         for i, c in iterator:
             y_ic = y.copy()
             y_ic[i] = c

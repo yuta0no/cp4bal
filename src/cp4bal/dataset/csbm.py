@@ -179,24 +179,16 @@ class CSBM(GraphDataset):
         # assume undirected edges
         mask_upper_triangular = edge_indices[0] < edge_indices[1]
         edge_indices = edge_indices[:, mask_upper_triangular]
-        _, class_counts_edges, class_counts_non_edges = (
-            count_in_class_by_triangular_upper_adjacency(
-                assignments, edge_indices, self.num_classes
-            )
+        _, class_counts_edges, class_counts_non_edges = count_in_class_by_triangular_upper_adjacency(
+            assignments, edge_indices, self.num_classes
         )
 
-        counts_edges = class_counts_by_node_to_affiliation_counts(
-            class_counts_edges, assignments
-        )
-        counts_non_edges = class_counts_by_node_to_affiliation_counts(
-            class_counts_non_edges, assignments
-        )
+        counts_edges = class_counts_by_node_to_affiliation_counts(class_counts_edges, assignments)
+        counts_non_edges = class_counts_by_node_to_affiliation_counts(class_counts_non_edges, assignments)
 
         log_likelihood = counts_edges * np.log(self.affiliation_matrix)[None, :, :]
         if use_non_edges:
-            log_likelihood += (
-                counts_non_edges * np.log(1 - self.affiliation_matrix)[None, :, :]
-            )
+            log_likelihood += counts_non_edges * np.log(1 - self.affiliation_matrix)[None, :, :]
 
         log_likelihood = log_likelihood.sum(axis=(1, 2))  # sum over nodes and classes
         return log_likelihood
@@ -208,9 +200,7 @@ class CSBM(GraphDataset):
         means = self.class_means.numpy()
         differences = features[:, None, :] - means[None, ...]
         log_likelihood = -(differences**2).sum(-1) / (2 * self.feature_sigma**2)
-        log_likelihood -= (features.shape[-1] / 2) * np.log(
-            2 * np.pi * self.feature_sigma**2
-        )
+        log_likelihood -= (features.shape[-1] / 2) * np.log(2 * np.pi * self.feature_sigma**2)
         return log_likelihood
 
     def _conditional_feature_log_likelihood(
@@ -220,9 +210,7 @@ class CSBM(GraphDataset):
     ) -> Float[np.ndarray, " num_assignments"]:
         """Computes the feature log likelihood of each instance conditioned on c i.e. log p(X_i | y_i = c)"""
         means = self.class_means.numpy()[assignments]
-        differences: Float[np.ndarray, "num_assignments num_nodes feature_dim"] = (
-            x - means
-        )
+        differences: Float[np.ndarray, "num_assignments num_nodes feature_dim"] = x - means
         log_likelihood: Float[np.ndarray, "num_assignments num_nodes"] = (
             -0.5 * np.sum(differences**2, axis=-1) / self.feature_sigma**2
         )
@@ -251,9 +239,7 @@ class CSBM(GraphDataset):
         num_assignments, _ = y.shape
         log_likelihood = np.zeros(num_assignments)
         if use_adjacency:
-            log_likelihood += self._conditional_adjacency_log_likelihood(
-                assignments=y, use_non_edges=use_non_edges
-            )
+            log_likelihood += self._conditional_adjacency_log_likelihood(assignments=y, use_non_edges=use_non_edges)
         if use_features:
             log_likelihood += self._conditional_feature_log_likelihood(y, x)
 

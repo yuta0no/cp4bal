@@ -1,7 +1,7 @@
 from cp4bal.dataset import ActiveLearningDataset
 
 from .bayes_optimal import BayesOptimalModel
-from .configs import GCNConfig, SGCConfig, BayesOptimalConfig
+from .configs import BayesOptimalConfig, GCNConfig, SGCConfig
 from .enums import ModelName
 from .gcn import GCN
 from .sgc import SGC

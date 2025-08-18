@@ -3,6 +3,7 @@ from enum import StrEnum, unique
 
 @unique
 class ModelName(StrEnum):
+    MISSING = "missing"
     BAYES_OPTIMAL = "bayes_optimal"
     GCN = "gcn"
     SGC = "sgc"

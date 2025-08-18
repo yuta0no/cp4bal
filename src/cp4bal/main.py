@@ -15,7 +15,7 @@ from cp4bal.dataset import (
     EdgeProbabilityType,
 )
 from cp4bal.model import ModelFactory, ModelName
-from cp4bal.model.trainer import OracleTrainerConfig
+from cp4bal.model.trainer.configs import OracleTrainerConfig
 from cp4bal.util.logger import init_logger
 from cp4bal.util.seed import set_seed
 
@@ -29,7 +29,7 @@ def main():
     # Dataset
     ds_config = DatasetConfig(
         common=CommonDatasetConfig(
-            seed=big_seed, name="csbm", num_nodes=24, num_classes=3, dim_features=10, val_size=0.0, test_size=0.3
+            seed=big_seed, name="csbm", num_nodes=100, num_classes=5, dim_features=10, val_size=0.0, test_size=0.3
         ),
         detail=CSBMConfig(
             feature_sigma=1.0,
@@ -49,17 +49,25 @@ def main():
     ds.split().print_masks()
     ds.select_initial_pool(count_per_class=1)
 
+    logger.info(f"{ds.data.num_train=}")
+    logger.info(f"{ds.data.num_train_labeled=}")
+
     # Model for Training
-    model_name = ModelName.BAYES_OPTIMAL
+    model_name = ModelName.SGC
     model = ModelFactory.create(name=model_name, dataset=ds)
+    logger.info(f"{model=}")
     trainer_config = OracleTrainerConfig()
 
     # Active Learning
-    acquisition_method = AcquisitionFactory.create(acquisition_type="oracle_uncertainty")
+    acquisition_method = AcquisitionFactory.create(acquisition_type="approximate_uncertainty")
 
     TOTAL_AL_ROUND = 10
     for al_round in range(TOTAL_AL_ROUND):
         logger.info(f"Round {al_round + 1}/{TOTAL_AL_ROUND}")
+        logger.info(f"{ds.data.num_train=}")
+        logger.info(f"{ds.data.num_val=}")
+        logger.info(f"{ds.data.num_test=}")
+        logger.info(f"{ds.data.num_train_labeled=}")
 
         AL.train_model(
             config=trainer_config,

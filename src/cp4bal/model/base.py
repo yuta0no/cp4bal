@@ -16,6 +16,7 @@ class Model(nn.Module):
     def __init__(self, config: ModelConfig, dataset: ActiveLearningDataset):
         super().__init__()
         self.name = config.name
+        self.config = config
 
     @abstractmethod
     def reset_parameters(self): ...
