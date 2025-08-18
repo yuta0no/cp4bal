@@ -134,7 +134,7 @@ class ConfigBuilder:
                 )
             case "approximate_uncertainty":
                 return ApproximateUncertaintyAcquisitionConfig(
-                    confidence_propagation=False,
+                    confidence_propagation=True,
                 )
 
     def set_ds_name(self, name: str) -> Self:

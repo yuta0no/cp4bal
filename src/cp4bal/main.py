@@ -20,14 +20,14 @@ logger = getLogger(__name__)
 
 
 def main():
-    rng, big_seed = set_seed(seed=52)
+    rng, big_seed = set_seed(seed=552)
     generator = torch.random.manual_seed(rng.integers(2**31))
 
     # configs
     cb = ConfigBuilder().set_seed(big_seed)
     # config for dataset
     n_class = 7
-    budget = 1
+    budget = 3
     cb.set_ds_name("csbm").set_n_nodes(n_class * 20).set_n_classes(n_class).set_dim_features(10).set_val_size(
         0.0
     ).set_test_size(0.3).set_feature_sigma(1.0).set_feature_class_mean_distance(1.0).set_edge_p_type(

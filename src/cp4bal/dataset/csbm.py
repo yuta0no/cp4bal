@@ -40,6 +40,8 @@ class CSBM(GraphDataset):
             num_nodes=num_nodes,
             expected_degree=csbm_config.expected_degree,
             edge_p_snr=csbm_config.edge_p_snr,
+            p_edge_inter=csbm_config.p_edge_inter,
+            p_edge_intra=csbm_config.p_edge_intra,
         )
         affiliation_matrix: Float[np.ndarray, "n_classes n_nodes"] = np.full(
             (num_classes, num_classes),
@@ -86,6 +88,8 @@ class CSBM(GraphDataset):
             dtype=torch.float,
         )
         self.feature_sigma = feature_sigma
+        self.p_edge_inter = p_edge_inter
+        self.p_edge_intra = p_edge_intra
 
         super().__init__(
             node_features=node_features,
@@ -98,9 +102,10 @@ class CSBM(GraphDataset):
         )
 
     def __compute_edge_probabilities(
-        self, type_: EdgeProbabilityType, num_classes: int, num_nodes: int, expected_degree: int, edge_p_snr: float
+        self, type_: EdgeProbabilityType, num_classes: int, num_nodes: int, expected_degree: int, edge_p_snr: float, p_edge_inter: float, p_edge_intra: float | None,
     ) -> tuple[float, float]:
         eps = 1e-8
+        _ = p_edge_intra, p_edge_inter
         match type_:
             case EdgeProbabilityType.BY_SNR_AND_DEGREE:
                 edge_probability_inter = (

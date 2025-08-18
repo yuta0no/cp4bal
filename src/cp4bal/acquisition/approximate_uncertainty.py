@@ -10,7 +10,7 @@ from torch import Tensor
 from tqdm import tqdm
 
 from cp4bal.active_learning import ActiveLearning as AL
-from cp4bal.dataset import ActiveLearningDataset, GraphData
+from cp4bal.dataset import CSBM, ActiveLearningDataset, GraphData
 from cp4bal.dataset.enums import DatasetSplit
 from cp4bal.model import Model, ModelFactory
 from cp4bal.model.configs import ModelConfig
@@ -75,26 +75,97 @@ class ApproximateUncertaintyAcquisition(Acquisition):
                 features_only=False,
             )
 
-        values_for_acquisition = epistemic_uncertainty  # no propagation for the first selection
         if self.confidence_propagation:
             acquired_indices = []
+            mask_train_Q = torch.zeros_like(mask_train_l, dtype=torch.bool)
             for _ in range(budget):
+                values_for_acquisition = epistemic_uncertainty - self._calculate_confidence_propagation(
+                    mask_train_u=mask_train_u,
+                    mask_train_Q=mask_train_Q,
+                    dataset=dataset,
+                )
                 indices_train_u = torch.where(mask_train_u)[0]
                 possible_values_for_acquisition = values_for_acquisition[mask_train_u]
                 acquired_index = indices_train_u[np.argsort(-possible_values_for_acquisition)[0]]
-                mask_train_l[acquired_index] = True
+                mask_train_Q[acquired_index] = True
                 mask_train_u[acquired_index] = False
-                values_for_acquisition = epistemic_uncertainty - self._calculate_confidence_propagation()
+                acquired_indices.append(acquired_index.item())
         else:
+            values_for_acquisition = epistemic_uncertainty
             indices_train_u = torch.where(mask_train_u)[0]
             possible_values_for_acquisition = values_for_acquisition[mask_train_u]
-            acquired_indices = indices_train_u[np.argsort(-possible_values_for_acquisition)[:budget]]
+            acquired_indices = indices_train_u[np.argsort(-possible_values_for_acquisition)[:budget]].tolist()
             mask_train_l[acquired_indices] = True
             mask_train_u[acquired_indices] = False
 
-        return acquired_indices.tolist()
+        return acquired_indices
 
-    def _calculate_confidence_propagation(self, mask_train_l: Bool[Tensor, " n"] = None) -> Float[Tensor, " n"]: ...
+    def _calculate_confidence_propagation(
+        self,
+        mask_train_u: Bool[Tensor, " n"],
+        mask_train_Q: Bool[Tensor, " n"],
+        dataset: ActiveLearningDataset,
+    ) -> Float[Tensor, " n"]:
+        if not isinstance(dataset.base, CSBM):
+            raise ValueError("Confidence propagation is only implemented for CSBM datasets")
+
+        if mask_train_Q.sum() == 0:
+            # no propagation for empty Q
+            return torch.zeros_like(mask_train_u, dtype=torch.float32)
+
+        USE_GT = True
+        if USE_GT:
+            logger.info("using CSBM prior knowledge")
+            y = dataset.data.y.clone().cpu()
+            K = dataset.data.num_classes
+            p = torch.tensor(dataset.base.p_edge_intra)
+            q = torch.tensor(dataset.base.p_edge_inter)
+            log_p = torch.log(p)
+            log_1mp = torch.log(1 - p)
+            log_q = torch.log(q)
+            log_1mq = torch.log(1 - q)
+            expected_pq = torch.log((p + (K - 1) * q) / K)
+            expected_1mpq = torch.log(((1 - p) + (K - 1) * (1 - q)) / K)
+            U = mask_train_u.nonzero().flatten().tolist()
+            Q = mask_train_Q.nonzero().flatten().tolist()
+
+            confidence_propagation = torch.zeros_like(mask_train_u, dtype=torch.float32)
+
+            edges: Int[Tensor, "e 2"] = dataset.base.edge_indices.clone().cpu().T.tolist()
+            edge_set = set(tuple(e) for e in edges) | set(tuple(e) for e in edges[::-1])
+            for u in U:
+                u_label = y[u]
+                a_same = 0  # connected and same label
+                a_diff = 0  # connected and different label
+                b_same = 0  # not connected and same label
+                b_diff = 0  # not connected and different label
+                for v in Q:
+                    v_label = y[v]
+                    has_edge = (u, v) in edge_set
+                    if v_label == u_label:
+                        if has_edge:
+                            a_same += 1
+                        else:
+                            b_same += 1
+                    else:
+                        if has_edge:
+                            a_diff += 1
+                        else:
+                            b_diff += 1
+
+                    cp_value = (
+                        a_same * log_p
+                        + b_same * log_1mp
+                        + a_diff * log_q
+                        + b_diff * log_1mq
+                        - (a_same + a_diff) * expected_pq
+                        - (b_same + b_diff) * expected_1mpq
+                    )
+                    confidence_propagation[v] = cp_value
+
+            return confidence_propagation
+        else:
+            raise NotImplementedError("Confidence propagation is only implemented for CSBM datasets with ground truth")
 
     def aleatoric_confidence(
         self,
