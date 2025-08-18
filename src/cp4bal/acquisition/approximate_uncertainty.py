@@ -247,7 +247,9 @@ class ApproximateUncertaintyAcquisition(Acquisition):
             )
             aleatoric_confidence[idx] = aleatoric_confidence_idx[idx, labels[idx]]
 
-        epistemic_uncertainty = aleatoric_confidence / total_confidence[torch.arange(total_confidence.size(0)), labels]
+        epistemic_uncertainty = torch.log(
+            aleatoric_confidence / total_confidence[torch.arange(total_confidence.size(0)), labels]
+        )
         epistemic_uncertainty[~mask_predict] = -float("inf")
         return epistemic_uncertainty
 
