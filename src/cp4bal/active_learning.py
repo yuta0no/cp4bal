@@ -36,16 +36,16 @@ class ActiveLearning:
 
     @staticmethod
     def train_model(
-        config: TrainerConfig,
+        trainer_config: TrainerConfig,
         model: Model,
         dataset: ActiveLearningDataset,
         rg: torch.Generator,
         al_round: int = -1,
     ):
         _ = al_round
-        if config.reset_parameter_before_training:
+        if trainer_config.reset_parameter_before_training:
             model.reset_parameters()
-        trainer: Trainer = TrainerFactory.create(config=config, model=model, dataset=dataset, rg=rg)
+        trainer: Trainer = TrainerFactory.create(config=trainer_config, model=model, dataset=dataset, rg=rg)
         trainer.fit()
 
     @staticmethod

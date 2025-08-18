@@ -1,7 +1,7 @@
 from cp4bal.dataset import ActiveLearningDataset
 
 from .bayes_optimal import BayesOptimalModel
-from .configs import BayesOptimalConfig, GCNConfig, SGCConfig
+from .configs import ModelConfig
 from .enums import ModelName
 from .gcn import GCN
 from .sgc import SGC
@@ -9,13 +9,13 @@ from .sgc import SGC
 
 class ModelFactory:
     @staticmethod
-    def create(name: ModelName, dataset: ActiveLearningDataset):
-        match name:
+    def create(config: ModelConfig, dataset: ActiveLearningDataset):
+        match config.name:
             case ModelName.BAYES_OPTIMAL:
-                return BayesOptimalModel(config=BayesOptimalConfig(), dataset=dataset)
+                return BayesOptimalModel(config=config, dataset=dataset)
             case ModelName.SGC:
-                return SGC(config=SGCConfig(), dataset=dataset)
+                return SGC(config=config, dataset=dataset)
             case ModelName.GCN:
-                return GCN(config=GCNConfig(), dataset=dataset)
+                return GCN(config=config, dataset=dataset)
             case _:
-                raise ValueError(f"Model {name} is not supported.")
+                raise ValueError(f"Model {config.name} is not supported.")

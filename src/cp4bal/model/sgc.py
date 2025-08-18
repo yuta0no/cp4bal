@@ -27,7 +27,7 @@ class SGC(Model):
         self.add_self_loops = config.add_self_loops
         self.improved = config.improved
         self.k = config.k
-        self.solver = "liblinear"
+        self.solver = "lbfgs"
 
         self.reset_cache()
         self._frozen_prediction = None

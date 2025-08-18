@@ -33,11 +33,8 @@ class ActiveLearningConfig:
     Configuration for active learning experiments.
     """
 
-    acquisition_type: str = "random"
     num_rounds: int = 10
     budget_per_round: int | None = None
-    num_epochs: int = 100
-    trainer_type: str = "oracle"
 
 
 @dataclass(kw_only=True)

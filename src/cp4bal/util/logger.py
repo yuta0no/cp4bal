@@ -1,4 +1,4 @@
-from logging import WARNING, getLogger
+from logging import ERROR, WARNING, getLogger
 from logging.config import dictConfig
 from pathlib import Path
 
@@ -15,3 +15,4 @@ def init_logger(log_dir: Path, log_file_name: str, config_path: Path = DEFAULT_L
         config["handlers"]["file"]["filename"] = str(log_path)
         dictConfig(config)
     getLogger("matplotlib").setLevel(WARNING)  # surpress unnecessary logging
+    getLogger("sklearn").setLevel(ERROR)  # surpress unnecessary logging

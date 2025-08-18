@@ -1,28 +1,30 @@
 from .approximate_uncertainty import ApproximateUncertaintyAcquisition
 from .base import Acquisition
-from .configs import ApproximateUncertaintyAcquisitionConfig, OracleUncertaintyAcquisitionConfig
+from .configs import (
+    AcquisitionConfig,
+    ApproximateUncertaintyAcquisitionConfig,
+    OracleUncertaintyAcquisitionConfig,
+    RandomAcquisitionConfig,
+)
 from .oracle_uncertainty import OracleUncertaintyAcquisition
 from .random import RandomAcquisition
 
 
 class AcquisitionFactory:
     @staticmethod
-    def create(acquisition_type: str) -> Acquisition:
-        match acquisition_type.lower():
+    def create(config: AcquisitionConfig) -> Acquisition:
+        match config.type_.name.lower():
             case "random":
-                return RandomAcquisition()
+                if not isinstance(config, RandomAcquisitionConfig):
+                    raise ValueError(f"Invalid config for random acquisition: {config}")
+                return RandomAcquisition(config=config)
             case "oracle_uncertainty":
-                return OracleUncertaintyAcquisition(
-                    config=OracleUncertaintyAcquisitionConfig(
-                        confidence_propagation=False,
-                    )
-                )
+                if not isinstance(config, OracleUncertaintyAcquisitionConfig):
+                    raise ValueError(f"Invalid config for oracle uncertainty acquisition: {config}")
+                return OracleUncertaintyAcquisition(config=config)
             case "approximate_uncertainty":
-                return ApproximateUncertaintyAcquisition(
-                    config=ApproximateUncertaintyAcquisitionConfig(
-                        requires_model_predictions=True,
-                        confidence_propagation=False,
-                    )
-                )
+                if not isinstance(config, ApproximateUncertaintyAcquisitionConfig):
+                    raise ValueError(f"Invalid config for approximate uncertainty acquisition: {config}")
+                return ApproximateUncertaintyAcquisition(config=config)
             case _:
-                raise ValueError(f"Unknown acquisition type: {acquisition_type}")
+                raise ValueError(f"Unknown acquisition type: {config.type_.name}")

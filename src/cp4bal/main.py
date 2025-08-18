@@ -6,16 +6,13 @@ import torch
 from cp4bal.acquisition import AcquisitionFactory
 from cp4bal.active_learning import ActiveLearning as AL
 from cp4bal.dataset import (
-    CSBM,
     ActiveLearningDataset,
-    CommonDatasetConfig,
-    CSBMConfig,
-    DatasetConfig,
     DatasetSplit,
-    EdgeProbabilityType,
 )
-from cp4bal.model import ModelFactory, ModelName
-from cp4bal.model.trainer.configs import OracleTrainerConfig
+from cp4bal.dataset.enums import EdgeProbabilityType
+from cp4bal.dataset.factory import DatasetFactory
+from cp4bal.model import ModelFactory
+from cp4bal.util.config_builder import ConfigBuilder
 from cp4bal.util.logger import init_logger
 from cp4bal.util.seed import set_seed
 
@@ -26,51 +23,46 @@ def main():
     rng, big_seed = set_seed(seed=52)
     generator = torch.random.manual_seed(rng.integers(2**31))
 
+    # configs
+    cb = ConfigBuilder().set_seed(big_seed)
+    # config for dataset
+    cb.set_ds_name("csbm").set_n_nodes(140).set_n_classes(7).set_dim_features(10).set_val_size(0.0).set_test_size(
+        0.3
+    ).set_feature_sigma(1.0).set_feature_class_mean_distance(1.0).set_edge_p_type(
+        EdgeProbabilityType.BY_SNR_AND_DEGREE
+    ).set_expected_degree(8).set_edge_p_snr(10.0)
+
+    # config for trainer
+    cb.set_trainer_name("sgc")
+
+    # config for model
+    cb.set_model_name("sgc")
+
+    # config for acquisition
+    cb.set_acquisition_name("random")
+
+    # config for active learning
+    cb.set_budget(5).set_round(5)
+
+    configs = cb.build(config_path=Path("configs/dataset.yaml"))
+
     # Dataset
-    ds_config = DatasetConfig(
-        common=CommonDatasetConfig(
-            seed=big_seed, name="csbm", num_nodes=100, num_classes=5, dim_features=10, val_size=0.0, test_size=0.3
-        ),
-        detail=CSBMConfig(
-            feature_sigma=1.0,
-            feature_class_mean_distance=1.0,
-            edge_p_type=EdgeProbabilityType.BY_SNR_AND_DEGREE,
-            p_edge_inter=None,
-            p_edge_intra=None,
-            expected_degree=8,
-            edge_p_snr=10,
-        ),
-    )
-    csbm = CSBM(
-        common_config=ds_config.common,
-        csbm_config=ds_config.detail,
-    )
-    ds = ActiveLearningDataset(base=csbm, config=ds_config)
+    base_ds = DatasetFactory.create(config=configs.dataset)
+    ds = ActiveLearningDataset(base=base_ds, config=configs.dataset)
     ds.split().print_masks()
     ds.select_initial_pool(count_per_class=1)
 
-    logger.info(f"{ds.data.num_train=}")
-    logger.info(f"{ds.data.num_train_labeled=}")
-
     # Model for Training
-    model_name = ModelName.SGC
-    model = ModelFactory.create(name=model_name, dataset=ds)
-    logger.info(f"{model=}")
-    trainer_config = OracleTrainerConfig()
+    model = ModelFactory.create(config=configs.model, dataset=ds)
 
     # Active Learning
-    acquisition_method = AcquisitionFactory.create(acquisition_type="approximate_uncertainty")
+    acquisition_method = AcquisitionFactory.create(config=configs.acquisition)
 
-    TOTAL_AL_ROUND = 10
-    for al_round in range(TOTAL_AL_ROUND):
-        logger.info(f"Round {al_round + 1}/{TOTAL_AL_ROUND}")
-        logger.info(f"{ds.data.num_train=}")
-        logger.info(f"{ds.data.num_val=}")
-        logger.info(f"{ds.data.num_test=}")
-        logger.info(f"{ds.data.num_train_labeled=}")
+    for al_round in range(configs.al.num_rounds):
+        logger.info(f"Round {al_round + 1}/{configs.al.num_rounds}")
 
         AL.train_model(
-            config=trainer_config,
+            trainer_config=configs.trainer,
             model=model,
             dataset=ds,
             rg=generator,
@@ -93,7 +85,7 @@ def main():
         )
 
         ds = AL.acquire_samples(
-            budget=1,  # TODO
+            budget=configs.al.budget_per_round,  # TODO
             model=model,
             acquisition=acquisition_method,
             dataset=ds,
