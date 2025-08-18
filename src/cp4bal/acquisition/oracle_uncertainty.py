@@ -47,7 +47,6 @@ class OracleUncertaintyAcquisition(Acquisition):
         mask_train_l = dataset.data.mask_train_l.clone()
         mask_train_u = dataset.data.mask_train_u.clone()
         prediction = model.predict(batch=dataset.data, acquisition=True)
-        indices_train_u = torch.where(mask_train_u)[0]
 
         match self.uncertainty_type:
             case UncertaintyType.TOTAL:
@@ -73,7 +72,10 @@ class OracleUncertaintyAcquisition(Acquisition):
             acquired_indices = []
             # determine which to select by greedy algorithm
             for _ in range(budget):
-                acquisition = uncertainty[torch.arange(model.graph.num_nodes), model.graph.labels]  # using oracle labels
+                indices_train_u = torch.where(mask_train_u)[0]
+                acquisition = uncertainty[
+                    torch.arange(model.graph.num_nodes), model.graph.labels
+                ]  # using oracle labels
                 possible_acquisitions = acquisition[mask_train_u]
                 confidence_propagation = self._compute_confidence_propagation()
                 possible_acquisitions_with_cp = possible_acquisitions - confidence_propagation
