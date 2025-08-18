@@ -16,3 +16,4 @@ def init_logger(log_dir: Path, log_file_name: str, config_path: Path = DEFAULT_L
         dictConfig(config)
     getLogger("matplotlib").setLevel(WARNING)  # surpress unnecessary logging
     getLogger("sklearn").setLevel(ERROR)  # surpress unnecessary logging
+    getLogger("numba").setLevel(WARNING)  # surpress unnecessary logging

@@ -3,12 +3,13 @@ from typing import Tuple
 
 import numpy as np
 from jaxtyping import Int
+from numba import jit
 
 from .enums import ImplementationType
 
 logger = getLogger(__name__)
 
-impl_type = ImplementationType.VANILLA
+impl_type = ImplementationType.NUMBA
 
 
 def count_in_class_by_triangular_upper_adjacency(
@@ -41,12 +42,12 @@ def count_in_class_by_triangular_upper_adjacency(
         Counts of labels in the non-neighboring nodes. Does not count self-loops as a non-neighbor.
     """
     match impl_type:
-        # case ImplementationType.NUMBA:
-        #     ret = count_in_class_by_triangular_upper_adjacency_numba(
-        #         labels=labels,
-        #         edge_indices=edge_indices,
-        #         num_classes=num_classes,
-        #     )
+        case ImplementationType.NUMBA:
+            ret = count_in_class_by_triangular_upper_adjacency_numba(
+                labels=labels,
+                edge_indices=edge_indices,
+                num_classes=num_classes,
+            )
         case ImplementationType.VANILLA:
             ret = count_in_class_by_triangular_upper_adjacency_py(
                 labels=labels,
@@ -78,10 +79,10 @@ def class_counts_by_node_to_affiliation_counts(
         For each assignment, how often classes are affilated
     """
     match impl_type:
-        # case ImplementationType.NUMBA:
-        #     return class_counts_by_node_to_affiliation_counts_numba(
-        #         class_counts=class_counts, labels=labels
-        #     )
+        case ImplementationType.NUMBA:
+            return class_counts_by_node_to_affiliation_counts_numba(
+                class_counts=class_counts, labels=labels
+            )
         case ImplementationType.VANILLA:
             return class_counts_by_node_to_affiliation_counts_py(class_counts=class_counts, labels=labels)
         case _:
@@ -143,89 +144,89 @@ def class_counts_by_node_to_affiliation_counts_py(
 
 
 # numba implementations
-# @jit(nopython=True, cache=True)
-# def _count_class_numba(
-#     S: int, N: int, C: int, labels: Int[np.ndarray, "num_assignments num_nodes"]
-# ) -> Int[np.ndarray, "num_assignments num_nodes num_classes"]:
-#     counts = np.zeros((S, N, C), dtype=np.int64)
-#     for s in range(S):
-#         for v in range(N):
-#             for u in range(v):
-#                 counts[s, u, labels[s, v]] += 1
-#     return counts.astype(np.int64)
+@jit(nopython=True, cache=True)
+def _count_class_numba(
+    S: int, N: int, C: int, labels: Int[np.ndarray, "num_assignments num_nodes"]
+) -> Int[np.ndarray, "num_assignments num_nodes num_classes"]:
+    counts = np.zeros((S, N, C), dtype=np.int64)
+    for s in range(S):
+        for v in range(N):
+            for u in range(v):
+                counts[s, u, labels[s, v]] += 1
+    return counts.astype(np.int64)
 
 
-# @jit(nopython=True, cache=True)
-# def _count_adj_numba(
-#     S: int,
-#     E: int,
-#     N: int,
-#     C: int,
-#     edge_indices: Int[np.ndarray, "2 num_edges"],
-#     labels: Int[np.ndarray, "num_assignments num_nodes"],
-# ) -> Int[np.ndarray, "num_assignments num_nodes num_classes"]:
-#     counts_adj = np.zeros((S, N, C), dtype=np.int64)
-#     for s in range(S):
-#         for e in range(E):
-#             counts_adj[s, edge_indices[0, e], labels[s, edge_indices[1, e]]] += 1
-#     return counts_adj
+@jit(nopython=True, cache=True)
+def _count_adj_numba(
+    S: int,
+    E: int,
+    N: int,
+    C: int,
+    edge_indices: Int[np.ndarray, "2 num_edges"],
+    labels: Int[np.ndarray, "num_assignments num_nodes"],
+) -> Int[np.ndarray, "num_assignments num_nodes num_classes"]:
+    counts_adj = np.zeros((S, N, C), dtype=np.int64)
+    for s in range(S):
+        for e in range(E):
+            counts_adj[s, edge_indices[0, e], labels[s, edge_indices[1, e]]] += 1
+    return counts_adj
 
 
-# @jit(nopython=True, cache=True)
-# def _count_non_adj_numba(
-#     S: int,
-#     N: int,
-#     C: int,
-#     counts: Int[np.ndarray, "num_assignments num_nodes num_classes"],
-#     counts_adj: Int[np.ndarray, "num_assignments num_nodes num_classes"],
-# ) -> Int[np.ndarray, "num_assignments num_nodes num_classes"]:
-#     counts_non_adj = np.zeros((S, N, C), dtype=np.int64)
-#     for s in range(S):
-#         for v in range(N):
-#             for c in range(C):
-#                 counts_non_adj[s, v, c] = counts[s, v, c] - counts_adj[s, v, c]
-#     return counts_non_adj
+@jit(nopython=True, cache=True)
+def _count_non_adj_numba(
+    S: int,
+    N: int,
+    C: int,
+    counts: Int[np.ndarray, "num_assignments num_nodes num_classes"],
+    counts_adj: Int[np.ndarray, "num_assignments num_nodes num_classes"],
+) -> Int[np.ndarray, "num_assignments num_nodes num_classes"]:
+    counts_non_adj = np.zeros((S, N, C), dtype=np.int64)
+    for s in range(S):
+        for v in range(N):
+            for c in range(C):
+                counts_non_adj[s, v, c] = counts[s, v, c] - counts_adj[s, v, c]
+    return counts_non_adj
 
 
-# @jit(nopython=True, cache=True)
-# def count_in_class_by_triangular_upper_adjacency_numba(
-#     labels: Int[np.ndarray, "num_assignments num_nodes"],
-#     edge_indices: Int[np.ndarray, "2 num_edges"],
-#     num_classes: int,
-# ) -> Tuple[
-#     Int[np.ndarray, "num_assignments num_nodes num_classes"],
-#     Int[np.ndarray, "num_assignments num_nodes num_classes"],
-#     Int[np.ndarray, "num_assignments num_nodes num_classes"],
-# ]:
-#     """Numba implementation of counting how often a label appears
-#     in the (non-)neighboring nodes of a node"""
-#     S = int(labels.shape[0])
-#     N = int(labels.shape[1])
-#     E = int(edge_indices.shape[1])
-#     C = int(num_classes)
-#     labels = labels.astype(np.int64)
-#     edge_indices = edge_indices.astype(np.int64)
-#     counts = _count_class_numba(S, N, C, labels)
-#     counts_adj = _count_adj_numba(S, E, N, C, edge_indices, labels)
-#     counts_non_adj = _count_non_adj_numba(S, N, C, counts, counts_adj)
-#     return counts, counts_adj, counts_non_adj
+@jit(nopython=True, cache=True)
+def count_in_class_by_triangular_upper_adjacency_numba(
+    labels: Int[np.ndarray, "num_assignments num_nodes"],
+    edge_indices: Int[np.ndarray, "2 num_edges"],
+    num_classes: int,
+) -> Tuple[
+    Int[np.ndarray, "num_assignments num_nodes num_classes"],
+    Int[np.ndarray, "num_assignments num_nodes num_classes"],
+    Int[np.ndarray, "num_assignments num_nodes num_classes"],
+]:
+    """Numba implementation of counting how often a label appears
+    in the (non-)neighboring nodes of a node"""
+    S = int(labels.shape[0])
+    N = int(labels.shape[1])
+    E = int(edge_indices.shape[1])
+    C = int(num_classes)
+    labels = labels.astype(np.int64)
+    edge_indices = edge_indices.astype(np.int64)
+    counts = _count_class_numba(S, N, C, labels)
+    counts_adj = _count_adj_numba(S, E, N, C, edge_indices, labels)
+    counts_non_adj = _count_non_adj_numba(S, N, C, counts, counts_adj)
+    return counts, counts_adj, counts_non_adj
 
 
-# @jit(nopython=True, cache=True)
-# def class_counts_by_node_to_affiliation_counts_numba(
-#     class_counts: Int[np.ndarray, "num_assignments num_nodes num_classes"],
-#     labels: Int[np.ndarray, "num_assignments num_nodes"],
-# ) -> Int[np.ndarray, "num_assignments num_classes num_classes"]:
-#     """Numba implementation of transforming class counts per node to affiliation counts,
-#     i.e. counting how often a class links to a class."""
-#     S, N, C = class_counts.shape
-#     S = int(S)
-#     N = int(N)
-#     C = int(C)
-#     affiliation_counts = np.zeros((S, C, C), dtype=np.int64)
-#     for s in range(S):
-#         for v in range(N):
-#             for c in range(C):
-#                 affiliation_counts[s, labels[s, v], c] += class_counts[s, v, c]
+@jit(nopython=True, cache=True)
+def class_counts_by_node_to_affiliation_counts_numba(
+    class_counts: Int[np.ndarray, "num_assignments num_nodes num_classes"],
+    labels: Int[np.ndarray, "num_assignments num_nodes"],
+) -> Int[np.ndarray, "num_assignments num_classes num_classes"]:
+    """Numba implementation of transforming class counts per node to affiliation counts,
+    i.e. counting how often a class links to a class."""
+    S, N, C = class_counts.shape
+    S = int(S)
+    N = int(N)
+    C = int(C)
+    affiliation_counts = np.zeros((S, C, C), dtype=np.int64)
+    for s in range(S):
+        for v in range(N):
+            for c in range(C):
+                affiliation_counts[s, labels[s, v], c] += class_counts[s, v, c]
 
-#     return affiliation_counts
+    return affiliation_counts

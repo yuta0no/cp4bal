@@ -15,18 +15,18 @@ dependencies = [
     "jaxtyping>=0.3.2",
     "matplotlib>=3.10.5",
     "networkx>=3.5",
-    "numpy>=2.3.2",
-    "omegaconf>=2.3.0",
-    "pyg-lib>=0.4.0",
-    "pyyaml>=6.0.2",
+    "numba>=0.61.2",
+    "numpy>=2.2.6",
     "scikit-learn>=1.7.1",
     "scipy>=1.16.1",
+    "pyyaml>=6.0.2",
+    "torch>=2.8.0",
     "torch-cluster>=1.6.3",
     "torch-geometric>=2.6.1",
     "torch-scatter>=2.1.2",
     "torch-sparse>=0.6.18",
     "torch-spline-conv>=1.2.2",
-    "torch>=2.8.0",
+    "pyg-lib>=0.4.0",
 ]
 
 [tool.ruff]
@@ -39,4 +39,4 @@ ignore = [
 ]
 
 [tool.uv]
-find-links = ["https://data.pyg.org/whl/torch-2.8.0+cu128.html"]
+find-links = ["https://data.pyg.org/whl/torch-2.8.0+cu126.html"]
