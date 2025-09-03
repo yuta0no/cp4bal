@@ -1,6 +1,9 @@
+import uuid
 from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 from typing import Self
+from zoneinfo import ZoneInfo
 
 from cp4bal.acquisition.configs import (
     AcquisitionConfig,
@@ -12,12 +15,13 @@ from cp4bal.dataset.configs import CommonDatasetConfig, CSBMConfig, DatasetConfi
 from cp4bal.dataset.enums import EdgeProbabilityType
 from cp4bal.model.configs import BayesOptimalConfig, ModelConfig, SGCConfig
 from cp4bal.model.trainer.configs import OracleTrainerConfig, SGCTrainerConfig, TrainerConfig
-from cp4bal.util.configs import ActiveLearningConfig
+from cp4bal.util.configs import ActiveLearningConfig, ExperimentConfig
 
 
 @dataclass
 class ConfigBuilderInterface:
     acquisition: AcquisitionConfig
+    experiment: ExperimentConfig
     al: ActiveLearningConfig
     dataset: DatasetConfig
     trainer: TrainerConfig
@@ -28,6 +32,7 @@ class ConfigBuilderInterface:
 class ConfigBuilderStates:
     # Common
     seed: int | None = None
+    experiment_name: str | None = None
     # Dataset
     ds_name: str | None = None
     n_nodes: int | None = None
@@ -63,16 +68,18 @@ class ConfigBuilder:
         trainer_config = self._build_trainer_config()
         model_config = self._build_model_config(trainer_config=trainer_config)
         acquisition_config = self._build_acquisition_config()
-        active_learning_config = ActiveLearningConfig(
+        al_config = ActiveLearningConfig(
             budget_per_round=self._states.budget,
             num_rounds=self._states.round,
         )
+        experiment_config = self._build_experiment_config(model_config=model_config, dataset_config=dataset_config, acquisition_config=acquisition_config, al_config=al_config)
         return ConfigBuilderInterface(
             acquisition=acquisition_config,
             dataset=dataset_config,
+            experiment=experiment_config,
             trainer=trainer_config,
             model=model_config,
-            al=active_learning_config,
+            al=al_config,
         )
 
     def _build_dataset_config(self) -> DatasetConfig:
@@ -134,8 +141,22 @@ class ConfigBuilder:
                 )
             case "approximate_uncertainty":
                 return ApproximateUncertaintyAcquisitionConfig(
-                    confidence_propagation=True,
+                    confidence_propagation=False,
                 )
+
+    def _build_experiment_config(self, dataset_config: DatasetConfig, model_config: ModelConfig, acquisition_config: AcquisitionConfig, al_config: ActiveLearningConfig) -> ExperimentConfig:
+        if self._states.experiment_name is None:
+            raise ValueError("Experiment name must be set before building the config.")
+        if self._states.experiment_name == "":
+            raise ValueError("Experiment name cannot be an empty string.")
+        if self._states.experiment_name == "auto":
+            unique_key = uuid.uuid4().hex[:4]
+            now = datetime.now(tz=ZoneInfo("Asia/Tokyo"))
+            timestamp = now.strftime("%Y-%m-%dT%H:%M:%S")
+            self._states.experiment_name = f"{dataset_config.common.name}/{model_config.name}/{al_config.budget_per_round}/{acquisition_config.type_.name.lower()}/{timestamp}-{unique_key}"
+        return ExperimentConfig(
+            name=self._states.experiment_name,
+        )
 
     def set_ds_name(self, name: str) -> Self:
         self._states.ds_name = name
@@ -203,4 +224,8 @@ class ConfigBuilder:
 
     def set_seed(self, seed: int) -> Self:
         self._states.seed = seed
+        return self
+
+    def set_experiment_name(self, name: str) -> Self:
+        self._states.experiment_name = name
         return self

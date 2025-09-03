@@ -1,4 +1,5 @@
 from logging import getLogger
+from math import ceil, log
 from pathlib import Path
 
 import torch
@@ -14,21 +15,25 @@ from cp4bal.dataset.factory import DatasetFactory
 from cp4bal.model import ModelFactory
 from cp4bal.util.config_builder import ConfigBuilder
 from cp4bal.util.logger import init_logger
+from cp4bal.util.options import Options
 from cp4bal.util.seed import set_seed
 
 logger = getLogger(__name__)
 
 
 def main():
-    rng, big_seed = set_seed(seed=552)
+    options = Options().parse()
+    logger.info(f"seed: {options.args.seed}")
+    rng, big_seed = set_seed(seed=options.args.seed)  # 42, 552
     generator = torch.random.manual_seed(rng.integers(2**31))
 
     # configs
-    cb = ConfigBuilder().set_seed(big_seed)
+    cb = ConfigBuilder().set_seed(big_seed).set_experiment_name(options.args.experiment_name)
     # config for dataset
     n_class = 7
-    budget = 3
-    cb.set_ds_name("csbm").set_n_nodes(n_class * 20).set_n_classes(n_class).set_dim_features(10).set_val_size(
+    n_nodes = 100
+    dim_feature = max(n_class, ceil(n_nodes / (log(n_nodes) * log(n_nodes))))
+    cb.set_ds_name("csbm").set_n_nodes(n_nodes).set_n_classes(n_class).set_dim_features(dim_feature).set_val_size(
         0.0
     ).set_test_size(0.3).set_feature_sigma(1.0).set_feature_class_mean_distance(1.0).set_edge_p_type(
         EdgeProbabilityType.BY_SNR_AND_DEGREE
@@ -41,12 +46,17 @@ def main():
     cb.set_model_name("sgc")
 
     # config for acquisition
-    cb.set_acquisition_name("random")
+    cb.set_acquisition_name(options.args.acquisition_name)
 
     # config for active learning
-    cb.set_budget(budget).set_round(10)
+    cb.set_budget(options.args.budget).set_round(options.args.round)
 
-    configs = cb.build(config_path=Path("configs/dataset.yaml"))
+    configs = cb.build(config_path=Path(""))
+    init_logger(
+        log_dir=(Path(__file__).parent.parent.parent / "log" / configs.experiment.name).parent,
+        log_file_name=Path(configs.experiment.name).name
+    )
+    logger.info(f"{configs=}")
 
     # Dataset
     base_ds = DatasetFactory.create(config=configs.dataset)
@@ -97,7 +107,6 @@ def main():
 
 
 if __name__ == "__main__":
-    init_logger(log_dir=Path("logs"), log_file_name="cp4bal")
     try:
         main()
     except Exception as e:
