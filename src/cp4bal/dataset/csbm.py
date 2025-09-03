@@ -33,7 +33,11 @@ class CSBM(GraphDataset):
 
         feature_sigma = csbm_config.feature_sigma
 
-        # sample labels ~ p(y) and graph structure ~ p(A | y)
+        # sample labels ~ p(y)
+        y = torch.multinomial(torch.full((num_classes,), 1.0 / num_classes), num_nodes, generator=rg, replacement=True)
+        label_counts = [(y == yi).sum().item() for yi in range(num_classes)]
+
+        # sample graph structure ~ p(A | y)
         p_edge_intra, p_edge_inter = self.__compute_edge_probabilities(
             type_=EdgeProbabilityType.BY_SNR_AND_DEGREE,
             num_classes=num_classes,
@@ -43,6 +47,7 @@ class CSBM(GraphDataset):
             p_edge_inter=csbm_config.p_edge_inter,
             p_edge_intra=csbm_config.p_edge_intra,
         )
+
         affiliation_matrix: Float[np.ndarray, "n_classes n_nodes"] = np.full(
             (num_classes, num_classes),
             p_edge_inter,
@@ -51,7 +56,7 @@ class CSBM(GraphDataset):
         np.fill_diagonal(affiliation_matrix, p_edge_intra)  # diagonal to p
         nx_seed = int(torch.randint(2**16, size=(1,), generator=rg, dtype=torch.int).item())
         graph = nx.stochastic_block_model(
-            sizes=[int(num_nodes / num_classes)] * num_classes,
+            sizes=label_counts,
             p=affiliation_matrix,
             seed=nx_seed,
             directed=False,

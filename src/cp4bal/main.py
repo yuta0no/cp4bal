@@ -29,6 +29,7 @@ def main():
 
     # configs
     cb = ConfigBuilder().set_seed(big_seed).set_experiment_name(options.args.experiment_name)
+
     # config for dataset
     n_class = 7
     n_nodes = 100
