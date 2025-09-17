@@ -28,6 +28,22 @@ random_s_snr2 = ResultPaths(
     ],
 )
 
+random_s_snr3_f_snr02 = ResultPaths(
+    name="random",
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:40:34-1cd4/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:40:39-c4d8/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:40:44-305d/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:40:49-d7f1/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:40:54-f154/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:41:00-0a01/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:41:05-73d9/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:41:10-dd8b/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:41:15-45b8/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:41:20-131d/result.csv",
+    ]
+)
+
 random_s_snr10 = ResultPaths(
     name="random",
     paths=[
@@ -60,6 +76,22 @@ us_s_snr2 = ResultPaths(
     ]
 )
 
+us_s_snr3_f_snr02 = ResultPaths(
+    name="uncertainty",
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:34:31-a166/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:35:06-1a50/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:35:41-9446/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:36:16-e006/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:36:52-8062/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:37:25-a40f/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:38:02-b0d5/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:38:36-05d7/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:39:12-845a/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:39:49-e637/result.csv",
+    ]
+)
+
 us_s_snr10 = ResultPaths(
     name="uncertainty",
     paths=[
@@ -76,7 +108,7 @@ us_s_snr10 = ResultPaths(
     ]
 )
 
-TARGET_RESULTS = [random_s_snr10, us_s_snr10]
+TARGET_RESULTS = [random_s_snr3_f_snr02, us_s_snr3_f_snr02]
 
 def main():
     fig, ax = plt.subplots()
@@ -87,7 +119,7 @@ def main():
     ax.set_xlabel("#annotation")
     ax.set_ylabel("accuracy")
     ax.legend()
-    fig.savefig(FIG_DIR / "mean_accuracy_s_snr10.png")
+    fig.savefig(FIG_DIR / "mean_accuracy_s_snr3_f_snr02.png")
 
 
 def load_results(result_paths: ResultPaths) -> tuple[str, list[int], list[float], list[float]]:

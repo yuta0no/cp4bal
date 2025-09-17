@@ -1,3 +1,4 @@
+import traceback
 from logging import getLogger
 from math import ceil, log
 from pathlib import Path
@@ -38,15 +39,15 @@ def main():
     dim_feature = max(n_class, ceil(n_nodes / (log(n_nodes) * log(n_nodes))))
     cb.set_ds_name("csbm").set_n_nodes(n_nodes).set_n_classes(n_class).set_dim_features(dim_feature).set_val_size(
         0.0
-    ).set_test_size(0.2).set_feature_sigma(1.0).set_feature_class_mean_distance(1.0).set_edge_p_type(
+    ).set_test_size(0.2).set_feature_sigma(1.0).set_feature_class_mean_distance(0.2).set_edge_p_type(
         EdgeProbabilityType.BY_SNR_AND_DEGREE
-    ).set_expected_degree(8).set_edge_p_snr(10.0)
+    ).set_expected_degree(8).set_edge_p_snr(3.0)
 
     # config for trainer
-    cb.set_trainer_name("sgc")
+    cb.set_trainer_name("oracle")
 
     # config for model
-    cb.set_model_name("sgc")
+    cb.set_model_name("bayes_optimal")
 
     # config for acquisition
     cb.set_acquisition_name(options.args.acquisition_name).set_propagation(options.args.propagation)
@@ -128,7 +129,7 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as e:
-        logger.error(f"error occurred: {e}")
+        logger.error(traceback.format_exc())
         raise e
 
     logger.info("finished")
