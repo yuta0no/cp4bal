@@ -9,6 +9,7 @@ from cp4bal.dataset import ActiveLearningDataset, DatasetSplit
 from cp4bal.model import Model, Prediction
 from cp4bal.model.trainer.base import Trainer, TrainerConfig
 from cp4bal.model.trainer.factory import TrainerFactory
+from cp4bal.util.writer import Writer
 
 logger = getLogger(__name__)
 
@@ -59,6 +60,7 @@ class ActiveLearning:
         rg: torch.Generator,
         which: DatasetSplit,
         al_round: int = -1,
+        writer: Writer | None = None,
     ) -> float:
         model.eval()
         _ = rg, al_round
@@ -72,11 +74,20 @@ class ActiveLearning:
             if (logits := prediction.get_logits()) is not None:
                 logits: Float[Tensor, "n c"] = logits.mean(dim=0)
                 acc = (logits[mask].argmax(dim=-1) == dataset.data.y[mask]).float().mean().item()
-                logger.info(f"Accuracy ({which.name}): {acc:.4f}")
             elif (probs := prediction.get_probabilities()) is not None:
                 probs: Float[Tensor, "n c"] = probs.mean(dim=0)
                 acc = (probs[mask].argmax(dim=-1) == dataset.data.y[mask]).float().mean().item()
-                logger.info(f"Accuracy ({which.name}): {acc:.4f}")
             else:
                 raise RuntimeError("Neither logits nor probabilities are available for evaluation")
+
+            logger.info(f"Accuracy ({which.name}): {acc:.4f}")
+            if writer is not None:
+                writer.write(
+                    {
+                        "round": al_round,
+                        "phase": which.name,
+                        "num_labeled_nodes": dataset.num_train_labeled_nodes,
+                        "accuracy": acc,
+                }
+            )
         return acc

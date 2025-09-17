@@ -18,6 +18,7 @@ from cp4bal.util.config_builder import ConfigBuilder
 from cp4bal.util.logger import init_logger
 from cp4bal.util.options import Options
 from cp4bal.util.seed import set_seed
+from cp4bal.util.writer import CSVWriter
 
 logger = getLogger(__name__)
 
@@ -71,6 +72,19 @@ def main():
 
     # Active Learning
     acquisition_method = AcquisitionFactory.create(config=configs.acquisition)
+    result_writer = CSVWriter(
+        file_path=Path(__file__).parent.parent.parent
+        / "out"
+        / configs.experiment.name
+        / "result.csv",
+    ).set_header(
+        [
+            "round",
+            "phase",
+            "num_labeled_nodes",
+            "accuracy",
+        ]
+    )
 
     for al_round in range(configs.al.num_rounds):
         logger.info(f"Round {al_round + 1}/{configs.al.num_rounds}")
@@ -89,6 +103,7 @@ def main():
             rg=generator,
             which=DatasetSplit.VAL,
             al_round=al_round,
+            writer=result_writer,
         )
         AL.evaluate_model(
             model=model,
@@ -96,6 +111,7 @@ def main():
             rg=generator,
             which=DatasetSplit.TEST,
             al_round=al_round,
+            writer=result_writer,
         )
 
         ds = AL.acquire_samples(
