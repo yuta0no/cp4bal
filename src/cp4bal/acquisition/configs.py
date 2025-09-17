@@ -27,7 +27,7 @@ class OracleUncertaintyAcquisitionConfig(AcquisitionConfig):
 class ApproximateUncertaintyAcquisitionConfig(AcquisitionConfig):
     type_: AcquisitionType = AcquisitionType.APPROXIMATE_UNCERTAINTY
     uncertainty_type: UncertaintyType = UncertaintyType.EPISTEMIC
-    confidence_propagation: bool = True
+    confidence_propagation: bool = False
     # whether to compute aleatoric confidence of a node when leaving it out (which is more exact, but way more costly)
     aleatoric_confidence_with_left_out_node: bool = True
     # How often to draw samples from the predictive distribution as truth for aleatoric confidence

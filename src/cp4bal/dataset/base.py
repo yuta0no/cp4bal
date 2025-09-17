@@ -11,7 +11,7 @@ from torch.utils.data import Dataset as TorchDataset
 from torch_geometric.data import Data as TorchGeometricData
 
 from .configs import DatasetConfig
-from .enums import DatasetSplit
+from .enums import DatasetSplit, InitialPoolSelectionType
 
 logger = getLogger(__name__)
 
@@ -343,17 +343,24 @@ class ActiveLearningDataset(TorchDataset):
         self.reset_train_idxs()
         return self
 
-    def select_initial_pool(self, count_per_class: int) -> Self:
+    def select_initial_pool(self, type_: InitialPoolSelectionType) -> Self:
         """select initial pool"""
-        index_pool = []
-        for y in range(self.base.num_classes):
-            for _ in range(count_per_class):
-                mask_pool = (self.data.y == y) & (self.data.mask_train_u)
-                selected_idx = sample_from_mask(mask=mask_pool, size=1).nonzero(as_tuple=False).item()
-                self.add_to_train_labeled_indices(indices=[selected_idx])
-                index_pool.append(selected_idx)
-        logger.info("initial pool: %s", index_pool)
-        return self
+        match type_:
+            case InitialPoolSelectionType.BALANCED:
+                index_pool = []
+                for y in range(self.base.num_classes):
+                    for _ in range(1):  # select one sample per class
+                        mask_pool = (self.data.y == y) & (self.data.mask_train_u)
+                        selected_idx = sample_from_mask(mask=mask_pool, size=1).nonzero().item()
+                        self.add_to_train_labeled_indices(indices=[selected_idx])
+                        index_pool.append(selected_idx)
+                logger.info("initial pool: %s", index_pool)
+                return self
+            case InitialPoolSelectionType.RANDOM:
+                selected_idx = sample_from_mask(mask=self.data.mask_train_u, size=1*self.base.num_classes).nonzero().view(-1)
+                self.add_to_train_labeled_indices(indices=selected_idx)
+                logger.info("initial pool: %s", selected_idx.tolist())
+                return self
 
     def cuda(self) -> Self:
         self.data = self.data.cuda()

@@ -107,7 +107,14 @@ class CSBM(GraphDataset):
         )
 
     def __compute_edge_probabilities(
-        self, type_: EdgeProbabilityType, num_classes: int, num_nodes: int, expected_degree: int, edge_p_snr: float, p_edge_inter: float, p_edge_intra: float | None,
+        self,
+        type_: EdgeProbabilityType,
+        num_classes: int,
+        num_nodes: int,
+        expected_degree: int,
+        edge_p_snr: float,
+        p_edge_inter: float,
+        p_edge_intra: float | None,
     ) -> tuple[float, float]:
         eps = 1e-8
         _ = p_edge_intra, p_edge_inter

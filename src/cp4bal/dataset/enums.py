@@ -19,3 +19,9 @@ class DatasetSplit(StrEnum):
 class ImplementationType(StrEnum):
     VANILLA = "vanilla"
     NUMBA = "numba"
+
+
+@unique
+class InitialPoolSelectionType(StrEnum):
+    RANDOM = "random"
+    BALANCED = "balanced"

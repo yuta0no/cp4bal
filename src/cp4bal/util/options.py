@@ -1,4 +1,3 @@
-
 import argparse
 from dataclasses import dataclass
 
@@ -11,6 +10,7 @@ class Args:
     acquisition_name: str
     budget: int
     round: int
+    propagation: bool
 
 
 class Options:
@@ -55,7 +55,11 @@ class Options:
             default=10,
             help="number of AL rounds",
         )
-
+        self.parser.add_argument(
+            "--propagation",
+            action="store_true",
+            help="whether to use confidence propagation",
+        )
 
     def parse(self):
         self.args = self.parser.parse_args(namespace=Args)

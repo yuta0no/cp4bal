@@ -7,3 +7,4 @@ from .configs import DatasetConfig as DatasetConfig
 from .csbm import CSBM as CSBM
 from .enums import DatasetSplit as DatasetSplit
 from .enums import EdgeProbabilityType as EdgeProbabilityType
+from .enums import InitialPoolSelectionType as InitialPoolSelectionType

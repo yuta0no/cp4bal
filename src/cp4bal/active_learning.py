@@ -42,6 +42,10 @@ class ActiveLearning:
         rg: torch.Generator,
         al_round: int = -1,
     ):
+        logger.info(f"{dataset.data.mask_train_l.sum().item()=}")
+        if dataset.data.mask_train_l.sum().item() <= 0:
+            return
+
         _ = al_round
         if trainer_config.reset_parameter_before_training:
             model.reset_parameters()
@@ -55,19 +59,24 @@ class ActiveLearning:
         rg: torch.Generator,
         which: DatasetSplit,
         al_round: int = -1,
-    ):
+    ) -> float:
         model.eval()
         _ = rg, al_round
         with torch.no_grad():
             prediction: Prediction = model.predict(dataset.data)
             mask = dataset.data.get_mask(which=which)
+            if mask.sum().item() == 0:
+                logger.warning(f"No nodes in the {which} set.")
+                return -1.0
             acc = 0.0
             if (logits := prediction.get_logits()) is not None:
                 logits: Float[Tensor, "n c"] = logits.mean(dim=0)
-                acc = (logits[mask].argmax(dim=-1) == dataset.data.y[mask]).float().mean()
+                acc = (logits[mask].argmax(dim=-1) == dataset.data.y[mask]).float().mean().item()
                 logger.info(f"Accuracy ({which.name}): {acc:.4f}")
             elif (probs := prediction.get_probabilities()) is not None:
                 probs: Float[Tensor, "n c"] = probs.mean(dim=0)
-                acc = (probs[mask].argmax(dim=-1) == dataset.data.y[mask]).float().mean()
+                acc = (probs[mask].argmax(dim=-1) == dataset.data.y[mask]).float().mean().item()
                 logger.info(f"Accuracy ({which.name}): {acc:.4f}")
+            else:
+                raise RuntimeError("Neither logits nor probabilities are available for evaluation")
         return acc

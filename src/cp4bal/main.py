@@ -9,6 +9,7 @@ from cp4bal.active_learning import ActiveLearning as AL
 from cp4bal.dataset import (
     ActiveLearningDataset,
     DatasetSplit,
+    InitialPoolSelectionType,
 )
 from cp4bal.dataset.enums import EdgeProbabilityType
 from cp4bal.dataset.factory import DatasetFactory
@@ -47,7 +48,7 @@ def main():
     cb.set_model_name("sgc")
 
     # config for acquisition
-    cb.set_acquisition_name(options.args.acquisition_name)
+    cb.set_acquisition_name(options.args.acquisition_name).set_propagation(options.args.propagation)
 
     # config for active learning
     cb.set_budget(options.args.budget).set_round(options.args.round)
@@ -55,7 +56,7 @@ def main():
     configs = cb.build(config_path=Path(""))
     init_logger(
         log_dir=(Path(__file__).parent.parent.parent / "log" / configs.experiment.name).parent,
-        log_file_name=Path(configs.experiment.name).name
+        log_file_name=Path(configs.experiment.name).name,
     )
     logger.info(f"{configs=}")
 
@@ -63,7 +64,7 @@ def main():
     base_ds = DatasetFactory.create(config=configs.dataset)
     ds = ActiveLearningDataset(base=base_ds, config=configs.dataset)
     ds.split().print_masks()
-    ds.select_initial_pool(count_per_class=1)
+    ds.select_initial_pool(type_=InitialPoolSelectionType.BALANCED)
 
     # Model for Training
     model = ModelFactory.create(config=configs.model, dataset=ds)

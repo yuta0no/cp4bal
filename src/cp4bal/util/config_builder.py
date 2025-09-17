@@ -48,6 +48,7 @@ class ConfigBuilderStates:
     edge_p_snr: float | None = None
     # Acquisition
     acquisition_name: str | None = None
+    propagation: bool | None = None
     # Active Learning
     budget: int | None = None
     round: int | None = None
@@ -72,7 +73,12 @@ class ConfigBuilder:
             budget_per_round=self._states.budget,
             num_rounds=self._states.round,
         )
-        experiment_config = self._build_experiment_config(model_config=model_config, dataset_config=dataset_config, acquisition_config=acquisition_config, al_config=al_config)
+        experiment_config = self._build_experiment_config(
+            model_config=model_config,
+            dataset_config=dataset_config,
+            acquisition_config=acquisition_config,
+            al_config=al_config,
+        )
         return ConfigBuilderInterface(
             acquisition=acquisition_config,
             dataset=dataset_config,
@@ -141,10 +147,16 @@ class ConfigBuilder:
                 )
             case "approximate_uncertainty":
                 return ApproximateUncertaintyAcquisitionConfig(
-                    confidence_propagation=False,
+                    confidence_propagation=self._states.propagation,
                 )
 
-    def _build_experiment_config(self, dataset_config: DatasetConfig, model_config: ModelConfig, acquisition_config: AcquisitionConfig, al_config: ActiveLearningConfig) -> ExperimentConfig:
+    def _build_experiment_config(
+        self,
+        dataset_config: DatasetConfig,
+        model_config: ModelConfig,
+        acquisition_config: AcquisitionConfig,
+        al_config: ActiveLearningConfig,
+    ) -> ExperimentConfig:
         if self._states.experiment_name is None:
             raise ValueError("Experiment name must be set before building the config.")
         if self._states.experiment_name == "":
@@ -153,7 +165,11 @@ class ConfigBuilder:
             unique_key = uuid.uuid4().hex[:4]
             now = datetime.now(tz=ZoneInfo("Asia/Tokyo"))
             timestamp = now.strftime("%Y-%m-%dT%H:%M:%S")
-            self._states.experiment_name = f"{dataset_config.common.name}/{model_config.name}/{al_config.budget_per_round}/{acquisition_config.type_.name.lower()}/{timestamp}-{unique_key}"
+            self._states.experiment_name = (
+                f"{dataset_config.common.name}/{model_config.name}/{al_config.budget_per_round}"
+                f"/{acquisition_config.type_.name.lower()}{'_cp' if self._states.propagation else ''}"
+                f"/{timestamp}-{unique_key}"
+            )
         return ExperimentConfig(
             name=self._states.experiment_name,
         )
@@ -204,6 +220,10 @@ class ConfigBuilder:
 
     def set_acquisition_name(self, name: str) -> Self:
         self._states.acquisition_name = name
+        return self
+
+    def set_propagation(self, propagation: bool) -> Self:
+        self._states.propagation = propagation
         return self
 
     def set_budget(self, b: int) -> Self:
