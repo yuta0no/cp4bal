@@ -40,7 +40,7 @@ def main():
         0.0
     ).set_test_size(0.2).set_feature_sigma(1.0).set_feature_class_mean_distance(1.0).set_edge_p_type(
         EdgeProbabilityType.BY_SNR_AND_DEGREE
-    ).set_expected_degree(8).set_edge_p_snr(2.0)
+    ).set_expected_degree(8).set_edge_p_snr(10.0)
 
     # config for trainer
     cb.set_trainer_name("sgc")
