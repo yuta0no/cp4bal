@@ -12,103 +12,7 @@ class ResultPaths:
     paths: list[str]
 
 
-random_s_snr2 = ResultPaths(
-    name="random",
-    paths=[
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T14:22:39-08a7/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T14:22:43-a8f4/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T14:22:48-24c9/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T14:22:53-707c/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T14:22:58-87f9/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T14:23:02-13bd/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T14:23:07-fd7b/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T14:23:12-a803/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T14:23:16-f21b/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T14:23:21-c40b/result.csv",
-    ],
-)
-
-random_s_snr3_f_snr02 = ResultPaths(
-    name="random",
-    paths=[
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:40:34-1cd4/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:40:39-c4d8/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:40:44-305d/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:40:49-d7f1/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:40:54-f154/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:41:00-0a01/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:41:05-73d9/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:41:10-dd8b/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:41:15-45b8/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:41:20-131d/result.csv",
-    ]
-)
-
-random_s_snr10 = ResultPaths(
-    name="random",
-    paths=[
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:12:54-6806/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:13:00-1d30/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:13:04-d902/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:13:09-6ac6/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:13:14-7821/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:13:19-2149/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:13:24-a71a/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:13:30-e69d/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:13:35-5cb7/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/random/2025-09-17T15:13:40-c25e/result.csv",
-    ]
-)
-
-us_s_snr2 = ResultPaths(
-    name="uncertainty",
-    paths=[
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T14:13:44-7de5/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T14:14:08-e0ce/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T14:14:31-aa58/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T14:14:55-253d/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T14:15:19-021b/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T14:15:42-d188/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T14:16:06-c23c/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T14:16:29-dba3/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T14:16:53-10de/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T14:17:20-05cb/result.csv",
-    ]
-)
-
-us_s_snr3_f_snr02 = ResultPaths(
-    name="uncertainty",
-    paths=[
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:34:31-a166/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:35:06-1a50/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:35:41-9446/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:36:16-e006/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:36:52-8062/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:37:25-a40f/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:38:02-b0d5/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:38:36-05d7/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:39:12-845a/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:39:49-e637/result.csv",
-    ]
-)
-
-us_s_snr10 = ResultPaths(
-    name="uncertainty",
-    paths=[
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:15:13-0609/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:15:48-5f0b/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:16:23-1412/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:16:58-2a8f/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:17:35-28a7/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:18:10-5f41/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:18:47-5c80/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:19:23-6811/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:20:00-eb9f/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/sgc/1/approximate_uncertainty/2025-09-17T15:20:36-bf5e/result.csv",
-    ]
-)
-
-TARGET_RESULTS = [random_s_snr3_f_snr02, us_s_snr3_f_snr02]
+TARGET_RESULTS = []
 
 def main():
     fig, ax = plt.subplots()
@@ -119,7 +23,7 @@ def main():
     ax.set_xlabel("#annotation")
     ax.set_ylabel("accuracy")
     ax.legend()
-    fig.savefig(FIG_DIR / "mean_accuracy_s_snr3_f_snr02.png")
+    fig.savefig(FIG_DIR / "mean_accuracy_new.png")
 
 
 def load_results(result_paths: ResultPaths) -> tuple[str, list[int], list[float], list[float]]:

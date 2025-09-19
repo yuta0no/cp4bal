@@ -75,5 +75,5 @@ class BayesOptimalConfig(ModelConfig):
     beam_search_num_iterations: int = 100
 
     # Variational inference parameters
-    vi_max_iterations: int = 1000
+    vi_max_iterations: int = 2000
     vi_convergence_tolerance: float = 1e-4

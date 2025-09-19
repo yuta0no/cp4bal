@@ -3,9 +3,9 @@
 #SBATCH --error=/home/members/ono/workspace/cp4bal/jobs/job%j.err  # where to store error messages
 #SBATCH --mem=60G
 #SBATCH --nodes=1
-#SBATCH --cpus-per-task=16
+#SBATCH --cpus-per-task=12
 #CommentSBATCH --gres=gpu:1
-#SBATCH --exclude=heart,liver  # you can exclude specified nodes here; Commented out now
+#SBATCH --exclude=heart,liver  # you can exclude specified nodes here
 #SBATCH --partition=long
 #CommentSBATCH --nodelist=habaki  # you can specify nodes where the job should be run; Ditto
 
