@@ -110,7 +110,7 @@ class BayesOptimalModel(Model):
         y: Int[np.ndarray, " num_nodes"],
         likelihood_config: BayesianLikelihoodConfig,
     ) -> Float[np.ndarray, "num_nodes num_classes"]:
-        """compute the aleatoric confidence of the model. requires heavy computation: [C]^|U|
+        """compute the aleatoric confidence of the model. O(|C||U|)
 
         Args:
             x (Float[np.ndarray, "num_nodes feature_dim"]): Node features
@@ -128,7 +128,7 @@ class BayesOptimalModel(Model):
         )
         for i, c in iterator:
             y_ic = y.copy()
-            y_ic[i] = c
+            y_ic[i] = c  # nodes other than i keep their ground-truth label
             log_likelihood[i, c] = self.graph.conditional_log_likelihood(
                 y=y_ic[None, :],
                 x=x[None, :],
@@ -136,7 +136,9 @@ class BayesOptimalModel(Model):
                 use_features=likelihood_config.use_features,
                 use_non_edges=likelihood_config.use_non_edges,
             )
-        return log_likelihood
+        log_likelihood -= logsumexp(log_likelihood, axis=-1, keepdims=True)
+        posterior = np.exp(log_likelihood)  # p(y_i=c | X, A, y_{-i}=y^{gt}_{-i})
+        return posterior
 
     def predict(self, batch, acquisition: bool = False) -> Prediction:
         _ = acquisition  # acquisition is not used in this model

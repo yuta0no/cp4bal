@@ -84,6 +84,7 @@ class OracleUncertaintyAcquisition(Acquisition):
                 mask_train_l[acquired_index] = True
                 mask_train_u[acquired_index] = False
         else:
+            indices_train_u = torch.where(mask_train_u)[0]
             acquisition = uncertainty[torch.arange(model.graph.num_nodes), model.graph.labels]  # using oracle labels
             possible_acquisitions = acquisition[mask_train_u]
             acquired_indices = indices_train_u[np.argsort(-possible_acquisitions)[:budget]]
