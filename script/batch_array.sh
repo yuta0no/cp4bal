@@ -1,7 +1,7 @@
 #!/bin/bash
 
-budget=1
-round=35
+budget=7
+round=5
 
 cd $(git rev-parse --show-toplevel)/script
 

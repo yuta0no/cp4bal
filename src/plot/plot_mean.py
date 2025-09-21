@@ -12,6 +12,7 @@ class ResultPaths:
     paths: list[str]
 
 
+# batch size = 1, initial pool size = 7 (random)
 uncertainty_w_initial7 = ResultPaths(
     name="Uncertainty",
     paths=[
@@ -22,7 +23,7 @@ uncertainty_w_initial7 = ResultPaths(
         "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/1/oracle_uncertainty/2025-09-19T19:13:17-242c/result.csv",
     ]
 )
-
+# batch size = 1, initial pool size = 1 (random)
 uncertainty_w_initial1 = ResultPaths(
     name="Uncertainty",
     paths=[
@@ -33,8 +34,8 @@ uncertainty_w_initial1 = ResultPaths(
         "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/1/oracle_uncertainty/2025-09-20T14:50:01-ed03/result.csv",
     ]
 )
-
-uncertainty_batch_7 = ResultPaths(
+# batch size = 7, initial pool size = 7 (random)
+uncertainty_batch_7_initial_random_7 = ResultPaths(
     name="Uncertainty",
     paths=[
         "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T13:14:01-bb23/result.csv",
@@ -44,6 +45,20 @@ uncertainty_batch_7 = ResultPaths(
         "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T13:14:08-2bd9/result.csv",
     ]
 )
+
+# batch size = 7, initial pool size = 7 (1 per class)
+uncertainty_batch_7_initial_balanced_7 = ResultPaths(
+    name="Uncertainty",
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T15:45:06-225b/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T15:45:10-5d63/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T15:45:10-a606/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T15:45:10-e9fd/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T15:45:10-fe7b/result.csv",
+    ]
+)
+
+
 random_w_initial7 = ResultPaths(
     name="Random",
     paths=[
@@ -66,7 +81,7 @@ random_w_initial1 = ResultPaths(
     ]
 )
 
-random_batch_7 = ResultPaths(
+random_batch_7_initial_random_7 = ResultPaths(
     name="Random",
     paths=[
         "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T13:14:01-121a/result.csv",
@@ -77,8 +92,19 @@ random_batch_7 = ResultPaths(
     ]
 )
 
-TARGET_RESULTS = [uncertainty_w_initial1, random_batch_7, uncertainty_batch_7]
+random_batch_7_initial_balanced_7 = ResultPaths(
+    name="Random",
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T15:45:04-8fd0/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T15:45:10-0b65/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T15:45:10-2ecb/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T15:45:10-d271/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T15:45:10-dd71/result.csv",
+    ]
+)
 
+TARGET_RESULTS = [uncertainty_batch_7_initial_balanced_7, random_batch_7_initial_balanced_7]
+FIG_NAME = "mean_accuracy_batch_7_initial_balanced.png"
 
 def main():
     fig, ax = plt.subplots()
@@ -95,7 +121,7 @@ def main():
     ax.set_xlabel("#annotation")
     ax.set_ylabel("accuracy")
     ax.legend()
-    fig.savefig(FIG_DIR / "mean_accuracy_batch_7.png")
+    fig.savefig(FIG_DIR / FIG_NAME)
 
 
 def load_results(result_paths: ResultPaths) -> tuple[str, list[int], list[float], list[float]]:

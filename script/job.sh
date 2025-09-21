@@ -3,7 +3,7 @@
 #SBATCH --error=/home/members/ono/workspace/cp4bal/jobs/job%j.err  # where to store error messages
 #SBATCH --mem=40G
 #SBATCH --nodes=1
-#SBATCH --cpus-per-task=16
+#SBATCH --cpus-per-task=4
 #CommentSBATCH --gres=gpu:1
 #CommentSBATCH --exclude=heart,liver  # you can exclude specified nodes here
 #SBATCH --partition=long
