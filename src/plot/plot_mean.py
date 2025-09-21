@@ -33,6 +33,17 @@ uncertainty_w_initial1 = ResultPaths(
         "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/1/oracle_uncertainty/2025-09-20T14:50:01-ed03/result.csv",
     ]
 )
+
+uncertainty_batch_7 = ResultPaths(
+    name="Uncertainty",
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T13:14:01-bb23/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T13:14:03-9dcc/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T13:14:03-ad5c/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T13:14:03-e27c/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T13:14:08-2bd9/result.csv",
+    ]
+)
 random_w_initial7 = ResultPaths(
     name="Random",
     paths=[
@@ -55,7 +66,18 @@ random_w_initial1 = ResultPaths(
     ]
 )
 
-TARGET_RESULTS = [random_w_initial7, uncertainty_w_initial7]
+random_batch_7 = ResultPaths(
+    name="Random",
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T13:14:01-121a/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T13:14:03-8f5f/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T13:14:03-84bb/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T13:14:03-183e/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T13:14:08-dd41/result.csv",
+    ]
+)
+
+TARGET_RESULTS = [uncertainty_w_initial1, random_batch_7, uncertainty_batch_7]
 
 
 def main():
@@ -73,7 +95,7 @@ def main():
     ax.set_xlabel("#annotation")
     ax.set_ylabel("accuracy")
     ax.legend()
-    fig.savefig(FIG_DIR / "mean_accuracy_w_initial7.png")
+    fig.savefig(FIG_DIR / "mean_accuracy_batch_7.png")
 
 
 def load_results(result_paths: ResultPaths) -> tuple[str, list[int], list[float], list[float]]:
