@@ -13,8 +13,7 @@ class Writer(ABC):
             print(content, file=f)
 
     @abstractmethod
-    def write(self, content: dict[str, Any]):
-        ...
+    def write(self, content: dict[str, Any]): ...
 
 
 class CSVWriter(Writer):

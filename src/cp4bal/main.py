@@ -66,7 +66,7 @@ def main():
     base_ds = DatasetFactory.create(config=configs.dataset)
     ds = ActiveLearningDataset(base=base_ds, config=configs.dataset)
     ds.split().print_masks()
-    ds.select_initial_pool(type_=InitialPoolSelectionType.RANDOM_1, rng=generator)
+    ds.select_initial_pool(type_=InitialPoolSelectionType.RANDOM, rng=generator)
 
     # Model for Training
     model = ModelFactory.create(config=configs.model, dataset=ds)
@@ -74,10 +74,7 @@ def main():
     # Active Learning
     acquisition_method = AcquisitionFactory.create(config=configs.acquisition)
     result_writer = CSVWriter(
-        file_path=Path(__file__).parent.parent.parent
-        / "out"
-        / configs.experiment.name
-        / "result.csv",
+        file_path=Path(__file__).parent.parent.parent / "out" / configs.experiment.name / "result.csv",
     ).set_header(
         [
             "round",

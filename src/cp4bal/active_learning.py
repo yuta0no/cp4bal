@@ -88,6 +88,6 @@ class ActiveLearning:
                         "phase": which.name,
                         "num_labeled_nodes": dataset.num_train_labeled_nodes,
                         "accuracy": acc,
-                }
-            )
+                    }
+                )
         return acc
