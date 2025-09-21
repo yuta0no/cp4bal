@@ -105,13 +105,13 @@ class ApproximateUncertaintyAcquisition(Acquisition):
         mask_train_u: Bool[Tensor, " n"],
         mask_train_Q: Bool[Tensor, " n"],
         dataset: ActiveLearningDataset,
-    ) -> Float[Tensor, " n"]:
+    ) -> Float[Tensor, "n 1"]:
         if not isinstance(dataset.base, CSBM):
             raise ValueError("Confidence propagation is only implemented for CSBM datasets")
 
         if mask_train_Q.sum() == 0:
             # no propagation for empty Q
-            return torch.zeros_like(mask_train_u, dtype=torch.float32)
+            return torch.zeros_like(mask_train_u, dtype=torch.float32)[:, None]
 
         USE_GT = True
         if USE_GT:
@@ -153,17 +153,17 @@ class ApproximateUncertaintyAcquisition(Acquisition):
                         else:
                             b_diff += 1
 
-                    cp_value = (
-                        a_same * log_p
-                        + b_same * log_1mp
-                        + a_diff * log_q
-                        + b_diff * log_1mq
-                        - (a_same + a_diff) * expected_pq
-                        - (b_same + b_diff) * expected_1mpq
-                    )
-                    confidence_propagation[v] = cp_value
+                cp_value = (
+                    a_same * log_p
+                    + b_same * log_1mp
+                    + a_diff * log_q
+                    + b_diff * log_1mq
+                    - (a_same + a_diff) * expected_pq
+                    - (b_same + b_diff) * expected_1mpq
+                )
+                confidence_propagation[u] = cp_value
 
-            return confidence_propagation
+            return confidence_propagation[:, None]
         else:
             raise NotImplementedError("Confidence propagation is only implemented for CSBM datasets with ground truth")
 

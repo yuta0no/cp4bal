@@ -143,7 +143,7 @@ class ConfigBuilder:
                 return RandomAcquisitionConfig()
             case "oracle_uncertainty":
                 return OracleUncertaintyAcquisitionConfig(
-                    confidence_propagation=False,
+                    confidence_propagation=self._states.propagation,
                 )
             case "approximate_uncertainty":
                 return ApproximateUncertaintyAcquisitionConfig(
