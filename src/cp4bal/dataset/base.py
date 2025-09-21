@@ -343,7 +343,7 @@ class ActiveLearningDataset(TorchDataset):
         self.reset_train_idxs()
         return self
 
-    def select_initial_pool(self, type_: InitialPoolSelectionType) -> Self:
+    def select_initial_pool(self, type_: InitialPoolSelectionType, rng: torch.Generator) -> Self:
         """select initial pool"""
         match type_:
             case InitialPoolSelectionType.BALANCED:
@@ -351,13 +351,18 @@ class ActiveLearningDataset(TorchDataset):
                 for y in range(self.base.num_classes):
                     for _ in range(1):  # select one sample per class
                         mask_pool = (self.data.y == y) & (self.data.mask_train_u)
-                        selected_idx = sample_from_mask(mask=mask_pool, size=1).nonzero().item()
+                        selected_idx = sample_from_mask(mask=mask_pool, size=1, generator=rng).nonzero().item()
                         self.add_to_train_labeled_indices(indices=[selected_idx])
                         index_pool.append(selected_idx)
                 logger.info("initial pool: %s", index_pool)
                 return self
             case InitialPoolSelectionType.RANDOM:
-                selected_idx = sample_from_mask(mask=self.data.mask_train_u, size=1*self.base.num_classes).nonzero().view(-1)
+                selected_idx = sample_from_mask(mask=self.data.mask_train_u, size=1*self.base.num_classes, generator=rng).nonzero().view(-1)
+                self.add_to_train_labeled_indices(indices=selected_idx)
+                logger.info("initial pool: %s", selected_idx.tolist())
+                return self
+            case InitialPoolSelectionType.RANDOM_1:
+                selected_idx = sample_from_mask(mask=self.data.mask_train_u, size=1, generator=rng).nonzero().view(-1)
                 self.add_to_train_labeled_indices(indices=selected_idx)
                 logger.info("initial pool: %s", selected_idx.tolist())
                 return self

@@ -24,4 +24,5 @@ class ImplementationType(StrEnum):
 @unique
 class InitialPoolSelectionType(StrEnum):
     RANDOM = "random"
+    RANDOM_1 = "random_1"
     BALANCED = "balanced"

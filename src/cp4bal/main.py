@@ -66,7 +66,7 @@ def main():
     base_ds = DatasetFactory.create(config=configs.dataset)
     ds = ActiveLearningDataset(base=base_ds, config=configs.dataset)
     ds.split().print_masks()
-    ds.select_initial_pool(type_=InitialPoolSelectionType.BALANCED)
+    ds.select_initial_pool(type_=InitialPoolSelectionType.RANDOM_1, rng=generator)
 
     # Model for Training
     model = ModelFactory.create(config=configs.model, dataset=ds)
