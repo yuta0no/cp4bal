@@ -58,6 +58,17 @@ uncertainty_batch_7_initial_balanced_7 = ResultPaths(
     ]
 )
 
+cp4bal_7_w_initial_balanced_7 = ResultPaths(
+    name="ours",
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty_cp/2025-09-21T19:51:52-40d7/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty_cp/2025-09-21T19:51:52-45f0/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty_cp/2025-09-21T19:51:52-aeed/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty_cp/2025-09-21T19:51:52-cec9/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty_cp/2025-09-21T19:51:52-e3b4/result.csv",
+    ]
+)
+
 
 random_w_initial7 = ResultPaths(
     name="Random",
@@ -103,7 +114,7 @@ random_batch_7_initial_balanced_7 = ResultPaths(
     ]
 )
 
-TARGET_RESULTS = [uncertainty_batch_7_initial_balanced_7, random_batch_7_initial_balanced_7]
+TARGET_RESULTS = [cp4bal_7_w_initial_balanced_7, uncertainty_batch_7_initial_balanced_7, random_batch_7_initial_balanced_7]
 FIG_NAME = "mean_accuracy_batch_7_initial_balanced.png"
 
 def main():

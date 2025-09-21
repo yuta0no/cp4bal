@@ -370,7 +370,7 @@ class BayesOptimalModel(Model):
 
         if initial_confidence is None:
             confidence = rg.uniform(0, 1, size=(self.graph.num_nodes, self.graph.num_classes))
-            logger.debug(f"VI initial confidence (first 10 nodes): {confidence[:10]}")
+            # logger.debug(f"VI initial confidence (first 10 nodes): {confidence[:10]}")
             confidence /= confidence.sum(1, keepdims=True)
         else:
             confidence = initial_confidence.copy()
