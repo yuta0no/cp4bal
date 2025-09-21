@@ -89,6 +89,7 @@ class BayesOptimalModel(Model):
         x: Float[np.ndarray, "num_nodes feature_dim"],
         y: Int[np.ndarray, " num_nodes"],
         likelihood_config: BayesianLikelihoodConfig,
+        rg: np.random.Generator,
     ) -> Float[np.ndarray, "num_nodes num_classes"]:
         match self.approximation_type:
             case ApproximationType.VARIATIONAL_INFERENCE:
@@ -97,6 +98,7 @@ class BayesOptimalModel(Model):
                     x=x,
                     y=y,
                     likelihood_config=likelihood_config,
+                    rg=rg,
                     initial_confidence=None,
                     return_history=True,
                 )
@@ -151,7 +153,11 @@ class BayesOptimalModel(Model):
             return prediction
 
         total_confidence = self._compute_total_confidence(
-            mask_fixed=mask_labeled, x=x, y=y, likelihood_config=self.confidence_likelihood_config
+            mask_fixed=mask_labeled,
+            x=x,
+            y=y,
+            likelihood_config=self.confidence_likelihood_config,
+            rg=np.random.default_rng(42315),
         )
         aleatoric_confidence = self._compute_aleatoric_confidence(
             x=x, y=y, likelihood_config=self.confidence_likelihood_config
@@ -173,7 +179,7 @@ class BayesOptimalModel(Model):
                     x=x,
                     y=y,
                     likelihood_config=self.prediction_likelihood_config,
-                    rg=np.random.default_rng(),
+                    rg=np.random.default_rng(334),
                 )
                 predicted_assignment = maximum_likelihood_assignments[log_likelihoods.argmax()]
                 probabilities = np.zeros((self.graph.num_nodes, self.graph.num_classes), dtype=float)
@@ -337,6 +343,7 @@ class BayesOptimalModel(Model):
         x: Float[np.ndarray, "num_nodes feature_dim"],
         y: Int[np.ndarray, " num_nodes"],
         likelihood_config: BayesianLikelihoodConfig,
+        rg: np.random.Generator,
         initial_confidence: Float[np.ndarray, "num_nodes num_classes"] | None = None,
         return_history: bool = False,
     ):
@@ -362,9 +369,8 @@ class BayesOptimalModel(Model):
         )
 
         if initial_confidence is None:
-            confidence = np.random.uniform(
-                0, 1, size=(self.graph.num_nodes, self.graph.num_classes)
-            )  # np.ones((self.graph.num_nodes, self.graph.num_classes))
+            confidence = rg.uniform(0, 1, size=(self.graph.num_nodes, self.graph.num_classes))
+            logger.debug(f"VI initial confidence (first 10 nodes): {confidence[:10]}")
             confidence /= confidence.sum(1, keepdims=True)
         else:
             confidence = initial_confidence.copy()
