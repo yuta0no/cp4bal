@@ -43,6 +43,11 @@ uncertainty_batch_7_initial_random_7 = ResultPaths(
         "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T22:36:38-50c3/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T22:36:38-fd43/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T22:37:39-8173/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-22T09:34:35-6a07/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-22T09:34:36-2d70/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-22T09:34:38-946a/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-22T09:34:38-a8a7/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-22T09:34:38-ed67/result.csv",
     ]
 )
 
@@ -77,6 +82,11 @@ cp4bal_7_w_initial_random_7 = ResultPaths(
         "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty_cp/2025-09-21T22:37:39-6a4b/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty_cp/2025-09-21T22:37:39-b8fa/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty_cp/2025-09-21T22:40:06-bbaa/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty_cp/2025-09-22T09:33:43-1dd8/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty_cp/2025-09-22T09:33:43-7ee3/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty_cp/2025-09-22T09:33:43-81d4/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty_cp/2025-09-22T09:33:43-a517/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty_cp/2025-09-22T09:33:43-e3e5/result.csv",
     ]
 )
 
@@ -111,6 +121,11 @@ random_batch_7_initial_random_7 = ResultPaths(
         "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T22:36:37-b57d/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T22:36:38-645c/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T22:37:39-c3c8/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-22T09:34:35-c850/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-22T09:34:36-5cc7/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-22T09:34:36-b216/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-22T09:34:38-40e2/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-22T09:34:38-a613/result.csv",
     ]
 )
 
