@@ -38,11 +38,11 @@ uncertainty_w_initial1 = ResultPaths(
 uncertainty_batch_7_initial_random_7 = ResultPaths(
     name="Uncertainty",
     paths=[
-        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T13:14:01-bb23/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T13:14:03-9dcc/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T13:14:03-ad5c/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T13:14:03-e27c/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T13:14:08-2bd9/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T22:36:35-12e3/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T22:36:36-2f4c/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T22:36:38-50c3/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T22:36:38-fd43/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty/2025-09-21T22:37:39-8173/result.csv",
     ]
 )
 
@@ -66,6 +66,17 @@ cp4bal_7_w_initial_balanced_7 = ResultPaths(
         "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty_cp/2025-09-21T19:51:52-aeed/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty_cp/2025-09-21T19:51:52-cec9/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty_cp/2025-09-21T19:51:52-e3b4/result.csv",
+    ]
+)
+
+cp4bal_7_w_initial_random_7 = ResultPaths(
+    name="ours",
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty_cp/2025-09-21T22:37:39-3cd5/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty_cp/2025-09-21T22:37:39-3e1d/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty_cp/2025-09-21T22:37:39-6a4b/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty_cp/2025-09-21T22:37:39-b8fa/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/oracle_uncertainty_cp/2025-09-21T22:40:06-bbaa/result.csv",
     ]
 )
 
@@ -95,11 +106,11 @@ random_w_initial1 = ResultPaths(
 random_batch_7_initial_random_7 = ResultPaths(
     name="Random",
     paths=[
-        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T13:14:01-121a/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T13:14:03-8f5f/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T13:14:03-84bb/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T13:14:03-183e/result.csv",
-        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T13:14:08-dd41/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T22:36:35-e7d1/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T22:36:36-e46b/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T22:36:37-b57d/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T22:36:38-645c/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm/bayes_optimal/7/random/2025-09-21T22:37:39-c3c8/result.csv",
     ]
 )
 
@@ -114,20 +125,20 @@ random_batch_7_initial_balanced_7 = ResultPaths(
     ]
 )
 
-TARGET_RESULTS = [cp4bal_7_w_initial_balanced_7, uncertainty_batch_7_initial_balanced_7, random_batch_7_initial_balanced_7]
-FIG_NAME = "mean_accuracy_batch_7_initial_balanced.png"
+TARGET_RESULTS = [cp4bal_7_w_initial_random_7, uncertainty_batch_7_initial_random_7, random_batch_7_initial_random_7]
+FIG_NAME = "mean_accuracy_batch_7_initial_random_7.png"
 
 def main():
     fig, ax = plt.subplots()
     for result_paths in TARGET_RESULTS:
         name, budgets, means, stds = load_results(result_paths)
         ax.plot(budgets, means, label=name, marker="o")
-        ax.fill_between(
-            budgets,
-            [m - s for m, s in zip(means, stds)],
-            [m + s for m, s in zip(means, stds)],
-            alpha=0.2,
-        )
+        # ax.fill_between(
+        #     budgets,
+        #     [m - s for m, s in zip(means, stds)],
+        #     [m + s for m, s in zip(means, stds)],
+        #     alpha=0.2,
+        # )
 
     ax.set_xlabel("#annotation")
     ax.set_ylabel("accuracy")
