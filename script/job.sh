@@ -13,7 +13,8 @@ seed=$1
 acquisition_name=$2
 budget=$3
 round=$4
+ds_config_file=$5
 
 cd $(git rev-parse --show-toplevel)/
 
-uv run src/cp4bal/main.py --seed $seed --acquisition_name $acquisition_name --budget $budget --round $round --propagation
+uv run src/cp4bal/main.py --seed $seed --acquisition_name $acquisition_name --budget $budget --round $round --propagation --dataset_config_file $ds_config_file

@@ -9,7 +9,7 @@ from torch import Tensor
 
 from cp4bal.dataset import GraphDataset
 
-from .configs import CommonDatasetConfig, CSBMConfig
+from .configs import CSBMConfig
 from .enums import EdgeProbabilityType
 from .funcs import (
     class_counts_by_node_to_affiliation_counts,
@@ -22,14 +22,15 @@ logger = getLogger(__name__)
 class CSBM(GraphDataset):
     def __init__(
         self,
-        common_config: CommonDatasetConfig,
         csbm_config: CSBMConfig,
     ):
         rg = torch.Generator()
-
-        num_classes = common_config.num_classes
-        num_nodes = common_config.num_nodes
-        dim_features = common_config.dim_features
+        if csbm_config.seed is None:
+            raise ValueError("CSBMConfig.seed must be set")
+        rg.manual_seed(csbm_config.seed)
+        num_classes = csbm_config.num_classes
+        num_nodes = csbm_config.num_nodes
+        dim_features = csbm_config.dim_features
 
         feature_sigma = csbm_config.feature_sigma
 

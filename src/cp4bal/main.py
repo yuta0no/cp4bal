@@ -1,6 +1,5 @@
 import traceback
 from logging import getLogger
-from math import ceil, log
 from pathlib import Path
 
 import torch
@@ -12,7 +11,6 @@ from cp4bal.dataset import (
     DatasetSplit,
     InitialPoolSelectionType,
 )
-from cp4bal.dataset.enums import EdgeProbabilityType
 from cp4bal.dataset.factory import DatasetFactory
 from cp4bal.model import ModelFactory
 from cp4bal.util.config_builder import ConfigBuilder
@@ -27,21 +25,15 @@ logger = getLogger(__name__)
 def main():
     options = Options().parse()
     logger.info(f"seed: {options.args.seed}")
-    rng, big_seed = set_seed(seed=options.args.seed)  # 42, 552
+    rng, big_seed = set_seed(seed=options.args.seed)
     generator = torch.random.manual_seed(rng.integers(2**31))
+    project_root = Path(__file__).parent.parent.parent
 
     # configs
     cb = ConfigBuilder().set_seed(big_seed).set_experiment_name(options.args.experiment_name)
 
     # config for dataset
-    n_class = 7
-    n_nodes = 100
-    dim_feature = max(n_class, ceil(n_nodes / (log(n_nodes) * log(n_nodes))))
-    cb.set_ds_name("csbm").set_n_nodes(n_nodes).set_n_classes(n_class).set_dim_features(dim_feature).set_val_size(
-        0.0
-    ).set_test_size(0.2).set_feature_sigma(1.0).set_feature_class_mean_distance(0.2).set_edge_p_type(
-        EdgeProbabilityType.BY_SNR_AND_DEGREE
-    ).set_expected_degree(8).set_edge_p_snr(3.0)
+    cb.load_dataset_config_file(project_root / options.args.dataset_config_file)
 
     # config for trainer
     cb.set_trainer_name("adam")
@@ -55,14 +47,16 @@ def main():
     # config for active learning
     cb.set_budget(options.args.budget).set_round(options.args.round)
 
-    configs = cb.build(config_path=Path(""))
+    configs = cb.build()
+
+    # logger
     init_logger(
-        log_dir=(Path(__file__).parent.parent.parent / "log" / configs.experiment.name).parent,
+        log_dir=(project_root / "log" / configs.experiment.name).parent,
         log_file_name=Path(configs.experiment.name).name,
     )
     logger.info(f"{configs=}")
 
-    # Dataset
+    # dataset
     base_ds = DatasetFactory.create(config=configs.dataset)
     ds = ActiveLearningDataset(base=base_ds, config=configs.dataset)
     ds.split().print_masks()

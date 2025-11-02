@@ -1,8 +1,9 @@
-from enum import Enum, StrEnum, auto, unique
+from enum import StrEnum, unique
 
 
-class EdgeProbabilityType(Enum):
-    BY_SNR_AND_DEGREE = auto()
+@unique
+class EdgeProbabilityType(StrEnum):
+    BY_SNR_AND_DEGREE = "by_snr_and_degree"
 
 
 @unique
@@ -26,3 +27,14 @@ class InitialPoolSelectionType(StrEnum):
     RANDOM = "random"
     RANDOM_1 = "random_1"
     BALANCED = "balanced"
+
+
+@unique
+class TorchGeometricDatasetType(StrEnum):
+    AMAZON_COMPUTERS = "amazon_computers"
+    AMAZON_PHOTOS = "amazon_photos"
+    CORA_ML = "cora_ml"
+    CITESEER = "citeseer"
+    OGBN_ARXIV = "ogbn_arxiv"
+    PUBMED = "pubmed"
+    REDDIT = "reddit"

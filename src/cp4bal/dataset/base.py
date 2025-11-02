@@ -20,7 +20,7 @@ class GraphDataset:
     def __init__(
         self,
         node_features: Float[Tensor, "num_nodes dim_features"],
-        labels: Float[Tensor, " num_nodes"],
+        labels: Int[Tensor, " num_nodes"],
         edge_indices: Int[Tensor, "2 num_edges"],
         num_classes: int | None = None,
         mask_train: Bool[Tensor, " num_nodes"] | None = None,
@@ -31,7 +31,7 @@ class GraphDataset:
         self.labels = labels
         self.edge_indices = edge_indices
         if num_classes is None:
-            self.num_classes = len(set(labels))
+            self.num_classes = len(set(labels.tolist()))
         else:
             self.num_classes = num_classes
         self.mask_train = mask_train

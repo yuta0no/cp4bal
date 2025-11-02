@@ -34,7 +34,8 @@ class MultipleSampleModel(Model):
         self.num_samples_train = config.num_samples_train
 
     @abstractmethod
-    def predict_multiple(self, batch: GraphData, num_samples: int, acquisition: bool = False) -> Prediction: ...
+    def predict_multiple(self, batch: GraphData, num_samples: int, acquisition: bool = False) -> Prediction:
+        raise NotImplementedError
 
     def predict(self, batch: GraphData, acquisition: bool = False) -> Prediction:
         num_samples = self.num_samples_train if self.training else self.num_samples_eval

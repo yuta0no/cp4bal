@@ -1,5 +1,6 @@
 import argparse
 from dataclasses import dataclass
+from pathlib import Path
 
 
 @dataclass
@@ -7,6 +8,7 @@ class Args:
     seed: int
     gpu_id: int
     experiment_name: str
+    dataset_config_file: Path
     acquisition_name: str
     budget: int
     round: int
@@ -36,6 +38,12 @@ class Options:
             type=str,
             default="auto",
             help="experiment name",
+        )
+        self.parser.add_argument(
+            "--dataset_config_file",
+            type=Path,
+            default="configs/dataset/csbm.yaml",
+            help="dataset config file path",
         )
         self.parser.add_argument(
             "--acquisition_name",

@@ -15,7 +15,7 @@ class MultipleSampleModelConfig(ModelConfig):
     """Configuration to support drawing from multiple samples."""
 
     num_samples_train: int = 1
-    num_samples_eval: int = 1
+    num_samples_eval: int = 20
 
 
 @dataclass(kw_only=True)

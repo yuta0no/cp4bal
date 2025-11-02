@@ -155,8 +155,8 @@ class ApproximateUncertaintyAcquisition(Acquisition):
             return self.aleatoric_confidence_sgc(mask_predict, mask_train, labels, model, dataset.data, features_only)
 
         # We need to re-train a model from scratch
-        labels = labels.clone()
-        labels[mask_train] = dataset.data.y[mask_train]
+        labels = labels.clone().to(dtype=torch.int32)
+        labels[mask_train] = dataset.data.y[mask_train].to(dtype=torch.int32)
 
         if self.aleatoric_confidence_with_left_out_node:
             raise RuntimeError("Re-training a model for each node is too expensive")
@@ -231,14 +231,15 @@ class ApproximateUncertaintyAcquisition(Acquisition):
         """Computes approximate epistemic uncertainty as the ratio aleatoric confidence / total confidence."""
         idxs_train = torch.where(mask_train)[0]
         if self.aleatoric_confidence_labels_num_samples is None:
-            aleatoric_samples = total_confidence.argmax(1)[..., None].to(dtype=torch.int32)
+            aleatoric_samples = total_confidence.argmax(1)[..., None]
         else:
             aleatoric_samples = torch.multinomial(
                 total_confidence, self.aleatoric_confidence_labels_num_samples, replacement=True
-            ).to(dtype=torch.int32)
+            )
 
         # For the observed labels, we do not sample
-        aleatoric_samples[idxs_train] = dataset.data.y[idxs_train][..., None]
+        aleatoric_samples = aleatoric_samples.to(dtype=torch.int32)
+        aleatoric_samples[idxs_train] = dataset.data.y[idxs_train][..., None].to(dtype=torch.int32)
 
         aleatoric_confidences = torch.stack(
             [

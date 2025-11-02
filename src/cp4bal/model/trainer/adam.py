@@ -3,7 +3,7 @@ from logging import getLogger
 import torch
 import torch.optim as optim
 
-from cp4bal.dataset import ActiveLearningDataset
+from cp4bal.dataset import ActiveLearningDataset, DatasetSplit
 
 from ..base import Model
 from .base import Trainer
@@ -40,8 +40,9 @@ class AdamTrainer(Trainer):
         model.train()
         batch = dataset.data
         self.optimizer.zero_grad()
+        mask_train = dataset.data.get_mask(DatasetSplit.TRAIN_L)
         prediction = model.predict(batch=batch, acquisition=False)
-        loss = self.loss_fn(prediction, batch.y)
+        loss: torch.Tensor = self.loss_fn(prediction=prediction, labels=batch.y, mask=mask_train)
         loss.backward()
         self.optimizer.step()
         return {

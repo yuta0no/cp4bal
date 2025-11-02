@@ -1,27 +1,30 @@
 from dataclasses import dataclass
 
-from .enums import EdgeProbabilityType
+from .enums import EdgeProbabilityType, TorchGeometricDatasetType
 
 
 @dataclass(kw_only=True)
 class CommonDatasetConfig:
-    seed: int | None = None
-
     name: str | None = None
-
-    num_nodes: int = 140
-    num_classes: int | None = None
-    dim_features: int | None = None
 
     val_size: float = 0.2  # How many nodes to use as validation
     test_size: float = 0.2  # How many nodes to use as test
 
 
 @dataclass(kw_only=True)
-class CSBMConfig:
+class DetailConfig: ...
+
+
+@dataclass(kw_only=True)
+class CSBMConfig(DetailConfig):
     """
     Configuration for the CSBM dataset.
     """
+
+    seed: int | None = None
+    num_nodes: int = 140
+    num_classes: int | None = None
+    dim_features: int | None = None
 
     feature_sigma: float | None = None
     feature_class_mean_distance: float | None = None
@@ -35,6 +38,18 @@ class CSBMConfig:
 
 
 @dataclass(kw_only=True)
+class TorchGeometricDataConfig(DetailConfig):
+    """
+    Configuration for datasets from PyTorch Geometric.
+    """
+
+    root: str = "data/torch_geometric"
+    torch_geometric_dataset: TorchGeometricDatasetType = TorchGeometricDatasetType.CORA_ML
+    undirected: bool = True
+    largest_connected_component: bool = True
+
+
+@dataclass(kw_only=True)
 class DatasetConfig:
     common: CommonDatasetConfig
-    detail: CSBMConfig | None = None
+    detail: DetailConfig | None = None
