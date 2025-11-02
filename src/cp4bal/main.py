@@ -44,10 +44,10 @@ def main():
     ).set_expected_degree(8).set_edge_p_snr(3.0)
 
     # config for trainer
-    cb.set_trainer_name("oracle")
+    cb.set_trainer_name("adam")
 
     # config for model
-    cb.set_model_name("bayes_optimal")
+    cb.set_model_name("gcn")
 
     # config for acquisition
     cb.set_acquisition_name(options.args.acquisition_name).set_propagation(options.args.propagation)
@@ -66,7 +66,7 @@ def main():
     base_ds = DatasetFactory.create(config=configs.dataset)
     ds = ActiveLearningDataset(base=base_ds, config=configs.dataset)
     ds.split().print_masks()
-    ds.select_initial_pool(type_=InitialPoolSelectionType.BALANCED, rng=generator)
+    ds.select_initial_pool(type_=InitialPoolSelectionType.RANDOM, rng=generator)
 
     # Model for Training
     model = ModelFactory.create(config=configs.model, dataset=ds)
@@ -113,7 +113,7 @@ def main():
         )
 
         ds = AL.acquire_samples(
-            budget=configs.al.budget_per_round,  # TODO
+            budget=configs.al.budget_per_round,
             model=model,
             acquisition=acquisition_method,
             dataset=ds,

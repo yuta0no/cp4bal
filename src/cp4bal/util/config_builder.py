@@ -13,8 +13,8 @@ from cp4bal.acquisition.configs import (
 )
 from cp4bal.dataset.configs import CommonDatasetConfig, CSBMConfig, DatasetConfig
 from cp4bal.dataset.enums import EdgeProbabilityType
-from cp4bal.model.configs import BayesOptimalConfig, ModelConfig, SGCConfig
-from cp4bal.model.trainer.configs import OracleTrainerConfig, SGCTrainerConfig, TrainerConfig
+from cp4bal.model.configs import BayesOptimalConfig, GCNConfig, ModelConfig, SGCConfig
+from cp4bal.model.trainer.configs import AdamTrainerConfig, OracleTrainerConfig, SGCTrainerConfig, TrainerConfig
 from cp4bal.util.configs import ActiveLearningConfig, ExperimentConfig
 
 
@@ -114,6 +114,8 @@ class ConfigBuilder:
         if self._states.model_name is None:
             raise ValueError("Model name must be set before building the config.")
         match self._states.model_name.lower():
+            case "gcn":
+                return GCNConfig(trainer=trainer_config)
             case "sgc":
                 return SGCConfig(trainer=trainer_config)
             case "bayes_optimal":
@@ -125,6 +127,8 @@ class ConfigBuilder:
         if self._states.trainer_name is None:
             raise ValueError("Trainer name must be set before building the config.")
         match self._states.trainer_name.lower():
+            case "adam":
+                return AdamTrainerConfig()
             case "sgc":
                 return SGCTrainerConfig()
             case "oracle":

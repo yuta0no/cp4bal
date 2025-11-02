@@ -47,7 +47,7 @@ class AdamTrainerConfig(TrainerConfig):
     lr: float = 0.001
     weight_decay: float = 0.0
 
-    max_epochs: int = 100
+    max_epochs: int = 500
     min_epochs: int = 0
 
     logits_propagated: bool = True

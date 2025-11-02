@@ -91,7 +91,9 @@ class OracleUncertaintyAcquisition(Acquisition):
                 )
                 values_for_acquisition = uncertainty - cp
                 indices_train_u = torch.where(mask_train_u)[0]
-                values_for_acquisition = values_for_acquisition[torch.arange(model.graph.num_nodes), model.graph.labels]  # using oracle labels
+                values_for_acquisition = values_for_acquisition[
+                    torch.arange(model.graph.num_nodes), model.graph.labels
+                ]  # using oracle labels
                 possible_values_for_acquisition = values_for_acquisition[mask_train_u]
                 acquired_index = indices_train_u[np.argsort(-possible_values_for_acquisition)[0]]
                 mask_train_Q[acquired_index] = True
@@ -128,7 +130,7 @@ class OracleUncertaintyAcquisition(Acquisition):
 
         USE_GT = True
         if USE_GT:
-            logger.info("using CSBM prior knowledge")
+            logger.info("using CSBM prior knowledge **with mean field approximation**")
             y = dataset.data.y.clone().cpu()
             K = dataset.data.num_classes
             p = torch.tensor(dataset.base.p_edge_intra)

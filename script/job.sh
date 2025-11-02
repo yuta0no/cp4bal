@@ -16,4 +16,4 @@ round=$4
 
 cd $(git rev-parse --show-toplevel)/
 
-uv run src/cp4bal/main.py --seed $seed --acquisition_name $acquisition_name --budget $budget --round $round
+uv run src/cp4bal/main.py --seed $seed --acquisition_name $acquisition_name --budget $budget --round $round --propagation

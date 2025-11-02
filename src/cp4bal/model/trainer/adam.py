@@ -34,7 +34,7 @@ class AdamTrainer(Trainer):
 
         for epoch in range(self.config.max_epochs):
             metrics = self._train_one_epoch(epoch, model, dataset)
-            logger.info(metrics)
+            logger.debug(metrics)
 
     def _train_one_epoch(self, epoch: int, model: Model, dataset: ActiveLearningDataset) -> dict[str, float]:
         model.train()

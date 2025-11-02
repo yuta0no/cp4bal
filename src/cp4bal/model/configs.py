@@ -22,8 +22,8 @@ class MultipleSampleModelConfig(ModelConfig):
 class MCDropoutModelConfig(MultipleSampleModelConfig):
     """Configuration for models that sample using MC dropout."""
 
-    dropout_at_eval: bool = False
-    dropout_p: float = 0.0
+    dropout_at_eval: bool = True
+    dropout_p: float = 0.5
 
 
 @dataclass(kw_only=True)
@@ -32,7 +32,7 @@ class BaseGCNConfig(ModelConfig):
     add_self_loops: bool = True
     cached = True
     improved = False  # If True, sets self-weight to 2
-    inplace: bool = True  # If True, uses inplace ReLU
+    inplace: bool = False  # If True, uses inplace ReLU
 
 
 @dataclass(kw_only=True)

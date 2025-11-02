@@ -10,9 +10,9 @@ from torch import Tensor
 from tqdm import tqdm
 
 from cp4bal.active_learning import ActiveLearning as AL
-from cp4bal.dataset import CSBM, ActiveLearningDataset, GraphData
+from cp4bal.dataset import ActiveLearningDataset, GraphData
 from cp4bal.dataset.enums import DatasetSplit
-from cp4bal.model import Model, ModelFactory
+from cp4bal.model import MCDropoutModel, Model, ModelFactory
 from cp4bal.model.configs import ModelConfig
 from cp4bal.model.sgc import SGC
 
@@ -78,15 +78,16 @@ class ApproximateUncertaintyAcquisition(Acquisition):
         if self.confidence_propagation:
             acquired_indices = []
             mask_train_Q = torch.zeros_like(mask_train_l, dtype=torch.bool)
-            for _ in range(budget):
+            for b in range(budget):
                 values_for_acquisition = epistemic_uncertainty - self._calculate_confidence_propagation(
                     mask_train_u=mask_train_u,
                     mask_train_Q=mask_train_Q,
+                    model=model,
                     dataset=dataset,
                 )
                 indices_train_u = torch.where(mask_train_u)[0]
                 possible_values_for_acquisition = values_for_acquisition[mask_train_u]
-                acquired_index = indices_train_u[np.argsort(-possible_values_for_acquisition)[0]]
+                acquired_index = indices_train_u[torch.argmax(possible_values_for_acquisition)]
                 mask_train_Q[acquired_index] = True
                 mask_train_u[acquired_index] = False
                 acquired_indices.append(acquired_index.item())
@@ -104,68 +105,38 @@ class ApproximateUncertaintyAcquisition(Acquisition):
         self,
         mask_train_u: Bool[Tensor, " n"],
         mask_train_Q: Bool[Tensor, " n"],
+        model: MCDropoutModel,
         dataset: ActiveLearningDataset,
-    ) -> Float[Tensor, "n 1"]:
-        if not isinstance(dataset.base, CSBM):
-            raise ValueError("Confidence propagation is only implemented for CSBM datasets")
-
+        use_gt_labels: bool = True,
+    ) -> Float[Tensor, " n"]:
+        """Calculates confidence propagation \gamma for all nodes.
+        \gamma = log [p(y_Q=y_Q^gt, y_q=y_q^gt)] - log [p(y_Q=y_Q^gt)] - log p(y_q=y_q^gt)
+        """
         if mask_train_Q.sum() == 0:
             # no propagation for empty Q
-            return torch.zeros_like(mask_train_u, dtype=torch.float32)[:, None]
+            return torch.zeros_like(mask_train_u, dtype=torch.float32)
 
-        USE_GT = True
-        if USE_GT:
-            logger.info("using CSBM prior knowledge")
-            y = dataset.data.y.clone().cpu()
-            K = dataset.data.num_classes
-            p = torch.tensor(dataset.base.p_edge_intra)
-            q = torch.tensor(dataset.base.p_edge_inter)
-            log_p = torch.log(p)
-            log_1mp = torch.log(1 - p)
-            log_q = torch.log(q)
-            log_1mq = torch.log(1 - q)
-            expected_pq = torch.log((p + (K - 1) * q) / K)
-            expected_1mpq = torch.log(((1 - p) + (K - 1) * (1 - q)) / K)
-            U = mask_train_u.nonzero().flatten().tolist()
-            Q = mask_train_Q.nonzero().flatten().tolist()
-
-            confidence_propagation = torch.zeros_like(mask_train_u, dtype=torch.float32)
-
-            edges: Int[Tensor, "e 2"] = dataset.base.edge_indices.clone().cpu().T.tolist()
-            edge_set = set(tuple(e) for e in edges) | set(tuple(e) for e in edges[::-1])
-            for u in U:
-                u_label = y[u]
-                a_same = 0  # connected and same label
-                a_diff = 0  # connected and different label
-                b_same = 0  # not connected and same label
-                b_diff = 0  # not connected and different label
-                for v in Q:
-                    v_label = y[v]
-                    has_edge = (u, v) in edge_set
-                    if v_label == u_label:
-                        if has_edge:
-                            a_same += 1
-                        else:
-                            b_same += 1
-                    else:
-                        if has_edge:
-                            a_diff += 1
-                        else:
-                            b_diff += 1
-
-                cp_value = (
-                    a_same * log_p
-                    + b_same * log_1mp
-                    + a_diff * log_q
-                    + b_diff * log_1mq
-                    - (a_same + a_diff) * expected_pq
-                    - (b_same + b_diff) * expected_1mpq
-                )
-                confidence_propagation[u] = cp_value
-
-            return confidence_propagation[:, None]
+        # obtain multiple inference results with dropout
+        s = 20  # TODO
+        n = dataset.num_nodes
+        predictions = model.predict_multiple(batch=dataset.data, num_samples=s, acquisition=True)
+        probabilities: Float[Tensor, "s n c"] = predictions.get_probabilities()
+        if use_gt_labels:
+            labels = dataset.data.y
         else:
-            raise NotImplementedError("Confidence propagation is only implemented for CSBM datasets with ground truth")
+            labels = probabilities.mean(dim=0).argmax(dim=-1)
+        labels = labels.view(1, n, 1).expand(s, n, 1)
+        correct_probs = probabilities.gather(dim=-1, index=labels).squeeze(-1)
+        probs_for_Q_product = torch.where(mask_train_Q, correct_probs, 1.0)
+        probs_Q_per_sample = probs_for_Q_product.prod(dim=1)
+        expected_probs_for_Q = probs_Q_per_sample.mean(dim=0)
+        log_p_yQ: Float[Tensor, ""] = torch.log(expected_probs_for_Q + 1e-12)
+        log_p_yQ_yq: Float[Tensor, " n"] = torch.log((probs_Q_per_sample[:, None] * correct_probs).mean(dim=0) + 1e-12)
+        mean_correct_probs = correct_probs.mean(dim=0)
+        log_p_yq: Float[Tensor, " n"] = torch.log(mean_correct_probs + 1e-12)
+        gamma = log_p_yQ_yq - log_p_yQ - log_p_yq
+        gamma = torch.where(mask_train_u, gamma, float("inf"))
+        return gamma
 
     def aleatoric_confidence(
         self,
@@ -190,7 +161,7 @@ class ApproximateUncertaintyAcquisition(Acquisition):
         if self.aleatoric_confidence_with_left_out_node:
             raise RuntimeError("Re-training a model for each node is too expensive")
 
-        model_aleatoric = ModelFactory.create(name=model_config.name, dataset=dataset)
+        model_aleatoric: Model = ModelFactory.create(config=model_config, dataset=dataset)
         logger.info("Re-training model for aleatoric uncertainty...")
         with torch.enable_grad():
             train_mask_backup, train_labels_backup = dataset.data.mask_train_l.clone(), dataset.data.y.clone()
@@ -199,7 +170,7 @@ class ApproximateUncertaintyAcquisition(Acquisition):
             dataset.data.mask_train_l[:], dataset.data.y[:] = train_mask_backup, train_labels_backup
 
         prediction_aleatoric = model_aleatoric.predict(dataset.data, acquisition=True)
-        probabilites = prediction_aleatoric.get_probabilities(propagated=not features_only)
+        probabilites = prediction_aleatoric.get_probabilities()
         if probabilites is None:
             raise ValueError("Got no probabilities")
         aleatoric_confidence = probabilites.mean(0)[torch.arange(probabilites.size(0)), labels]
@@ -260,11 +231,11 @@ class ApproximateUncertaintyAcquisition(Acquisition):
         """Computes approximate epistemic uncertainty as the ratio aleatoric confidence / total confidence."""
         idxs_train = torch.where(mask_train)[0]
         if self.aleatoric_confidence_labels_num_samples is None:
-            aleatoric_samples = total_confidence.argmax(1)[..., None]
+            aleatoric_samples = total_confidence.argmax(1)[..., None].to(dtype=torch.int32)
         else:
             aleatoric_samples = torch.multinomial(
                 total_confidence, self.aleatoric_confidence_labels_num_samples, replacement=True
-            )
+            ).to(dtype=torch.int32)
 
         # For the observed labels, we do not sample
         aleatoric_samples[idxs_train] = dataset.data.y[idxs_train][..., None]
