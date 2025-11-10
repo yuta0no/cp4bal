@@ -13,6 +13,7 @@ from cp4bal.dataset import (
 )
 from cp4bal.dataset.factory import DatasetFactory
 from cp4bal.model import ModelFactory
+from cp4bal.util.auc_logger import AUCLogger
 from cp4bal.util.config_builder import ConfigBuilder
 from cp4bal.util.logger import init_logger
 from cp4bal.util.options import Options
@@ -60,7 +61,7 @@ def main():
     base_ds = DatasetFactory.create(config=configs.dataset)
     ds = ActiveLearningDataset(base=base_ds, config=configs.dataset)
     ds.split().print_masks()
-    ds.select_initial_pool(type_=InitialPoolSelectionType.RANDOM, rng=generator)
+    ds.select_initial_pool(type_=InitialPoolSelectionType.BALANCED, rng=generator)
 
     # Model for Training
     model = ModelFactory.create(config=configs.model, dataset=ds)
@@ -68,7 +69,7 @@ def main():
     # Active Learning
     acquisition_method = AcquisitionFactory.create(config=configs.acquisition)
     result_writer = CSVWriter(
-        file_path=Path(__file__).parent.parent.parent / "out" / configs.experiment.name / "result.csv",
+        file_path=project_root / "out" / configs.experiment.name / "result.csv",
     ).set_header(
         [
             "round",
@@ -78,7 +79,8 @@ def main():
         ]
     )
 
-    for al_round in range(configs.al.num_rounds):
+    auc_logger = AUCLogger(log_file_path=project_root / "out" / configs.experiment.name / "auc.csv")
+    for al_round in range(configs.al.num_rounds + 1):
         logger.info(f"Round {al_round + 1}/{configs.al.num_rounds}")
 
         AL.train_model(
@@ -97,13 +99,16 @@ def main():
             al_round=al_round,
             writer=result_writer,
         )
-        AL.evaluate_model(
+        acc = AL.evaluate_model(
             model=model,
             dataset=ds,
             rg=generator,
             which=DatasetSplit.TEST,
             al_round=al_round,
             writer=result_writer,
+        )
+        auc_logger.record_auc(
+            round=al_round, cumulative_budget=ds.num_train_labeled_nodes, current_accuracy=acc
         )
 
         ds = AL.acquire_samples(
