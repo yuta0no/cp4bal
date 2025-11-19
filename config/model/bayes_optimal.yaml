@@ -1,0 +1,2 @@
+model: bayes_optimal
+trainer: oracle
