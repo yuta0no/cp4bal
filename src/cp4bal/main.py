@@ -36,11 +36,8 @@ def main():
     # config for dataset
     cb.load_dataset_config_file(project_root / options.args.dataset_config_file)
 
-    # config for trainer
-    cb.set_trainer_name("adam")
-
-    # config for model
-    cb.set_model_name("gcn")
+    # config for model / trainer
+    cb.load_model_config_file(project_root / options.args.model_config_file)
 
     # config for acquisition
     cb.set_acquisition_name(options.args.acquisition_name).set_propagation(options.args.propagation)
@@ -107,9 +104,7 @@ def main():
             al_round=al_round,
             writer=result_writer,
         )
-        auc_logger.record_auc(
-            round=al_round, cumulative_budget=ds.num_train_labeled_nodes, current_accuracy=acc
-        )
+        auc_logger.record_auc(round=al_round, cumulative_budget=ds.num_train_labeled_nodes, current_accuracy=acc)
 
         ds = AL.acquire_samples(
             budget=configs.al.budget_per_round,
@@ -119,6 +114,8 @@ def main():
             rg=generator,
             al_round=al_round,
         )
+
+    logger.info(f"final AUC: {auc_logger.latest_auc:.4f}")
 
 
 if __name__ == "__main__":

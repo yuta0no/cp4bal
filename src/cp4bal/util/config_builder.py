@@ -213,6 +213,13 @@ class ConfigBuilder:
             )
         return self
 
+    def load_model_config_file(self, file_path: Path) -> Self:
+        with open(file_path, "r") as f:
+            config: dict = yaml.safe_load(f)
+        self.set_model_name(config.get("model", self._states.model_name))
+        self.set_trainer_name(config.get("trainer", self._states.trainer_name))
+        return self
+
     # setters for dataset configs
     def set_ds_name(self, name: str) -> Self:
         self._states.ds_name = name

@@ -9,6 +9,7 @@ class Args:
     gpu_id: int
     experiment_name: str
     dataset_config_file: Path
+    model_config_file: Path
     acquisition_name: str
     budget: int
     round: int
@@ -44,6 +45,12 @@ class Options:
             type=Path,
             default="configs/dataset/csbm.yaml",
             help="dataset config file path",
+        )
+        self.parser.add_argument(
+            "--model_config_file",
+            type=Path,
+            default="configs/model/bayes_optimal.yaml",
+            help="model config file path",
         )
         self.parser.add_argument(
             "--acquisition_name",
