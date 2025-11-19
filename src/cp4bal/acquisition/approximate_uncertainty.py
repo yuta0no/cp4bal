@@ -78,13 +78,14 @@ class ApproximateUncertaintyAcquisition(Acquisition):
         if self.confidence_propagation:
             acquired_indices = []
             mask_train_Q = torch.zeros_like(mask_train_l, dtype=torch.bool)
-            for b in range(budget):
-                values_for_acquisition = epistemic_uncertainty - self._calculate_confidence_propagation(
+            for _ in range(budget):
+                gamma = self._calculate_confidence_propagation(
                     mask_train_u=mask_train_u,
                     mask_train_Q=mask_train_Q,
                     model=model,
                     dataset=dataset,
                 )
+                values_for_acquisition = epistemic_uncertainty - gamma
                 indices_train_u = torch.where(mask_train_u)[0]
                 possible_values_for_acquisition = values_for_acquisition[mask_train_u]
                 acquired_index = indices_train_u[torch.argmax(possible_values_for_acquisition)]
@@ -95,9 +96,8 @@ class ApproximateUncertaintyAcquisition(Acquisition):
             values_for_acquisition = epistemic_uncertainty
             indices_train_u = torch.where(mask_train_u)[0]
             possible_values_for_acquisition = values_for_acquisition[mask_train_u]
-            acquired_indices = indices_train_u[np.argsort(-possible_values_for_acquisition)[:budget]].tolist()
-            mask_train_l[acquired_indices] = True
-            mask_train_u[acquired_indices] = False
+            ids = torch.argsort(possible_values_for_acquisition)[-budget:]
+            acquired_indices = indices_train_u[ids].tolist()
 
         return acquired_indices
 
@@ -117,8 +117,9 @@ class ApproximateUncertaintyAcquisition(Acquisition):
             return torch.zeros_like(mask_train_u, dtype=torch.float32)
 
         # obtain multiple inference results with dropout
-        s = 20  # TODO
+        s = 50  # TODO
         n = dataset.num_nodes
+        eps = 1e-12
         predictions = model.predict_multiple(batch=dataset.data, num_samples=s, acquisition=True)
         probabilities: Float[Tensor, "s n c"] = predictions.get_probabilities()
         if use_gt_labels:
@@ -126,16 +127,15 @@ class ApproximateUncertaintyAcquisition(Acquisition):
         else:
             labels = probabilities.mean(dim=0).argmax(dim=-1)
         labels = labels.view(1, n, 1).expand(s, n, 1)
-        correct_probs = probabilities.gather(dim=-1, index=labels).squeeze(-1)
+        correct_probs: Float[Tensor, "s n"] = probabilities.gather(dim=-1, index=labels).squeeze(-1)
         probs_for_Q_product = torch.where(mask_train_Q, correct_probs, 1.0)
         probs_Q_per_sample = probs_for_Q_product.prod(dim=1)
         expected_probs_for_Q = probs_Q_per_sample.mean(dim=0)
-        log_p_yQ: Float[Tensor, ""] = torch.log(expected_probs_for_Q + 1e-12)
-        log_p_yQ_yq: Float[Tensor, " n"] = torch.log((probs_Q_per_sample[:, None] * correct_probs).mean(dim=0) + 1e-12)
+        log_p_yQ: Float[Tensor, ""] = torch.log(expected_probs_for_Q + eps)
+        log_p_yQ_yq: Float[Tensor, " n"] = torch.log((probs_Q_per_sample[:, None] * correct_probs).mean(dim=0) + eps)
         mean_correct_probs = correct_probs.mean(dim=0)
-        log_p_yq: Float[Tensor, " n"] = torch.log(mean_correct_probs + 1e-12)
+        log_p_yq: Float[Tensor, " n"] = torch.log(mean_correct_probs + eps)
         gamma = log_p_yQ_yq - log_p_yQ - log_p_yq
-        gamma = torch.where(mask_train_u, gamma, float("inf"))
         return gamma
 
     def aleatoric_confidence(
@@ -251,48 +251,8 @@ class ApproximateUncertaintyAcquisition(Acquisition):
             dim=0,
         )
         total_confidences = total_confidence[torch.arange(total_confidence.size(0)), aleatoric_samples.T]
-
-        epistemic_uncertainties = aleatoric_confidences / (total_confidences + 1e-12)
-        epistemic_uncertainty = torch.log(epistemic_uncertainties.mean(0))
-        epistemic_uncertainty[~mask_predict] = -float("inf")
-        print("alea conf", torch.nanmean(aleatoric_confidences), aleatoric_confidences)
-        print("epi uncertainty", torch.nanmean(epistemic_uncertainty), epistemic_uncertainty)
-        print("class counts", torch.unique(aleatoric_samples.flatten(), return_counts=True))
-
-        return epistemic_uncertainty
-
-    def epistemic_uncertainty_argmax(
-        self,
-        mask_predict: Bool[Tensor, " n"],
-        mask_train: Bool[Tensor, " n"],
-        total_confidence: Float[Tensor, "n c"],
-        labels: Int[Tensor, " n"],
-        model: SGC,
-        batch: GraphData,
-    ) -> Float[Tensor, " n"]:
-        labels = labels.clone()
-        labels[mask_train] = batch.y[mask_train]
-        labels_np = labels.cpu().numpy()
-        x = model.get_diffused_node_features(batch).cpu().numpy()
-        aleatoric_confidence = torch.full((mask_train.size(0),), float("nan"), dtype=torch.float32)
-
-        iterator = tqdm(torch.where(mask_predict)[0])
-
-        mask_aleatoric = np.ones_like(mask_train)
-        prev_idx = None
-        for idx in iterator:
-            mask_aleatoric[idx] = False
-            if prev_idx is not None:
-                mask_aleatoric[prev_idx] = True
-            prev_idx = idx
-            aleatoric_confidence_idx = _probabilities_from_logistic_regression(
-                x, labels_np, mask_aleatoric, model, batch.num_classes
-            )
-            aleatoric_confidence[idx] = aleatoric_confidence_idx[idx, labels[idx]]
-
-        epistemic_uncertainty = torch.log(
-            aleatoric_confidence / total_confidence[torch.arange(total_confidence.size(0)), labels]
-        )
+        epistemic_confidence = total_confidences.mean(0) / (aleatoric_confidences.mean(0) + 1e-12)
+        epistemic_uncertainty = -torch.log(epistemic_confidence)
         epistemic_uncertainty[~mask_predict] = -float("inf")
         return epistemic_uncertainty
 
@@ -319,7 +279,7 @@ class ApproximateUncertaintyAcquisition(Acquisition):
             Float[Tensor, 'n']: The epistemic uncertainty
         """
 
-        n, c = total_confidence.size()
+        n, _ = total_confidence.size()
         if features_only:
             x = batch.x.cpu().numpy()
         else:

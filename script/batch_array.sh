@@ -1,14 +1,15 @@
 #!/bin/bash
 
-budget=7
-round=5
+budget=4
+round=9
 
 cd $(git rev-parse --show-toplevel)/script
 
-for seed in 31 45 52 94 318
+# for seed in 31 41 52 94 318
+for seed in 28 69 72 85 116 31 41 52 94 318
 do
-    for method in "oracle_uncertainty" "random"
+    for method in "oracle_uncertainty"
     do
-        sbatch job.sh $seed $method $budget $round
+        sbatch job.sh $seed $method $budget $round config/dataset/csbm-2.yaml config/model/bayes_optimal.yaml
     done
 done

@@ -1,6 +1,9 @@
+from logging import getLogger
 from pathlib import Path
 
 import numpy as np
+
+logger = getLogger(__name__)
 
 
 class AUCLogger:
@@ -9,12 +12,13 @@ class AUCLogger:
         self.log_file_path.parent.mkdir(parents=True, exist_ok=True)
         self.budgets = [0]
         self.accuracies = [0.0]
+        self.latest_auc = 0.0
         with open(self.log_file_path, "w") as f:
             f.write("round,budget,auc\n")
 
     def record_auc(self, round: int, cumulative_budget: float, current_accuracy: float):
         """Records the AUC for the current round.
-        
+
         Parameters
         ----------
         round : int
@@ -25,8 +29,10 @@ class AUCLogger:
             The accuracy achieved at this round (0 <= acc <= 1).
         """
         auc = self._calculate_auc(cumulative_budget, current_accuracy)
+        self.latest_auc = auc
         with open(self.log_file_path, "a") as f:
             f.write(f"{round},{cumulative_budget},{auc}\n")
+        logger.info(f"AUC after round {round}: {auc:.4f}")
 
     def _calculate_auc(self, cumulative_budget: int, current_accuracy: float) -> float:
         self.budgets.append(cumulative_budget)

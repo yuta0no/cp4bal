@@ -72,7 +72,7 @@ class BayesOptimalConfig(ModelConfig):
 
     # Beam search parameters
     beam_width: int = 1000
-    beam_search_num_iterations: int = 100
+    beam_search_num_iterations: int = 10
 
     # Variational inference parameters
     vi_max_iterations: int = 2000
