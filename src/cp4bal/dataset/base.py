@@ -279,8 +279,13 @@ class ActiveLearningDataset(TorchDataset):
                 0x8D2CBCFC3A
             )  # A random test seed to keep test splits fixed among different calls of `self.split`
             mask_test = torch.zeros(self.base.num_nodes, dtype=torch.bool)
+            num_test_sample_per_class = (
+                config.common.test_size
+                if isinstance(config.common.test_size, int)
+                else int(self.base.num_nodes * config.common.test_size / self.base.num_classes)
+            )
             for y in range(self.base.num_classes):
-                mask_test |= sample_from_mask(self.base.labels == y, config.common.test_size, generator=rng_test)
+                mask_test |= sample_from_mask(self.base.labels == y, num_test_sample_per_class, generator=rng_test)
 
         # The base data instance is directly derived from `self.base` and serves as a "template"
         self.base_data = self.transform(
