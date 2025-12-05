@@ -96,7 +96,7 @@ class ConfigBuilder:
         )
 
     def _build_dataset_config(self) -> DatasetConfig:
-        if self._states.ds_name.lower() == "csbm":
+        if self._states.ds_name.lower().startswith("csbm"):
             dc = CSBMConfig(
                 seed=self._states.seed,
                 num_nodes=self._states.n_nodes,
@@ -199,7 +199,7 @@ class ConfigBuilder:
         self.set_n_classes(config.get("num_classes", self._states.n_classes))
         self.set_val_size(config.get("val_size", self._states.val_size))
         self.set_test_size(config.get("test_size", self._states.test_size))
-        if self._states.ds_name == "csbm":
+        if self._states.ds_name.startswith("csbm"):
             (
                 self.set_csbm_n_nodes(config.get("n_nodes", self._states.n_nodes))
                 .set_csbm_feature_sigma(config.get("feature_sigma", self._states.feature_sigma))

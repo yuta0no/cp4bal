@@ -6,7 +6,7 @@ from .torch_geometric import TorchGeometricDataset, TorchGeometricDatasetType
 class DatasetFactory:
     @staticmethod
     def create(config: DatasetConfig) -> CSBM:
-        if config.common.name == "csbm":
+        if config.common.name.startswith("csbm"):
             return CSBM(
                 csbm_config=config.detail,
             )

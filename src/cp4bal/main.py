@@ -78,7 +78,7 @@ def main():
 
     auc_logger = AUCLogger(log_file_path=project_root / "out" / configs.experiment.name / "auc.csv")
     for al_round in range(configs.al.num_rounds + 1):
-        logger.info(f"Round {al_round + 1}/{configs.al.num_rounds}")
+        logger.info(f"Round {al_round + 1}/{configs.al.num_rounds + 1}")
 
         AL.train_model(
             trainer_config=configs.trainer,
