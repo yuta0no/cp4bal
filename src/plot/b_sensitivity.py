@@ -1,29 +1,21 @@
 import matplotlib.pyplot as plt
 
 from plot.constant import FIG_DIR
-from plot.results import (
-    b_sensitivity_csbm4_b1,
-    b_sensitivity_csbm4_b2,
-    b_sensitivity_csbm4_b3,
-    b_sensitivity_csbm4_b4,
-    b_sensitivity_csbm4_b6,
-    b_sensitivity_csbm4_b8,
-    b_sensitivity_csbm4_b12,
-    b_sensitivity_csbm4_b24,
-)
+from plot.results import *
 from plot.utils import get_n_continuous_colors, load_results
 
 TARGET_RESULTS = [
-    b_sensitivity_csbm4_b1,
-    b_sensitivity_csbm4_b2,
-    b_sensitivity_csbm4_b3,
-    b_sensitivity_csbm4_b4,
-    b_sensitivity_csbm4_b6,
-    b_sensitivity_csbm4_b8,
-    b_sensitivity_csbm4_b12,
-    b_sensitivity_csbm4_b24,
+    b_sensitivity_csbm2_b1_marginal,
+    b_sensitivity_csbm2_b2_marginal,
+    b_sensitivity_csbm2_b3_marginal,
+    b_sensitivity_csbm2_b4_marginal,
+    b_sensitivity_csbm2_b6_marginal,
+    b_sensitivity_csbm2_b8_marginal,
+    b_sensitivity_csbm2_b12_marginal,
+    b_sensitivity_csbm2_b16_marginal,
+    b_sensitivity_csbm2_b24_marginal,
 ]
-FIG_NAME = "b_sensitivity_csbm4.png"
+FIG_NAME = "b_sensitivity_csbm2.png"
 
 
 def main():
