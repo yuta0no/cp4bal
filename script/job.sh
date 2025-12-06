@@ -5,7 +5,7 @@
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=4
 #CommentSBATCH --gres=gpu:1
-#SBATCH --exclude=yukhoe  # you can exclude specified nodes here
+#CommentSBATCH --exclude=yukhoe  # you can exclude specified nodes here
 #SBATCH --partition=long
 #CommentSBATCH --nodelist=habaki  # you can specify nodes where the job should be run; Ditto
 
