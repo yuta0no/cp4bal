@@ -66,7 +66,7 @@ class BayesOptimalConfig(ModelConfig):
     cached: bool = True
 
     predict_train: bool = True  # if set, predicts with 100% confidence the true label for train nodes
-    prediction: BayesianPrediction = BayesianPrediction.JOINT_BEAM_SEARCH
+    prediction: BayesianPrediction = BayesianPrediction.MARGINAL
     prediction_likelihood: BayesianLikelihoodConfig = field(default_factory=BayesianLikelihoodConfig)
     confidence_likelihood: BayesianLikelihoodConfig = field(default_factory=BayesianLikelihoodConfig)
 

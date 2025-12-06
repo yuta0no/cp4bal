@@ -310,6 +310,7 @@ class BayesOptimalModel(Model):
         # initialize beam with random labels for unlabeled nodes
         beam[:, ~mask_fixed] = rg.integers(low=0, high=num_classes, size=(self.beam_width, num_unlabeled_nodes))
 
+        # NOTE: origial code seems to have a bug
         for _ in tqdm(range(self.beam_search_num_iterations), desc="beam search", disable=not self.verbose):
             for idx in range(num_unlabeled_nodes):
                 beam: Int[np.ndarray, "beam_width * num_classes num_nodes"] = np.tile(
