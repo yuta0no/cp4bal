@@ -19,3 +19,13 @@ def get_n_continuous_colors(n: int, cmap_name: str = 'viridis') -> list:
     intervals = np.linspace(0, 1, n)
     cmap = plt.get_cmap(cmap_name)
     return cmap(intervals).tolist()
+
+
+def compute_auc_from_budgets_and_means(budgets: list[int], means: list[float]) -> float:
+    auc = 0.0
+    auc_max = (budgets[-1] - budgets[0]) * 1.0
+    for i in range(1, len(budgets)):
+        x_diff = budgets[i] - budgets[i - 1]
+        y_avg = (means[i] + means[i - 1]) / 2
+        auc += x_diff * y_avg
+    return auc / auc_max
