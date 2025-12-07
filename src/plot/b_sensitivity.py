@@ -1,23 +1,24 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 from plot.constant import FIG_DIR
 from plot.results import *
 from plot.utils import compute_auc_from_budgets_and_means, get_n_continuous_colors, load_results
 
 # Parameters
+CLASS_NUM = 4
 TARGET_RESULTS = [
-    b_sensitivity_csbm5_b1_marginal,
-    b_sensitivity_csbm5_b2_marginal,
-    b_sensitivity_csbm5_b3_marginal,
-    b_sensitivity_csbm5_b4_marginal,
-    b_sensitivity_csbm5_b6_marginal,
-    b_sensitivity_csbm5_b8_marginal,
-    b_sensitivity_csbm5_b12_marginal,
-    b_sensitivity_csbm5_b16_marginal,
-    b_sensitivity_csbm5_b24_marginal,
+    b_sensitivity_csbm8_b1,
+    b_sensitivity_csbm8_b2,
+    b_sensitivity_csbm8_b3,
+    b_sensitivity_csbm8_b4,
+    b_sensitivity_csbm8_b6,
+    b_sensitivity_csbm8_b8,
+    b_sensitivity_csbm8_b12,
+    b_sensitivity_csbm8_b16,
+    b_sensitivity_csbm8_b24,
 ]
-FIG_NAME = "b_sensitivity_csbm5.png"
-
+FIG_NAME = "b_sensitivity_csbm8.png"
 # Consants for plot
 Y_MAX = 0.725
 Y_MIN = 0.50
@@ -33,7 +34,9 @@ def main():
 
     ax.set_xlabel("#annotation")
     ax.set_ylabel("accuracy")
-    ax.set_ylim(Y_MIN, Y_MAX)
+    xticks = np.arange(min(budgets), max(budgets) + CLASS_NUM, CLASS_NUM)
+    ax.set_xticks(xticks)
+    # ax.set_ylim(Y_MIN, Y_MAX)
     ax.legend()
     (FIG_DIR / "accuracy").mkdir(parents=True, exist_ok=True)
     fig.savefig(FIG_DIR / "accuracy" / FIG_NAME)
