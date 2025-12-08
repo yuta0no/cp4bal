@@ -24,20 +24,23 @@ Y_MAX = 0.725
 Y_MIN = 0.50
 
 def main():
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(8, 6))
     cs = get_n_continuous_colors(len(TARGET_RESULTS), cmap_name="coolwarm")
     for result_paths, color in zip(TARGET_RESULTS, cs):
         name, budgets, means, _ = load_results(result_paths)
         auc = compute_auc_from_budgets_and_means(budgets, means)
+        if len(name) == 1:
+            name += "  "
         name = f"{name} (AUC: {auc:.3f})"
         ax.plot(budgets, means, marker="o", label=name, color=color)
 
-    ax.set_xlabel("#annotation")
-    ax.set_ylabel("accuracy")
+    ax.set_xlabel("#Annotation", fontsize=18)
+    ax.set_ylabel("Accuracy", fontsize=18)
     xticks = np.arange(min(budgets), max(budgets) + CLASS_NUM, CLASS_NUM)
     ax.set_xticks(xticks)
     # ax.set_ylim(Y_MIN, Y_MAX)
-    ax.legend()
+    ax.legend(fontsize=14)
+    ax.tick_params(axis="both", labelsize=14)
     (FIG_DIR / "accuracy").mkdir(parents=True, exist_ok=True)
     fig.savefig(FIG_DIR / "accuracy" / FIG_NAME)
 

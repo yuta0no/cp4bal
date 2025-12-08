@@ -35,8 +35,8 @@ def compute_auc_from_budgets_and_means(budgets: list[int], means: list[float]) -
 def method_to_color(method: ALM) -> str:
     color_map = {
         ALM.RANDOM: "gray",
-        ALM.ORACLE_UNCERTAINTY_CP: "blue",
-        ALM.ORACLE_UNCERTAINTY: "red",
+        ALM.ORACLE_UNCERTAINTY_CP: "green",
+        ALM.ORACLE_UNCERTAINTY: "purple",
     }
     return color_map.get(method, "black")
 
@@ -46,3 +46,21 @@ def method_to_linestyle(method: ALM) -> str:
         ALM.RANDOM: "dashed",
     }
     return linestyle_map.get(method, "solid")
+
+
+def method_to_marker(method: ALM) -> str:
+    marker_map = {
+        ALM.RANDOM: "o",
+        ALM.ORACLE_UNCERTAINTY_CP: "s",
+        ALM.ORACLE_UNCERTAINTY: "D",
+    }
+    return marker_map.get(method, "x")
+
+
+def method_to_name(method: ALM) -> str:
+    name_map = {
+        ALM.RANDOM: "Random",
+        ALM.ORACLE_UNCERTAINTY_CP: "Ours",
+        ALM.ORACLE_UNCERTAINTY: "Uncertainty",
+    }
+    return name_map.get(method, "Unknown Method")
