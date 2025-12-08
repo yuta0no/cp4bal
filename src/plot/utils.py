@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 
 from plot.results import ResultPaths
+from plot.types_ import ActiveLearningMethod as ALM
 
 
 def load_results(result_paths: ResultPaths) -> tuple[str, list[int], list[float], list[float]]:
@@ -29,3 +30,19 @@ def compute_auc_from_budgets_and_means(budgets: list[int], means: list[float]) -
         y_avg = (means[i] + means[i - 1]) / 2
         auc += x_diff * y_avg
     return auc / auc_max
+
+
+def method_to_color(method: ALM) -> str:
+    color_map = {
+        ALM.RANDOM: "gray",
+        ALM.ORACLE_UNCERTAINTY_CP: "blue",
+        ALM.ORACLE_UNCERTAINTY: "red",
+    }
+    return color_map.get(method, "black")
+
+
+def method_to_linestyle(method: ALM) -> str:
+    linestyle_map = {
+        ALM.RANDOM: "dashed",
+    }
+    return linestyle_map.get(method, "solid")

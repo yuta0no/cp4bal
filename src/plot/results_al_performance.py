@@ -1,7 +1,9 @@
+from .types_ import ActiveLearningMethod as ALM
 from .types_ import ResultPaths
 
 csbm5_b4_random_marginal = ResultPaths(
     name="random",
+    method=ALM.RANDOM,
     paths=[
         "/home/members/ono/workspace/cp4bal/out/csbm-5/bayes_optimal/4/random/2025-12-06T15:00:57-3346/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm-5/bayes_optimal/4/random/2025-12-06T15:01:09-e8f3/result.csv",
@@ -18,6 +20,7 @@ csbm5_b4_random_marginal = ResultPaths(
 
 csbm5_b4_us_marginal = ResultPaths(
     name="uncertainty",
+    method=ALM.ORACLE_UNCERTAINTY,
     paths=[
         "/home/members/ono/workspace/cp4bal/out/csbm-5/bayes_optimal/4/oracle_uncertainty/2025-12-06T15:00:57-3fc3/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm-5/bayes_optimal/4/oracle_uncertainty/2025-12-06T15:00:57-69f6/result.csv",
@@ -34,6 +37,7 @@ csbm5_b4_us_marginal = ResultPaths(
 
 csbm5_b4_usp_marginal = ResultPaths(
     name="uncertainty propagation",
+    method=ALM.ORACLE_UNCERTAINTY_CP,
     paths=[
         "/home/members/ono/workspace/cp4bal/out/csbm-5/bayes_optimal/4/oracle_uncertainty/2025-12-06T15:28:27-d83d/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm-5/bayes_optimal/4/oracle_uncertainty/2025-12-06T15:28:28-c3dd/result.csv",
@@ -50,6 +54,7 @@ csbm5_b4_usp_marginal = ResultPaths(
 
 csbm5_b8_random_marginal = ResultPaths(
     name="random",
+    method=ALM.RANDOM,
     paths=[
         "/home/members/ono/workspace/cp4bal/out/csbm-5/bayes_optimal/8/random/2025-12-06T15:02:59-2a42/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm-5/bayes_optimal/8/random/2025-12-06T15:03:00-37e1/result.csv",
@@ -66,6 +71,7 @@ csbm5_b8_random_marginal = ResultPaths(
 
 csbm5_b8_us_marginal = ResultPaths(
     name="uncertainty",
+    method=ALM.ORACLE_UNCERTAINTY,
     paths=[
         "/home/members/ono/workspace/cp4bal/out/csbm-5/bayes_optimal/8/oracle_uncertainty/2025-12-06T15:02:48-97a1/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm-5/bayes_optimal/8/oracle_uncertainty/2025-12-06T15:02:57-8102/result.csv",
@@ -82,6 +88,7 @@ csbm5_b8_us_marginal = ResultPaths(
 
 csbm5_b8_usp_marginal = ResultPaths(
     name="uncertainty propagation",
+    method=ALM.ORACLE_UNCERTAINTY_CP,
     paths=[
         "/home/members/ono/workspace/cp4bal/out/csbm-5/bayes_optimal/8/oracle_uncertainty_cp/2025-12-06T00:28:58-6554/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm-5/bayes_optimal/8/oracle_uncertainty_cp/2025-12-06T00:28:59-7f9c/result.csv",
@@ -98,6 +105,7 @@ csbm5_b8_usp_marginal = ResultPaths(
 
 csbm5_b12_random_marginal = ResultPaths(
     name="random",
+    method=ALM.RANDOM,
     paths=[
         "/home/members/ono/workspace/cp4bal/out/csbm-5/bayes_optimal/12/random/2025-12-06T15:04:07-cae5/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm-5/bayes_optimal/12/random/2025-12-06T15:04:17-9cf6/result.csv",
@@ -114,6 +122,7 @@ csbm5_b12_random_marginal = ResultPaths(
 
 csbm5_b12_us_marginal = ResultPaths(
     name="uncertainty",
+    method=ALM.ORACLE_UNCERTAINTY,
     paths=[
         "/home/members/ono/workspace/cp4bal/out/csbm-5/bayes_optimal/12/oracle_uncertainty/2025-12-06T15:04:01-1838/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm-5/bayes_optimal/12/oracle_uncertainty/2025-12-06T15:04:08-ebf0/result.csv",
@@ -130,6 +139,7 @@ csbm5_b12_us_marginal = ResultPaths(
 
 csbm5_b12_usp_marginal = ResultPaths(
     name="uncertainty propagation",
+    method=ALM.ORACLE_UNCERTAINTY_CP,
     paths=[
         "/home/members/ono/workspace/cp4bal/out/csbm-5/bayes_optimal/12/oracle_uncertainty_cp/2025-12-06T00:29:02-a4e8/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm-5/bayes_optimal/12/oracle_uncertainty_cp/2025-12-06T00:29:03-62ca/result.csv",
