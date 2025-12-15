@@ -38,6 +38,9 @@ class Prediction:
         probs = self.probabilities
         if probs is not None:
             return probs.mean(dim=0).argmax(dim=-1)
+        logits = self.logits
+        if logits is not None:
+            return logits.mean(dim=0).argmax(dim=-1)
         return None
 
     def get_logits(self) -> Float[Tensor, "s n c"] | None:

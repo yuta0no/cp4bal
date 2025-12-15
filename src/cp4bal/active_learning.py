@@ -49,6 +49,7 @@ class ActiveLearning:
 
         _ = al_round
         if trainer_config.reset_parameter_before_training:
+            logger.info("resetting model parameters before training")
             model.reset_parameters()
         trainer: Trainer = TrainerFactory.create(config=trainer_config, model=model, dataset=dataset, rg=rg)
         trainer.fit()

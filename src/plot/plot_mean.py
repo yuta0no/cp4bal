@@ -12,11 +12,11 @@ from plot.utils import (
 )
 
 TARGET_RESULTS = [
-    csbm5_b12_random_marginal,
-    csbm5_b12_us_marginal,
-    csbm5_b12_usp_marginal
+    csbm5_b8_random_marginal,
+    csbm5_b8_us_marginal,
+    csbm5_b8_usp_marginal
 ]
-FIG_NAME = "csbm5_budget12.png"
+FIG_NAME = "csbm5_budget8.png"
 
 SHOW_STD = False
 

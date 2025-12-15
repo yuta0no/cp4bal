@@ -1,11 +1,11 @@
 #!/bin/bash
 #SBATCH --output=/home/members/ono/workspace/cp4bal/jobs/job%j.out  # where to store the output (%j is the JOBID)
 #SBATCH --error=/home/members/ono/workspace/cp4bal/jobs/job%j.err  # where to store error messages
-#SBATCH --mem=40G
+#SBATCH --mem=64G
 #SBATCH --nodes=1
-#SBATCH --cpus-per-task=4
-#CommentSBATCH --gres=gpu:1
-#SBATCH --exclude=rump,liver  # you can exclude specified nodes here
+#SBATCH --cpus-per-task=8
+#SBATCH --gres=gpu:1
+#CommentSBATCH --exclude=rump,liver  # you can exclude specified nodes here
 #SBATCH --partition=long
 #CommentSBATCH --nodelist=habaki  # you can specify nodes where the job should be run; Ditto
 

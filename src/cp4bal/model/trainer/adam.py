@@ -43,12 +43,14 @@ class AdamTrainer(Trainer):
         mask_train = dataset.data.get_mask(DatasetSplit.TRAIN_L)
         prediction = model.predict(batch=batch, acquisition=False)
         loss: torch.Tensor = self.loss_fn(prediction=prediction, labels=batch.y, mask=mask_train)
+        acc: torch.Tensor = (prediction.get_estimated_classes()[mask_train] == batch.y[mask_train]).float().mean()
         loss.backward()
         self.optimizer.step()
         return {
             "epoch": epoch,
             "phase": "train",
             "loss": loss.item(),
+            "accuracy": acc.item(),
         }
 
     def _get_optimizer(self, lr: float, weight_decay: float):

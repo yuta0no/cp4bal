@@ -42,17 +42,18 @@ class ApproximateUncertaintyAcquisition(Acquisition):
     ) -> list[int]:
         _ = generator
 
-        mask_train_u = dataset.data.mask_train_u.clone()
-        mask_train_l = dataset.data.mask_train_l.clone()
+        mask_train_u = dataset.data.get_mask(DatasetSplit.TRAIN_U).clone()
+        mask_train_l = dataset.data.get_mask(DatasetSplit.TRAIN_L).clone()
 
         with torch.no_grad():
             prediction = model.predict(dataset.data, acquisition=True)
 
-        total_confidence = prediction.get_probabilities()
-        total_confidence = total_confidence.mean(dim=0)
+        total_confidence = prediction.get_probabilities().mean(dim=0)  # average over samples
 
         mask_predict_nodes = np.ones(dataset.num_nodes, dtype=bool)
         mask_predict_nodes &= dataset.data.get_mask(DatasetSplit.TRAIN_ALL).cpu().numpy()
+
+        assert np.all(mask_predict_nodes == mask_train_l.cpu().numpy() | mask_train_u.cpu().numpy())
 
         if self.compute_as_ratio:
             epistemic_uncertainty = self.epistemic_uncertainty_mp(
@@ -94,7 +95,7 @@ class ApproximateUncertaintyAcquisition(Acquisition):
                 acquired_indices.append(acquired_index.item())
         else:
             values_for_acquisition = epistemic_uncertainty
-            indices_train_u = torch.where(mask_train_u)[0]
+            indices_train_u = torch.where(mask_train_u)[0]  # TODO: unnecessary as we set others to -inf
             possible_values_for_acquisition = values_for_acquisition[mask_train_u]
             ids = torch.argsort(possible_values_for_acquisition)[-budget:]
             acquired_indices = indices_train_u[ids].tolist()
@@ -189,7 +190,7 @@ class ApproximateUncertaintyAcquisition(Acquisition):
         assignment `labels`, i.e. it treats `labels` as ground_truth."""
         labels = labels.clone()
         # replace the ground truth in labels when it is available
-        labels[mask_train] = batch.y[mask_train]
+        labels[mask_train] = batch.y[mask_train].to(dtype=torch.int32)
         labels_np = labels.cpu().numpy()
         if features_only:
             x = batch.x.cpu().numpy()
