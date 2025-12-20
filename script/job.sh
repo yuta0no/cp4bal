@@ -4,7 +4,7 @@
 #SBATCH --mem=64G
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=8
-#SBATCH --gres=gpu:1
+#CommentSBATCH --gres=gpu:1
 #CommentSBATCH --exclude=rump,liver  # you can exclude specified nodes here
 #SBATCH --partition=long
 #CommentSBATCH --nodelist=habaki  # you can specify nodes where the job should be run; Ditto
@@ -18,8 +18,4 @@ model_config_file=$6
 
 cd $(git rev-parse --show-toplevel)/
 
-# w/o propagation
-# uv run src/cp4bal/main.py --seed $seed --acquisition_name $acquisition_name --budget $budget --round $round --dataset_config_file $ds_config_file --model_config_file $model_config_file
-
-# with propagation
-uv run src/cp4bal/main.py --seed $seed --acquisition_name $acquisition_name --budget $budget --round $round --dataset_config_file $ds_config_file --model_config_file $model_config_file --propagation
+uv run src/cp4bal/main.py --seed $seed --acquisition_name $acquisition_name --budget $budget --round $round --dataset_config_file $ds_config_file --model_config_file $model_config_file
