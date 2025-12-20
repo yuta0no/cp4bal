@@ -40,7 +40,7 @@ def main():
     cb.load_model_config_file(project_root / options.args.model_config_file)
 
     # config for acquisition
-    cb.set_acquisition_name(options.args.acquisition_name).set_propagation(options.args.propagation)
+    cb.set_acquisition_name(options.args.acquisition_name)
 
     # config for active learning
     cb.set_budget(options.args.budget).set_round(options.args.round)

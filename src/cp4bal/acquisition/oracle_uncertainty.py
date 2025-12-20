@@ -24,7 +24,7 @@ class OracleUncertaintyAcquisition(Acquisition):
 
     def __init__(self, config: OracleUncertaintyAcquisitionConfig):
         super().__init__(config=config)
-        self.confidence_propagation = config.confidence_propagation
+        self.confidence_propagation = False
         self.uncertainty_type = config.uncertainty_type
 
     @torch.no_grad()

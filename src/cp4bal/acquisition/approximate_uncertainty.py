@@ -25,7 +25,7 @@ logger = getLogger(__name__)
 class ApproximateUncertaintyAcquisition(Acquisition):
     def __init__(self, config: ApproximateUncertaintyAcquisitionConfig):
         super().__init__(config=config)
-        self.confidence_propagation = config.confidence_propagation
+        self.confidence_propagation = False
         self.uncertainty_type = config.uncertainty_type
         self.aleatoric_confidence_with_left_out_node = config.aleatoric_confidence_with_left_out_node
         self.aleatoric_confidence_labels_num_samples = config.aleatoric_confidence_labels_num_samples

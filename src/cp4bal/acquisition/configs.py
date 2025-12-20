@@ -20,14 +20,18 @@ class RandomAcquisitionConfig(AcquisitionConfig):
 class OracleUncertaintyAcquisitionConfig(AcquisitionConfig):
     type_: AcquisitionType = AcquisitionType.ORACLE_UNCERTAINTY
     uncertainty_type: UncertaintyType = UncertaintyType.EPISTEMIC
-    confidence_propagation: bool = True
+
+
+@dataclass(kw_only=True)
+class OracleUncertaintyWithConfidencePropagationAcquisitionConfig(AcquisitionConfig):
+    type_: AcquisitionType = AcquisitionType.ORACLE_UNCERTAINTY_CP
+    uncertainty_type: UncertaintyType = UncertaintyType.EPISTEMIC
 
 
 @dataclass(kw_only=True)
 class ApproximateUncertaintyAcquisitionConfig(AcquisitionConfig):
     type_: AcquisitionType = AcquisitionType.APPROXIMATE_UNCERTAINTY
     uncertainty_type: UncertaintyType = UncertaintyType.EPISTEMIC
-    confidence_propagation: bool = False
     # whether to compute aleatoric confidence of a node when leaving it out (which is more exact, but way more costly)
     aleatoric_confidence_with_left_out_node: bool = False
     # How often to draw samples from the predictive distribution as truth for aleatoric confidence
@@ -35,4 +39,13 @@ class ApproximateUncertaintyAcquisitionConfig(AcquisitionConfig):
     aleatoric_confidence_labels_num_samples: int | None = None
     # if True, conf(epi) is computed as conf(total) / conf(ale)
     # if False, we optimize the ratio of observing the remaining expected ground-truth
+    compute_as_ratio: bool = True
+
+
+@dataclass(kw_only=True)
+class ApproximateUncertaintyWithConfidencePropagationAcquisitionConfig(AcquisitionConfig):
+    type_: AcquisitionType = AcquisitionType.APPROXIMATE_UNCERTAINTY_CP
+    uncertainty_type: UncertaintyType = UncertaintyType.EPISTEMIC
+    aleatoric_confidence_with_left_out_node: bool = False
+    aleatoric_confidence_labels_num_samples: int | None = None
     compute_as_ratio: bool = True

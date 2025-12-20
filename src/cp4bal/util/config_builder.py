@@ -11,7 +11,9 @@ import yaml
 from cp4bal.acquisition.configs import (
     AcquisitionConfig,
     ApproximateUncertaintyAcquisitionConfig,
+    ApproximateUncertaintyWithConfidencePropagationAcquisitionConfig,
     OracleUncertaintyAcquisitionConfig,
+    OracleUncertaintyWithConfidencePropagationAcquisitionConfig,
     RandomAcquisitionConfig,
 )
 from cp4bal.dataset.configs import (
@@ -57,7 +59,6 @@ class ConfigBuilderStates:
     edge_p_snr: float | None = None
     # Acquisition
     acquisition_name: str | None = None
-    propagation: bool | None = None
     # Active Learning
     budget: int | None = None
     round: int | None = None
@@ -160,13 +161,13 @@ class ConfigBuilder:
             case "random":
                 return RandomAcquisitionConfig()
             case "oracle_uncertainty":
-                return OracleUncertaintyAcquisitionConfig(
-                    confidence_propagation=self._states.propagation,
-                )
+                return OracleUncertaintyAcquisitionConfig()
+            case "oracle_uncertainty_cp":
+                return OracleUncertaintyWithConfidencePropagationAcquisitionConfig()
             case "approximate_uncertainty":
-                return ApproximateUncertaintyAcquisitionConfig(
-                    confidence_propagation=self._states.propagation,
-                )
+                return ApproximateUncertaintyAcquisitionConfig()
+            case "approximate_uncertainty_cp":
+                return ApproximateUncertaintyWithConfidencePropagationAcquisitionConfig()
 
     def _build_experiment_config(
         self,
@@ -185,8 +186,6 @@ class ConfigBuilder:
             timestamp = now.strftime("%Y-%m-%dT%H:%M:%S")
             self._states.experiment_name = f"{ds_config.common.name}/{model_config.name}/{al_config.budget_per_round}"
             self._states.experiment_name += f"/{acquisition_config.type_.name.lower()}"
-            if self._states.propagation and "uncertainty" in acquisition_config.type_.name.lower():
-                self._states.experiment_name += "_cp"
             self._states.experiment_name += f"/{timestamp}-{unique_key}"
         return ExperimentConfig(
             name=self._states.experiment_name,
@@ -270,10 +269,6 @@ class ConfigBuilder:
     # setters for acquisition configs
     def set_acquisition_name(self, name: str) -> Self:
         self._states.acquisition_name = name
-        return self
-
-    def set_propagation(self, propagation: bool) -> Self:
-        self._states.propagation = propagation
         return self
 
     def set_budget(self, b: int) -> Self:
