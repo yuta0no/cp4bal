@@ -2126,3 +2126,139 @@ b_sensitivity_csbm9_b32 = ResultPaths(
         "/home/members/ono/workspace/cp4bal/out/csbm-9/bayes_optimal/32/oracle_uncertainty_cp/2025-12-06T22:59:21-73a1/result.csv",
     ]
 )
+
+b_sensitivity_csbm10_b4 = ResultPaths(
+    name="4",
+    method=ALM.ORACLE_UNCERTAINTY_CP,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/4/oracle_uncertainty_cp/2025-12-20T13:43:58-8391/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/4/oracle_uncertainty_cp/2025-12-20T13:43:59-13c4/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/4/oracle_uncertainty_cp/2025-12-20T13:43:59-ec0d/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/4/oracle_uncertainty_cp/2025-12-20T13:44:05-069e/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/4/oracle_uncertainty_cp/2025-12-20T13:44:05-095c/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/4/oracle_uncertainty_cp/2025-12-20T13:44:07-9bd1/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/4/oracle_uncertainty_cp/2025-12-20T13:44:08-82aa/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/4/oracle_uncertainty_cp/2025-12-20T13:44:13-881e/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/4/oracle_uncertainty_cp/2025-12-20T13:44:13-ac6e/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/4/oracle_uncertainty_cp/2025-12-20T13:44:18-7a9f/result.csv",
+    ]
+)
+
+b_sensitivity_csbm10_b8 = ResultPaths(
+    name="8",
+    method=ALM.ORACLE_UNCERTAINTY_CP,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/8/oracle_uncertainty_cp/2025-12-20T13:44:17-7ab8/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/8/oracle_uncertainty_cp/2025-12-20T13:44:20-1ff8/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/8/oracle_uncertainty_cp/2025-12-20T13:44:21-8d0c/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/8/oracle_uncertainty_cp/2025-12-20T13:44:25-5cb9/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/8/oracle_uncertainty_cp/2025-12-20T13:44:27-5693/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/8/oracle_uncertainty_cp/2025-12-20T13:44:28-cfe7/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/8/oracle_uncertainty_cp/2025-12-20T13:44:31-41a5/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/8/oracle_uncertainty_cp/2025-12-20T13:44:33-67ed/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/8/oracle_uncertainty_cp/2025-12-20T13:44:34-349f/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/8/oracle_uncertainty_cp/2025-12-20T13:44:34-2244/result.csv",
+    ]
+)
+
+b_sensitivity_csbm10_b12 = ResultPaths(
+    name="12",
+    method=ALM.ORACLE_UNCERTAINTY_CP,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/12/oracle_uncertainty_cp/2025-12-20T13:40:19-09bc/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/12/oracle_uncertainty_cp/2025-12-20T13:40:22-abee/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/12/oracle_uncertainty_cp/2025-12-20T13:40:22-d09c/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/12/oracle_uncertainty_cp/2025-12-20T13:40:24-5a90/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/12/oracle_uncertainty_cp/2025-12-20T13:40:30-4cd6/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/12/oracle_uncertainty_cp/2025-12-20T13:40:30-c9cd/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/12/oracle_uncertainty_cp/2025-12-20T13:40:31-8467/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/12/oracle_uncertainty_cp/2025-12-20T13:40:32-c60e/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/12/oracle_uncertainty_cp/2025-12-20T13:40:37-8d3b/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/12/oracle_uncertainty_cp/2025-12-20T13:41:23-68ab/result.csv",
+    ]
+)
+
+b_sensitivity_csbm10_b24 = ResultPaths(
+    name="24",
+    method=ALM.ORACLE_UNCERTAINTY_CP,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/24/oracle_uncertainty_cp/2025-12-20T14:12:13-9bef/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/24/oracle_uncertainty_cp/2025-12-20T14:12:13-bf51/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/24/oracle_uncertainty_cp/2025-12-20T14:12:14-6de0/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/24/oracle_uncertainty_cp/2025-12-20T14:12:21-0f20/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/24/oracle_uncertainty_cp/2025-12-20T14:12:21-23d2/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/24/oracle_uncertainty_cp/2025-12-20T14:12:22-505c/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/24/oracle_uncertainty_cp/2025-12-20T14:12:27-64c3/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/24/oracle_uncertainty_cp/2025-12-20T14:12:28-a9ac/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/24/oracle_uncertainty_cp/2025-12-20T14:12:29-dd0a/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/24/oracle_uncertainty_cp/2025-12-20T14:13:14-fafc/result.csv",
+    ]
+)
+
+b_sensitivity_csbm10_b4_wocp = ResultPaths(
+    name="4",
+    method=ALM.ORACLE_UNCERTAINTY,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/4/oracle_uncertainty/2025-12-20T13:43:57-33c3/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/4/oracle_uncertainty/2025-12-20T13:43:59-4c93/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/4/oracle_uncertainty/2025-12-20T13:43:59-d9ea/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/4/oracle_uncertainty/2025-12-20T13:43:59-e196/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/4/oracle_uncertainty/2025-12-20T13:44:05-44e5/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/4/oracle_uncertainty/2025-12-20T13:44:06-547e/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/4/oracle_uncertainty/2025-12-20T13:44:07-4697/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/4/oracle_uncertainty/2025-12-20T13:44:09-209b/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/4/oracle_uncertainty/2025-12-20T13:44:13-7718/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/4/oracle_uncertainty/2025-12-20T13:44:18-855b/result.csv",
+    ]
+)
+
+b_sensitivity_csbm10_b8_wocp = ResultPaths(
+    name="8",
+    method=ALM.ORACLE_UNCERTAINTY,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/8/oracle_uncertainty/2025-12-20T13:44:14-f274/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/8/oracle_uncertainty/2025-12-20T13:44:18-e5ef/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/8/oracle_uncertainty/2025-12-20T13:44:20-bda9/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/8/oracle_uncertainty/2025-12-20T13:44:21-3e53/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/8/oracle_uncertainty/2025-12-20T13:44:26-189d/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/8/oracle_uncertainty/2025-12-20T13:44:27-c68d/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/8/oracle_uncertainty/2025-12-20T13:44:27-e5e6/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/8/oracle_uncertainty/2025-12-20T13:44:28-9923/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/8/oracle_uncertainty/2025-12-20T13:44:34-2939/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/8/oracle_uncertainty/2025-12-20T13:44:34-de99/result.csv",
+    ]
+)
+
+b_sensitivity_csbm10_b12_wocp = ResultPaths(
+    name="12",
+    method=ALM.ORACLE_UNCERTAINTY,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/12/oracle_uncertainty/2025-12-20T13:40:19-3c79/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/12/oracle_uncertainty/2025-12-20T13:40:22-3ff0/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/12/oracle_uncertainty/2025-12-20T13:40:22-ed8d/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/12/oracle_uncertainty/2025-12-20T13:40:22-fff7/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/12/oracle_uncertainty/2025-12-20T13:40:26-c965/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/12/oracle_uncertainty/2025-12-20T13:40:28-4132/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/12/oracle_uncertainty/2025-12-20T13:40:30-9e24/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/12/oracle_uncertainty/2025-12-20T13:40:32-3629/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/12/oracle_uncertainty/2025-12-20T13:40:36-6d78/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/12/oracle_uncertainty/2025-12-20T13:41:23-9be7/result.csv",
+    ]
+)
+
+b_sensitivity_csbm10_b24_wocp = ResultPaths(
+    name="24",
+    method=ALM.ORACLE_UNCERTAINTY,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/24/oracle_uncertainty/2025-12-20T14:12:09-3ba8/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/24/oracle_uncertainty/2025-12-20T14:12:13-14b1/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/24/oracle_uncertainty/2025-12-20T14:12:13-a875/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/24/oracle_uncertainty/2025-12-20T14:12:13-bcaf/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/24/oracle_uncertainty/2025-12-20T14:12:21-742a/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/24/oracle_uncertainty/2025-12-20T14:12:21-df09/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/24/oracle_uncertainty/2025-12-20T14:12:22-8fe2/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/24/oracle_uncertainty/2025-12-20T14:12:28-783b/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/24/oracle_uncertainty/2025-12-20T14:12:29-e9e2/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-10/bayes_optimal/24/oracle_uncertainty/2025-12-20T14:13:14-f240/result.csv",
+    ]
+)

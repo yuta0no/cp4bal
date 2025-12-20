@@ -12,11 +12,11 @@ from plot.utils import (
 )
 
 TARGET_RESULTS = [
-    coraml_b1_sgc_us_w_leftout,
-    coraml_b1_sgc_us_wo_leftout,
+    csbm10_b24_us,
+    csbm10_b24_usp,
+    csbm10_b24_random,
 ]
-FIG_NAME = "leftout_error.png"
-
+FIG_NAME = "csbm10-b24.png"
 SHOW_STD = False
 
 LINESTYLES = ["-", "--", "-.", ":"]

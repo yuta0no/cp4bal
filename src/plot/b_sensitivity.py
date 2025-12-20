@@ -10,22 +10,16 @@ from plot.utils import compute_auc_from_budgets_and_means, get_n_continuous_colo
 # Parameters
 CLASS_NUM = 4
 TARGET_RESULTS = [
-    b_sensitivity_csbm8_b1,
-    b_sensitivity_csbm8_b2,
-    b_sensitivity_csbm8_b3,
-    b_sensitivity_csbm8_b4,
-    b_sensitivity_csbm8_b6,
-    b_sensitivity_csbm8_b8,
-    b_sensitivity_csbm8_b12,
-    b_sensitivity_csbm8_b16,
-    b_sensitivity_csbm8_b24,
+    b_sensitivity_csbm10_b4_wocp,
+    b_sensitivity_csbm10_b8_wocp,
+    b_sensitivity_csbm10_b12_wocp,
+    b_sensitivity_csbm10_b24_wocp,
 ]
-FIG_NAME = "b_sensitivity_csbm8.png"
-
+FIG_NAME = "b_sensitivity_csbm10_wocp.png"
 # Consants for plot
 Y_MAX = 0.725
 Y_MIN = 0.50
-SHOW_LB = True
+SHOW_LB = False  # 1-1/e lower bound
 
 
 def main():
