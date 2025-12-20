@@ -153,3 +153,25 @@ csbm5_b12_usp_marginal = ResultPaths(
         "/home/members/ono/workspace/cp4bal/out/csbm-5/bayes_optimal/12/oracle_uncertainty_cp/2025-12-06T00:29:08-ff01/result.csv",
     ]
 )
+
+coraml_b1_sgc_us_w_leftout = ResultPaths(
+    name="with left-out nodes",
+    method=ALM.APPROXIMATE_UNCERTAINTY,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/cora_ml/sgc/1/approximate_uncertainty_cp/2025-12-09T23:01:52-e42d/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/cora_ml/sgc/1/approximate_uncertainty_cp/2025-12-09T23:01:53-f8c6/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/cora_ml/sgc/1/approximate_uncertainty_cp/2025-12-09T23:02:10-ae62/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/cora_ml/sgc/1/approximate_uncertainty_cp/2025-12-09T23:02:32-0373/result.csv",
+    ]
+)
+
+coraml_b1_sgc_us_wo_leftout = ResultPaths(
+    name="without left-out nodes",
+    method=ALM.APPROXIMATE_UNCERTAINTY,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/cora_ml/sgc/1/approximate_uncertainty_cp/2025-12-15T17:50:39-f0f4/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/cora_ml/sgc/1/approximate_uncertainty_cp/2025-12-15T17:50:22-72fa/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/cora_ml/sgc/1/approximate_uncertainty_cp/2025-12-15T17:49:22-e14c/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/cora_ml/sgc/1/approximate_uncertainty_cp/2025-12-15T17:49:22-c36c/result.csv",
+    ]
+)

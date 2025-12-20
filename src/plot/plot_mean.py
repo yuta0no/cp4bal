@@ -12,27 +12,29 @@ from plot.utils import (
 )
 
 TARGET_RESULTS = [
-    csbm5_b8_random_marginal,
-    csbm5_b8_us_marginal,
-    csbm5_b8_usp_marginal
+    coraml_b1_sgc_us_w_leftout,
+    coraml_b1_sgc_us_wo_leftout,
 ]
-FIG_NAME = "csbm5_budget8.png"
+FIG_NAME = "leftout_error.png"
 
 SHOW_STD = False
 
+LINESTYLES = ["-", "--", "-.", ":"]
 
 def main():
     fig, ax = plt.subplots(figsize=(8, 6))
-    for result_paths in TARGET_RESULTS:
+    for i, result_paths in enumerate(TARGET_RESULTS):
         name, budgets, means, stds = load_results(result_paths)
         auc = compute_auc_from_budgets_and_means(budgets, means)
         ax.plot(
             budgets, means,
             label=f"{method_to_name(result_paths.method)} (AUC: {auc:.4f})",
+            # label=f"{result_paths.name} (AUC: {auc:.4f})",
             marker=method_to_marker(result_paths.method),
             markersize=8,
             color=method_to_color(result_paths.method),
             linestyle=method_to_linestyle(result_paths.method),
+            # linestyle=LINESTYLES[i],
             linewidth=3,
         )
         if SHOW_STD:
