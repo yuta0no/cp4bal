@@ -44,10 +44,10 @@ class AdamTrainerConfig(TrainerConfig):
 
     name: TrainerType = TrainerType.ADAM
 
-    lr: float = 0.001
+    lr: float = 0.0001
     weight_decay: float = 0.0
 
-    max_epochs: int = 500
+    max_epochs: int = 30
     min_epochs: int = 0
 
     logits_propagated: bool = True

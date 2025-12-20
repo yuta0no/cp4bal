@@ -6,6 +6,7 @@ class ActiveLearningMethod(Enum):
     RANDOM = "random"
     ORACLE_UNCERTAINTY = "oracle_uncertainty"
     ORACLE_UNCERTAINTY_CP = "oracle_uncertainty_cp"
+    APPROXIMATE_UNCERTAINTY = "approximate_uncertainty"
 
 
 @dataclass

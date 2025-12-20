@@ -23,7 +23,7 @@ class MCDropoutModelConfig(MultipleSampleModelConfig):
     """Configuration for models that sample using MC dropout."""
 
     dropout_at_eval: bool = True
-    dropout_p: float = 0.5
+    dropout_p: float = 0.2
 
 
 @dataclass(kw_only=True)
