@@ -47,7 +47,7 @@ def main():
             p_edge_inter=None,
             edge_p_snr=SNR,
             expected_degree=D,
-        )
+        ),
     )
     base_ds = DatasetFactory.create(config=config)
     x = base_ds.node_features
@@ -59,8 +59,8 @@ def main():
     # logger.info(f"CSBM Graph created: {base_ds.edge_indices}")
     logger.info("labels: %s", gt_labels.tolist())
 
-    labeled_nodes = {0, 1, N-2, N-1}  # L
-    Q_nodes = {2, 3, N-3}  # Q
+    labeled_nodes = {0, 1, N - 2, N - 1}  # L
+    Q_nodes = {2, 3, N - 3}  # Q
     unlabeled_nodes = set(range(N)) - labeled_nodes  # U
 
     q_ids = []
@@ -96,32 +96,39 @@ def main():
         v_d = 0.0
         v_n = 0.0
 
-        for allocation in product(list(range(K)), repeat=len(Q_nodes)+len(T_nodes)):
+        for allocation in product(list(range(K)), repeat=len(Q_nodes) + len(T_nodes)):
             allocation = np.array(allocation, dtype=int)
-            labels_SQ[0, T_nodes] = allocation[:len(T_nodes)]  # for P(A | y_S, y_Q)
+            labels_SQ[0, T_nodes] = allocation[: len(T_nodes)]  # for P(A | y_S, y_Q)
             labels_S[0, QT_nodes] = allocation  # for P(A | y_S)
 
-            v_n += np.exp(base_ds.conditional_log_likelihood(
-                y=labels_SQ, x=x, use_adjacency=True, use_features=False, use_non_edges=True
-            )) / (K ** (len(Q_nodes) + len(T_nodes)))
-            v_d += np.exp(base_ds.conditional_log_likelihood(
-                y=labels_S, x=x, use_adjacency=True, use_features=False, use_non_edges=True
-            )) / (K ** (len(Q_nodes) + len(T_nodes)))
+            v_n += np.exp(
+                base_ds.conditional_log_likelihood(
+                    y=labels_SQ, x=x, use_adjacency=True, use_features=False, use_non_edges=True
+                )
+            ) / (K ** (len(Q_nodes) + len(T_nodes)))
+            v_d += np.exp(
+                base_ds.conditional_log_likelihood(
+                    y=labels_S, x=x, use_adjacency=True, use_features=False, use_non_edges=True
+                )
+            ) / (K ** (len(Q_nodes) + len(T_nodes)))
 
         log_R_q = (np.log(v_n) - np.log(v_d)).item()
         R_numerators.append(v_n.item())
         R_denominators.append(v_d.item())
         log_Rs.append(log_R_q)
 
-        mean_field_log_R_q = _calculate_log_R_by_mean_field_approximation(
-            labels=gt_labels,
-            p_inter=base_ds.p_edge_inter,
-            p_intra=base_ds.p_edge_intra,
-            K=K,
-            Q_nodes=list(Q_nodes),
-            i=q,
-            edges=base_ds.edge_indices.clone().cpu().T.tolist(),
-        ) + mean_field_log_R_const
+        mean_field_log_R_q = (
+            _calculate_log_R_by_mean_field_approximation(
+                labels=gt_labels,
+                p_inter=base_ds.p_edge_inter,
+                p_intra=base_ds.p_edge_intra,
+                K=K,
+                Q_nodes=list(Q_nodes),
+                i=q,
+                edges=base_ds.edge_indices.clone().cpu().T.tolist(),
+            )
+            + mean_field_log_R_const
+        )
         mean_field_log_Rs.append(mean_field_log_R_q)
 
         logger.debug(f"q: {q}, log_R_q: {log_R_q}, mean_field_log_R_q: {mean_field_log_R_q}, v_n: {v_n}, v_d: {v_d}")
