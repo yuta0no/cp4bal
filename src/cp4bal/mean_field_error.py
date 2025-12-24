@@ -24,8 +24,8 @@ def main():
     # dataset
     N = 20  # num nodes
     K = 2  # num classes
-    SNR = 2.0  # signal to noise ratio
-    D = 4  # expected degree
+    SNR = 1.2  # signal to noise ratio
+    D = 8  # expected degree
     output_dir = OUT_DIR / f"csbm_n{N}_k{K}_snr{SNR}_d{D}_seed{seed}"
     output_dir.mkdir(parents=True, exist_ok=True)
     logger.info("output_dir: %s", output_dir.resolve())

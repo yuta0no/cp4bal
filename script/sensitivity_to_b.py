@@ -2,7 +2,7 @@ import os
 import subprocess
 import sys
 
-DATASET_CONFIG = "config/dataset/csbm-11.yaml"
+DATASET_CONFIG = "config/dataset/csbm-13.yaml"
 MODEL_CONFIG = "config/model/bayes_optimal.yaml"
 
 budget_round_pairs = [

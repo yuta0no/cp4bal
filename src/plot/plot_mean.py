@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 from plot.constant import FIG_DIR
-from plot.results import *
+from plot.results import *  # noqa: F403
 from plot.utils import (
     compute_auc_from_budgets_and_means,
     load_results,
@@ -12,11 +12,11 @@ from plot.utils import (
 )
 
 TARGET_RESULTS = [
-    csbm10_b24_us,
-    csbm10_b24_usp,
-    csbm10_b24_random,
+    csbm11_b1_us,
+    csbm11_b1_usp,
+    csbm11_b1_random,
 ]
-FIG_NAME = "csbm10-b24.png"
+FIG_NAME = "csbm11-b1.png"
 SHOW_STD = False
 
 LINESTYLES = ["-", "--", "-.", ":"]

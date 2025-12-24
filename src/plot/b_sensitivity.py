@@ -4,18 +4,23 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from plot.constant import FIG_DIR
-from plot.results import *
+from plot.results import *  # noqa: F403
 from plot.utils import compute_auc_from_budgets_and_means, get_n_continuous_colors, load_results
 
 # Parameters
 CLASS_NUM = 4
 TARGET_RESULTS = [
-    b_sensitivity_csbm10_b4_wocp,
-    b_sensitivity_csbm10_b8_wocp,
-    b_sensitivity_csbm10_b12_wocp,
-    b_sensitivity_csbm10_b24_wocp,
+    b_sensitivity_csbm11_b1_wocp,
+    b_sensitivity_csbm11_b2_wocp,
+    b_sensitivity_csbm11_b3_wocp,
+    b_sensitivity_csbm11_b4_wocp,
+    b_sensitivity_csbm11_b6_wocp,
+    b_sensitivity_csbm11_b8_wocp,
+    b_sensitivity_csbm11_b12_wocp,
+    b_sensitivity_csbm11_b16_wocp,
+    b_sensitivity_csbm11_b24_wocp,
 ]
-FIG_NAME = "b_sensitivity_csbm10_wocp.png"
+FIG_NAME = "b_sensitivity_csbm11_wocp.png"
 # Consants for plot
 Y_MAX = 0.725
 Y_MIN = 0.50

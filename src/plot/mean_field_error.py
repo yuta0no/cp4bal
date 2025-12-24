@@ -9,7 +9,7 @@ from plot.constant import FIG_DIR
 
 # Constants
 result_dir = Path("/home/members/ono/workspace/cp4bal/out/mean_field_error/")
-exp_name = "csbm_n20_k2_snr2.0_d4_seed42"
+exp_name = "csbm_n20_k2_snr1.2_d8_seed42"
 EXP_DIR = result_dir / exp_name
 
 
