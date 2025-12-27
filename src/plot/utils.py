@@ -1,10 +1,10 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import re
 
 from plot.results import ResultPaths
 from plot.types_ import ActiveLearningMethod as ALM
-
 
 def load_results(result_paths: ResultPaths) -> tuple[str, list[int], list[float], list[float]]:
     all_data = [pd.read_csv(path) for path in result_paths.paths]
@@ -14,6 +14,22 @@ def load_results(result_paths: ResultPaths) -> tuple[str, list[int], list[float]
     means = stats["accuracy"]["mean"].tolist()
     stds = stats["accuracy"]["std"].tolist()
     return result_paths.name, budgets, means, stds
+
+
+def load_results_with_seed(result_paths: ResultPaths) -> dict[int, tuple[list[int], list[float]]]:
+    ret = {}
+    for result_path in result_paths.paths:
+        data = pd.read_csv(result_path)
+        log_path = str(result_path).replace("/out/", "/log/").replace("/result.csv", ".log")
+        with open(log_path, 'r', encoding='utf-8') as f:
+            first_line = f.readline()
+            match = re.search(r"dataset=.*?seed=(\d+)", first_line)
+            if match:
+                seed = int(match.group(1))
+            else:
+                raise ValueError(f"seed not found in log file: {log_path}")
+        ret[seed] = data
+    return ret
 
 
 def get_n_continuous_colors(n: int, cmap_name: str = 'viridis') -> list:
