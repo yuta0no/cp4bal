@@ -60,3 +60,9 @@ class EntropyAcquisitionConfig(AcquisitionByAttributeConfig):
     type_: AcquisitionType = AcquisitionType.ENTROPY
     requires_model_predictions: bool = True
     higher_is_better: bool = True
+
+@dataclass(kw_only=True)
+class MarginAcquisitionConfig(AcquisitionByAttributeConfig):
+    type_: AcquisitionType = AcquisitionType.MARGIN
+    requires_model_predictions: bool = True
+    higher_is_better: bool = True

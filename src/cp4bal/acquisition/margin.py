@@ -6,11 +6,11 @@ from cp4bal.dataset import ActiveLearningDataset
 from cp4bal.model import Prediction
 
 from .attribute import AcquisitionByAttribute
-from .configs import EntropyAcquisitionConfig
+from .configs import MarginAcquisitionConfig
 
 
-class EntropyAcquisition(AcquisitionByAttribute):
-    def __init__(self, config: EntropyAcquisitionConfig):
+class MarginAcquisition(AcquisitionByAttribute):
+    def __init__(self, config: MarginAcquisitionConfig):
         super().__init__(config)
 
     def get_attribute(
@@ -19,10 +19,8 @@ class EntropyAcquisition(AcquisitionByAttribute):
         _ = dataset, generator
 
         if prediction is None:
-            raise ValueError("Model predictions are required for EntropyAcquisition.")
+            raise ValueError("Model predictions are required for MarginAcquisition.")
 
         probabilities: Float[Tensor, " s n c"] = prediction.probabilities
-        log_probabilities = torch.log(probabilities + 1e-12)
-        entropy = -torch.sum(probabilities * log_probabilities, dim=2).mean(dim=0)  # reduce over samples
-
-        return entropy
+        margin = (probabilities.sort(dim=-1).values[:, :, -1] - probabilities.sort(dim=-1).values[:, :, -2]).mean(dim=0)
+        return margin

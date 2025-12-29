@@ -16,11 +16,10 @@ TARGET_RESULTS = [
     csbm17_b8_us,
     csbm17_b8_usp,
     csbm17_b8_random,
+    csbm17_b8_margin,
 ]
 FIG_NAME = "csbm17-b8.png"
 SHOW_STD = False
-
-LINESTYLES = ["-", "--", "-.", ":"]
 
 def main():
     fig, ax = plt.subplots(figsize=(8, 6))
@@ -35,7 +34,6 @@ def main():
             markersize=8,
             color=method_to_color(result_paths.method),
             linestyle=method_to_linestyle(result_paths.method),
-            # linestyle=LINESTYLES[i],
             linewidth=3,
         )
         if SHOW_STD:

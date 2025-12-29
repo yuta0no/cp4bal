@@ -13,6 +13,7 @@ from cp4bal.acquisition.configs import (
     ApproximateUncertaintyAcquisitionConfig,
     ApproximateUncertaintyWithConfidencePropagationAcquisitionConfig,
     EntropyAcquisitionConfig,
+    MarginAcquisitionConfig,
     OracleUncertaintyAcquisitionConfig,
     OracleUncertaintyWithConfidencePropagationAcquisitionConfig,
     RandomAcquisitionConfig,
@@ -163,6 +164,8 @@ class ConfigBuilder:
                 return EntropyAcquisitionConfig()
             case "random":
                 return RandomAcquisitionConfig()
+            case "margin":
+                return MarginAcquisitionConfig()
             case "oracle_uncertainty":
                 return OracleUncertaintyAcquisitionConfig()
             case "oracle_uncertainty_cp":
