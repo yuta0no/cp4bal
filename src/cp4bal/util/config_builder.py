@@ -12,6 +12,7 @@ from cp4bal.acquisition.configs import (
     AcquisitionConfig,
     ApproximateUncertaintyAcquisitionConfig,
     ApproximateUncertaintyWithConfidencePropagationAcquisitionConfig,
+    EntropyAcquisitionConfig,
     OracleUncertaintyAcquisitionConfig,
     OracleUncertaintyWithConfidencePropagationAcquisitionConfig,
     RandomAcquisitionConfig,
@@ -158,6 +159,8 @@ class ConfigBuilder:
             raise ValueError("Budget must be set and positive before building the config.")
 
         match self._states.acquisition_name.lower():
+            case "entropy":
+                return EntropyAcquisitionConfig()
             case "random":
                 return RandomAcquisitionConfig()
             case "oracle_uncertainty":

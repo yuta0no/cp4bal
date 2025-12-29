@@ -1,10 +1,12 @@
+import re
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import re
 
 from plot.results import ResultPaths
 from plot.types_ import ActiveLearningMethod as ALM
+
 
 def load_results(result_paths: ResultPaths) -> tuple[str, list[int], list[float], list[float]]:
     all_data = [pd.read_csv(path) for path in result_paths.paths]
@@ -51,8 +53,9 @@ def compute_auc_from_budgets_and_means(budgets: list[int], means: list[float]) -
 def method_to_color(method: ALM) -> str:
     color_map = {
         ALM.RANDOM: "gray",
-        ALM.ORACLE_UNCERTAINTY_CP: "green",
+        ALM.ORACLE_UNCERTAINTY_CP: "blue",
         ALM.ORACLE_UNCERTAINTY: "purple",
+        ALM.ENTROPY: "green",
     }
     return color_map.get(method, "black")
 
@@ -69,6 +72,7 @@ def method_to_marker(method: ALM) -> str:
         ALM.RANDOM: "o",
         ALM.ORACLE_UNCERTAINTY_CP: "s",
         ALM.ORACLE_UNCERTAINTY: "D",
+        ALM.ENTROPY: "^",
     }
     return marker_map.get(method, "x")
 
@@ -78,5 +82,6 @@ def method_to_name(method: ALM) -> str:
         ALM.RANDOM: "Random",
         ALM.ORACLE_UNCERTAINTY_CP: "Ours",
         ALM.ORACLE_UNCERTAINTY: "Uncertainty",
+        ALM.ENTROPY: "Entropy",
     }
     return name_map.get(method, "Unknown Method")

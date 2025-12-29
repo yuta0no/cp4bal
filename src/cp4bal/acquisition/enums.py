@@ -9,6 +9,7 @@ class AcquisitionType(Enum):
     ORACLE_UNCERTAINTY_CP = auto()
     APPROXIMATE_UNCERTAINTY = auto()
     APPROXIMATE_UNCERTAINTY_CP = auto()
+    BY_ATTRIBUTE = auto()
 
 
 @unique

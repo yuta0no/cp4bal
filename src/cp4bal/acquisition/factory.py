@@ -5,10 +5,12 @@ from .configs import (
     AcquisitionConfig,
     ApproximateUncertaintyAcquisitionConfig,
     ApproximateUncertaintyWithConfidencePropagationAcquisitionConfig,
+    EntropyAcquisitionConfig,
     OracleUncertaintyAcquisitionConfig,
     OracleUncertaintyWithConfidencePropagationAcquisitionConfig,
     RandomAcquisitionConfig,
 )
+from .entropy import EntropyAcquisition
 from .oracle_uncertainty import OracleUncertaintyAcquisition
 from .oracle_uncertainty_cp import OracleUncertaintyWithConfidencePropagationAcquisition
 from .random import RandomAcquisition
@@ -18,6 +20,10 @@ class AcquisitionFactory:
     @staticmethod
     def create(config: AcquisitionConfig) -> Acquisition:
         match config.type_.name.lower():
+            case "entropy":
+                if not isinstance(config, EntropyAcquisitionConfig):
+                    raise ValueError(f"Invalid config for entropy acquisition: {config}")
+                return EntropyAcquisition(config=config)
             case "random":
                 if not isinstance(config, RandomAcquisitionConfig):
                     raise ValueError(f"Invalid config for random acquisition: {config}")

@@ -3,6 +3,7 @@ from enum import Enum
 
 
 class ActiveLearningMethod(Enum):
+    ENTROPY = "entropy"
     RANDOM = "random"
     ORACLE_UNCERTAINTY = "oracle_uncertainty"
     ORACLE_UNCERTAINTY_CP = "oracle_uncertainty_cp"

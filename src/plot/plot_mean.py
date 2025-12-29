@@ -12,10 +12,12 @@ from plot.utils import (
 )
 
 TARGET_RESULTS = [
-    b_sensitivity_csbm13_b16,
-    b_sensitivity_csbm13_b16_wocp,
+    csbm17_b8_entropy,
+    csbm17_b8_us,
+    csbm17_b8_usp,
+    csbm17_b8_random,
 ]
-FIG_NAME = "csbm13-b16.png"
+FIG_NAME = "csbm17-b8.png"
 SHOW_STD = False
 
 LINESTYLES = ["-", "--", "-.", ":"]

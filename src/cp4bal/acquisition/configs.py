@@ -49,3 +49,14 @@ class ApproximateUncertaintyWithConfidencePropagationAcquisitionConfig(Acquisiti
     aleatoric_confidence_with_left_out_node: bool = False
     aleatoric_confidence_labels_num_samples: int | None = None
     compute_as_ratio: bool = True
+
+@dataclass(kw_only=True)
+class AcquisitionByAttributeConfig(AcquisitionConfig):
+    higher_is_better: bool
+    type_: AcquisitionType = AcquisitionType.BY_ATTRIBUTE
+
+@dataclass(kw_only=True)
+class EntropyAcquisitionConfig(AcquisitionByAttributeConfig):
+    type_: AcquisitionType = AcquisitionType.ENTROPY
+    requires_model_predictions: bool = True
+    higher_is_better: bool = True
