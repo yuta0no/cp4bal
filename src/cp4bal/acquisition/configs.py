@@ -66,3 +66,9 @@ class MarginAcquisitionConfig(AcquisitionByAttributeConfig):
     type_: AcquisitionType = AcquisitionType.MARGIN
     requires_model_predictions: bool = True
     higher_is_better: bool = True
+
+@dataclass(kw_only=True)
+class LeastConfidenceAcquisitionConfig(AcquisitionByAttributeConfig):
+    type_: AcquisitionType = AcquisitionType.LEAST_CONFIDENCE
+    requires_model_predictions: bool = True
+    higher_is_better: bool = True

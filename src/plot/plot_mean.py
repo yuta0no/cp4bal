@@ -16,6 +16,7 @@ TARGET_RESULTS = [
     csbm17_b8_us,
     csbm17_b8_usp,
     csbm17_b8_random,
+    csbm17_b8_least_confidence,
     csbm17_b8_margin,
 ]
 FIG_NAME = "csbm17-b8.png"

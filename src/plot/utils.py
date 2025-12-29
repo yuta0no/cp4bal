@@ -56,6 +56,7 @@ def method_to_color(method: ALM) -> str:
         ALM.ORACLE_UNCERTAINTY_CP: "blue",
         ALM.ORACLE_UNCERTAINTY: "purple",
         ALM.ENTROPY: "green",
+        ALM.LEAST_CONFIDENCE: "darkorange",
         ALM.MARGIN: "deeppink",
     }
     return color_map.get(method, "black")
@@ -74,6 +75,7 @@ def method_to_marker(method: ALM) -> str:
         ALM.ORACLE_UNCERTAINTY_CP: "s",
         ALM.ORACLE_UNCERTAINTY: "D",
         ALM.ENTROPY: "^",
+        ALM.LEAST_CONFIDENCE: "X",
         ALM.MARGIN: "v",
     }
     return marker_map.get(method, "x")
@@ -85,6 +87,7 @@ def method_to_name(method: ALM) -> str:
         ALM.ORACLE_UNCERTAINTY_CP: "Ours",
         ALM.ORACLE_UNCERTAINTY: "Uncertainty",
         ALM.ENTROPY: "Entropy",
+        ALM.LEAST_CONFIDENCE: "Least Confidence",
         ALM.MARGIN: "Margin",
     }
     return name_map.get(method, "Unknown Method")

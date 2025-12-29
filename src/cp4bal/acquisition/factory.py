@@ -6,12 +6,14 @@ from .configs import (
     ApproximateUncertaintyAcquisitionConfig,
     ApproximateUncertaintyWithConfidencePropagationAcquisitionConfig,
     EntropyAcquisitionConfig,
+    LeastConfidenceAcquisitionConfig,
     MarginAcquisitionConfig,
     OracleUncertaintyAcquisitionConfig,
     OracleUncertaintyWithConfidencePropagationAcquisitionConfig,
     RandomAcquisitionConfig,
 )
 from .entropy import EntropyAcquisition
+from .least_confidence import LeastConfidenceAcquisition
 from .margin import MarginAcquisition
 from .oracle_uncertainty import OracleUncertaintyAcquisition
 from .oracle_uncertainty_cp import OracleUncertaintyWithConfidencePropagationAcquisition
@@ -30,6 +32,10 @@ class AcquisitionFactory:
                 if not isinstance(config, RandomAcquisitionConfig):
                     raise ValueError(f"Invalid config for random acquisition: {config}")
                 return RandomAcquisition(config=config)
+            case "least_confidence":
+                if not isinstance(config, LeastConfidenceAcquisitionConfig):
+                    raise ValueError(f"Invalid config for least confidence acquisition: {config}")
+                return LeastConfidenceAcquisition(config=config)
             case "margin":
                 if not isinstance(config, MarginAcquisitionConfig):
                     raise ValueError(f"Invalid config for margin acquisition: {config}")

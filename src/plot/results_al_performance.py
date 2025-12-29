@@ -785,6 +785,23 @@ csbm17_b8_random = ResultPaths(
     ]
 )
 
+csbm17_b8_least_confidence = ResultPaths(
+    name="least_confidence",
+    method=ALM.LEAST_CONFIDENCE,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/least_confidence/2025-12-29T13:38:59-6fd4/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/least_confidence/2025-12-29T13:39:01-014b/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/least_confidence/2025-12-29T13:39:02-412d/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/least_confidence/2025-12-29T13:39:02-a115/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/least_confidence/2025-12-29T13:39:02-f257/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/least_confidence/2025-12-29T13:39:03-2034/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/least_confidence/2025-12-29T13:39:06-bb92/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/least_confidence/2025-12-29T13:39:17-b9bd/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/least_confidence/2025-12-29T13:40:04-47c7/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/least_confidence/2025-12-29T13:40:04-94b3/result.csv",
+    ]
+)
+
 csbm17_b8_margin = ResultPaths(
     name="margin",
     method=ALM.MARGIN,

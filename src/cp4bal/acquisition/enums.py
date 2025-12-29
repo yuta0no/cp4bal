@@ -5,6 +5,7 @@ from enum import Enum, auto, unique
 class AcquisitionType(Enum):
     RANDOM = auto()
     ENTROPY = auto()
+    LEAST_CONFIDENCE = auto()
     MARGIN = auto()
     ORACLE_UNCERTAINTY = auto()
     ORACLE_UNCERTAINTY_CP = auto()
