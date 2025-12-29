@@ -5,8 +5,8 @@
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=8
 #CommentSBATCH --gres=gpu:1
-#CommentSBATCH --exclude=rump,liver  # you can exclude specified nodes here
-#SBATCH --partition=long
+#SBATCH --exclude=zabuton  # you can exclude specified nodes here
+#SBATCH --partition=short
 #CommentSBATCH --nodelist=habaki  # you can specify nodes where the job should be run; Ditto
 
 seed=$1

@@ -12,11 +12,10 @@ from plot.utils import (
 )
 
 TARGET_RESULTS = [
-    csbm11_b1_us,
-    csbm11_b1_usp,
-    csbm11_b1_random,
+    b_sensitivity_csbm13_b16,
+    b_sensitivity_csbm13_b16_wocp,
 ]
-FIG_NAME = "csbm11-b1.png"
+FIG_NAME = "csbm13-b16.png"
 SHOW_STD = False
 
 LINESTYLES = ["-", "--", "-.", ":"]
@@ -43,6 +42,7 @@ def main():
                 [m - s for m, s in zip(means, stds)],
                 [m + s for m, s in zip(means, stds)],
                 alpha=0.2,
+                color=method_to_color(result_paths.method),
             )
 
     ax.set_xlabel("#Annotation", fontsize=18)

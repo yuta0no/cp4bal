@@ -8,20 +8,20 @@ from plot.results import *  # noqa: F403
 from plot.utils import compute_auc_from_budgets_and_means, get_n_continuous_colors, load_results
 
 # Parameters
-CLASS_NUM = 4
+CLASS_NUM = 2
 TARGET_RESULTS = [
-    b_sensitivity_csbm11_b1_wocp,
-    b_sensitivity_csbm11_b2_wocp,
-    b_sensitivity_csbm11_b3_wocp,
-    b_sensitivity_csbm11_b4_wocp,
-    b_sensitivity_csbm11_b6_wocp,
-    b_sensitivity_csbm11_b8_wocp,
-    b_sensitivity_csbm11_b12_wocp,
-    b_sensitivity_csbm11_b16_wocp,
-    b_sensitivity_csbm11_b24_wocp,
+    b_sensitivity_csbm17_b1,
+    b_sensitivity_csbm17_b2,
+    b_sensitivity_csbm17_b4,
+    b_sensitivity_csbm17_b6,
+    b_sensitivity_csbm17_b8,
+    b_sensitivity_csbm17_b12,
+    b_sensitivity_csbm17_b16,
+    b_sensitivity_csbm17_b24,
 ]
-FIG_NAME = "b_sensitivity_csbm11_wocp.png"
+FIG_NAME = "b_sensitivity_csbm17"
 # Consants for plot
+EXTS = ["png", "pdf"]
 Y_MAX = 0.725
 Y_MIN = 0.50
 SHOW_LB = False  # 1-1/e lower bound
@@ -45,7 +45,7 @@ def main():
             handle_dict[100] = line[0]
     ax.set_xlabel("#Annotation", fontsize=18)
     ax.set_ylabel("Accuracy", fontsize=18)
-    xticks = np.arange(min(budgets), max(budgets) + CLASS_NUM, CLASS_NUM)
+    xticks = np.arange(min(budgets), max(budgets) + 1, CLASS_NUM * 4)
     ax.set_xticks(xticks)
     # ax.set_ylim(Y_MIN, Y_MAX)
 
@@ -56,7 +56,8 @@ def main():
     ax.tick_params(axis="both", labelsize=14)
     fig.tight_layout()
     (FIG_DIR / "accuracy").mkdir(parents=True, exist_ok=True)
-    fig.savefig(FIG_DIR / "accuracy" / FIG_NAME)
+    for ext in EXTS:
+        fig.savefig(FIG_DIR / "accuracy" / f"{FIG_NAME}.{ext}", dpi=600)
 
 
 def _calculate_lb(means):

@@ -1,27 +1,30 @@
 import os
 import subprocess
 import sys
+from pathlib import Path
 
-DATASET_CONFIG = "config/dataset/csbm-13.yaml"
-MODEL_CONFIG = "config/model/bayes_optimal.yaml"
+import yaml
+
+PROJ_ROOT = Path(__file__).parent.parent
+DATASET_CONFIG_PATH = "config/dataset/csbm-17.yaml"
+MODEL_CONFIG_PATH = "config/model/bayes_optimal.yaml"
+
+with open(PROJ_ROOT / DATASET_CONFIG_PATH, "r") as f:
+    dataset_config = yaml.safe_load(f)
+    class_num = dataset_config.get("num_classes")
+
+total_budget = 24 * class_num
 
 budget_round_pairs = [
-    (24, 2),
-    (16, 3),
-    (12, 4),
-    (8, 6),
-    (6, 8),
-    (4, 12),
-    (3, 16),
-    (2, 24),
-    (1, 48),
-    # (32, 3),
-    # (24, 4),
-    # (16, 6),
-    # (8, 12),
-    # (4, 24),
-    # (2, 48),
-    # (1, 96),
+    (1, total_budget),
+    (2, total_budget // 2),
+    # (class_num, total_budget // class_num),
+    (2*class_num, total_budget // (2*class_num)),
+    (3*class_num, total_budget // (3*class_num)),
+    (4*class_num, total_budget // (4*class_num)),
+    (6*class_num, total_budget // (6*class_num)),
+    (8*class_num, total_budget // (8*class_num)),
+    (12*class_num, total_budget // (12*class_num)),
 ]
 
 try:
@@ -48,7 +51,7 @@ for budget, round_num in budget_round_pairs:
                 method,
                 str(budget),
                 str(round_num),
-                DATASET_CONFIG,
-                MODEL_CONFIG
+                DATASET_CONFIG_PATH,
+                MODEL_CONFIG_PATH
             ]
             subprocess.run(cmd)

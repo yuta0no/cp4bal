@@ -124,6 +124,7 @@ class CSBM(GraphDataset):
                 edge_probability_inter = (
                     expected_degree * num_classes / (num_nodes - 1) / (edge_p_snr + num_classes - 1)
                 )  # q
+                # edge_probability_inter = expected_degree * num_classes / (edge_p_snr * (num_nodes - num_classes) + num_nodes * (num_classes - 1))
                 if edge_probability_inter > 1.0:
                     logger.warning(
                         f"Inter-community connection probability q for {num_classes} classes "
