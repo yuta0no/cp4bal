@@ -45,7 +45,11 @@ class Prediction:
 
     def get_logits(self) -> Float[Tensor, "s n c"] | None:
         """Returns the logits, either propagated or unpropagated."""
-        return self.logits
+        if self.logits is not None:
+            return self.logits
+        if (probs := self.get_probabilities()) is not None:
+            return (probs + 1e-12).log()
+        return None
 
     def get_embeddings(self) -> Float[Tensor, "s n d"] | None:
         """Returns the embeddings, either propagated or unpropagated."""

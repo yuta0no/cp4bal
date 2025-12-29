@@ -5,6 +5,7 @@ from .configs import (
     AcquisitionConfig,
     ApproximateUncertaintyAcquisitionConfig,
     ApproximateUncertaintyWithConfidencePropagationAcquisitionConfig,
+    EnergyAcquisitionConfig,
     EntropyAcquisitionConfig,
     LeastConfidenceAcquisitionConfig,
     MarginAcquisitionConfig,
@@ -12,6 +13,7 @@ from .configs import (
     OracleUncertaintyWithConfidencePropagationAcquisitionConfig,
     RandomAcquisitionConfig,
 )
+from .energy import EnergyAcquisition
 from .entropy import EntropyAcquisition
 from .least_confidence import LeastConfidenceAcquisition
 from .margin import MarginAcquisition
@@ -24,6 +26,10 @@ class AcquisitionFactory:
     @staticmethod
     def create(config: AcquisitionConfig) -> Acquisition:
         match config.type_.name.lower():
+            case "energy":
+                if not isinstance(config, EnergyAcquisitionConfig):
+                    raise ValueError(f"Invalid config for energy acquisition: {config}")
+                return EnergyAcquisition(config=config)
             case "entropy":
                 if not isinstance(config, EntropyAcquisitionConfig):
                     raise ValueError(f"Invalid config for entropy acquisition: {config}")

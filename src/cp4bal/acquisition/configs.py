@@ -56,6 +56,13 @@ class AcquisitionByAttributeConfig(AcquisitionConfig):
     type_: AcquisitionType = AcquisitionType.BY_ATTRIBUTE
 
 @dataclass(kw_only=True)
+class EnergyAcquisitionConfig(AcquisitionByAttributeConfig):
+    type_: AcquisitionType = AcquisitionType.ENERGY
+    requires_model_predictions: bool = True
+    higher_is_better: bool = True
+    temperature: float = 1.0
+
+@dataclass(kw_only=True)
 class EntropyAcquisitionConfig(AcquisitionByAttributeConfig):
     type_: AcquisitionType = AcquisitionType.ENTROPY
     requires_model_predictions: bool = True

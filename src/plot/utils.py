@@ -52,12 +52,13 @@ def compute_auc_from_budgets_and_means(budgets: list[int], means: list[float]) -
 
 def method_to_color(method: ALM) -> str:
     color_map = {
-        ALM.RANDOM: "gray",
-        ALM.ORACLE_UNCERTAINTY_CP: "blue",
-        ALM.ORACLE_UNCERTAINTY: "purple",
+        ALM.ENERGY: "tomato",
         ALM.ENTROPY: "green",
         ALM.LEAST_CONFIDENCE: "darkorange",
         ALM.MARGIN: "deeppink",
+        ALM.ORACLE_UNCERTAINTY: "purple",
+        ALM.ORACLE_UNCERTAINTY_CP: "blue",
+        ALM.RANDOM: "gray",
     }
     return color_map.get(method, "black")
 
@@ -71,23 +72,25 @@ def method_to_linestyle(method: ALM) -> str:
 
 def method_to_marker(method: ALM) -> str:
     marker_map = {
-        ALM.RANDOM: "o",
-        ALM.ORACLE_UNCERTAINTY_CP: "s",
-        ALM.ORACLE_UNCERTAINTY: "D",
+        ALM.ENERGY: "*",
         ALM.ENTROPY: "^",
         ALM.LEAST_CONFIDENCE: "X",
         ALM.MARGIN: "v",
+        ALM.ORACLE_UNCERTAINTY: "D",
+        ALM.ORACLE_UNCERTAINTY_CP: "s",
+        ALM.RANDOM: "o",
     }
     return marker_map.get(method, "x")
 
 
 def method_to_name(method: ALM) -> str:
     name_map = {
-        ALM.RANDOM: "Random",
-        ALM.ORACLE_UNCERTAINTY_CP: "Ours",
-        ALM.ORACLE_UNCERTAINTY: "Uncertainty",
+        ALM.ENERGY: "Energy",
         ALM.ENTROPY: "Entropy",
         ALM.LEAST_CONFIDENCE: "Least Confidence",
         ALM.MARGIN: "Margin",
+        ALM.ORACLE_UNCERTAINTY: "Uncertainty",
+        ALM.ORACLE_UNCERTAINTY_CP: "Ours",
+        ALM.RANDOM: "Random",
     }
     return name_map.get(method, "Unknown Method")

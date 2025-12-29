@@ -751,6 +751,23 @@ csbm17_b8_usp.name = "uncertainty propagation"
 csbm17_b8_us = copy(b_sensitivity_csbm17_b8_wocp)
 csbm17_b8_us.name = "uncertainty"
 
+csbm17_b8_energy = ResultPaths(
+    name="energy",
+    method=ALM.ENERGY,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/energy/2025-12-29T14:14:58-7285/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/energy/2025-12-29T14:15:00-3ca7/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/energy/2025-12-29T14:15:00-6bb7/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/energy/2025-12-29T14:15:01-9140/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/energy/2025-12-29T14:15:01-b8fa/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/energy/2025-12-29T14:15:01-d3e6/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/energy/2025-12-29T14:15:15-f2cb/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/energy/2025-12-29T14:16:04-31cb/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/energy/2025-12-29T14:16:04-9036/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/energy/2025-12-29T14:16:04-f419/result.csv",
+    ]
+)
+
 csbm17_b8_entropy = ResultPaths(
     name="entropy",
     method=ALM.ENTROPY,

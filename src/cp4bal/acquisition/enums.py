@@ -4,6 +4,7 @@ from enum import Enum, auto, unique
 @unique
 class AcquisitionType(Enum):
     RANDOM = auto()
+    ENERGY = auto()
     ENTROPY = auto()
     LEAST_CONFIDENCE = auto()
     MARGIN = auto()
