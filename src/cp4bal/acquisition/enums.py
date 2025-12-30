@@ -4,6 +4,7 @@ from enum import Enum, auto, unique
 @unique
 class AcquisitionType(Enum):
     RANDOM = auto()
+    DEGREE = auto()
     ENERGY = auto()
     ENTROPY = auto()
     LEAST_CONFIDENCE = auto()
@@ -20,3 +21,9 @@ class UncertaintyType(Enum):
     EPISTEMIC = auto()
     ALEATORIC = auto()
     TOTAL = auto()
+
+
+@unique
+class DegreeType(Enum):
+    IN = "in"
+    OUT = "out"

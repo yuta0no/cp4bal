@@ -3,6 +3,7 @@ from enum import Enum
 
 
 class ActiveLearningMethod(Enum):
+    DEGREE = "degree"
     ENERGY = "energy"
     ENTROPY = "entropy"
     RANDOM = "random"

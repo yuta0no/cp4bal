@@ -751,6 +751,23 @@ csbm17_b8_usp.name = "uncertainty propagation"
 csbm17_b8_us = copy(b_sensitivity_csbm17_b8_wocp)
 csbm17_b8_us.name = "uncertainty"
 
+csbm17_b8_degree = ResultPaths(
+    name="degree",
+    method=ALM.DEGREE,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/degree/2025-12-29T16:12:53-22a2/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/degree/2025-12-29T16:12:57-4ab0/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/degree/2025-12-29T16:12:57-4cfd/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/degree/2025-12-29T16:12:57-7ef7/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/degree/2025-12-29T16:12:57-3497/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/degree/2025-12-29T16:12:57-b00f/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/degree/2025-12-29T16:13:12-88e4/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/degree/2025-12-29T16:14:00-94b0/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/degree/2025-12-29T16:14:00-534e/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-17/bayes_optimal/8/degree/2025-12-29T16:14:00-fd44/result.csv",
+    ]
+)
+
 csbm17_b8_energy = ResultPaths(
     name="energy",
     method=ALM.ENERGY,

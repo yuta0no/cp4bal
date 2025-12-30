@@ -12,6 +12,7 @@ from cp4bal.acquisition.configs import (
     AcquisitionConfig,
     ApproximateUncertaintyAcquisitionConfig,
     ApproximateUncertaintyWithConfidencePropagationAcquisitionConfig,
+    DegreeAcquisitionConfig,
     EnergyAcquisitionConfig,
     EntropyAcquisitionConfig,
     LeastConfidenceAcquisitionConfig,
@@ -162,6 +163,8 @@ class ConfigBuilder:
             raise ValueError("Budget must be set and positive before building the config.")
 
         match self._states.acquisition_name.lower():
+            case "degree":
+                return DegreeAcquisitionConfig()
             case "energy":
                 return EnergyAcquisitionConfig()
             case "entropy":

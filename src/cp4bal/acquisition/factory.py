@@ -5,6 +5,7 @@ from .configs import (
     AcquisitionConfig,
     ApproximateUncertaintyAcquisitionConfig,
     ApproximateUncertaintyWithConfidencePropagationAcquisitionConfig,
+    DegreeAcquisitionConfig,
     EnergyAcquisitionConfig,
     EntropyAcquisitionConfig,
     LeastConfidenceAcquisitionConfig,
@@ -13,6 +14,7 @@ from .configs import (
     OracleUncertaintyWithConfidencePropagationAcquisitionConfig,
     RandomAcquisitionConfig,
 )
+from .degree import DegreeAcquisition
 from .energy import EnergyAcquisition
 from .entropy import EntropyAcquisition
 from .least_confidence import LeastConfidenceAcquisition
@@ -26,6 +28,10 @@ class AcquisitionFactory:
     @staticmethod
     def create(config: AcquisitionConfig) -> Acquisition:
         match config.type_.name.lower():
+            case "degree":
+                if not isinstance(config, DegreeAcquisitionConfig):
+                    raise ValueError(f"Invalid config for degree acquisition: {config}")
+                return DegreeAcquisition(config=config)
             case "energy":
                 if not isinstance(config, EnergyAcquisitionConfig):
                     raise ValueError(f"Invalid config for energy acquisition: {config}")

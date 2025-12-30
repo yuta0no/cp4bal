@@ -52,6 +52,7 @@ def compute_auc_from_budgets_and_means(budgets: list[int], means: list[float]) -
 
 def method_to_color(method: ALM) -> str:
     color_map = {
+        ALM.DEGREE: "dodgerblue",
         ALM.ENERGY: "tomato",
         ALM.ENTROPY: "green",
         ALM.LEAST_CONFIDENCE: "darkorange",
@@ -66,12 +67,14 @@ def method_to_color(method: ALM) -> str:
 def method_to_linestyle(method: ALM) -> str:
     linestyle_map = {
         ALM.RANDOM: "dashed",
+        ALM.DEGREE: "dotted",
     }
     return linestyle_map.get(method, "solid")
 
 
 def method_to_marker(method: ALM) -> str:
     marker_map = {
+        ALM.DEGREE: "x",
         ALM.ENERGY: "*",
         ALM.ENTROPY: "^",
         ALM.LEAST_CONFIDENCE: "X",
@@ -85,6 +88,7 @@ def method_to_marker(method: ALM) -> str:
 
 def method_to_name(method: ALM) -> str:
     name_map = {
+        ALM.DEGREE: "Degree",
         ALM.ENERGY: "Energy",
         ALM.ENTROPY: "Entropy",
         ALM.LEAST_CONFIDENCE: "Least Confidence",

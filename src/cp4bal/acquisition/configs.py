@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from .enums import AcquisitionType, UncertaintyType
+from .enums import AcquisitionType, DegreeType, UncertaintyType
 
 
 # Acquisition
@@ -54,6 +54,13 @@ class ApproximateUncertaintyWithConfidencePropagationAcquisitionConfig(Acquisiti
 class AcquisitionByAttributeConfig(AcquisitionConfig):
     higher_is_better: bool
     type_: AcquisitionType = AcquisitionType.BY_ATTRIBUTE
+
+@dataclass(kw_only=True)
+class DegreeAcquisitionConfig(AcquisitionByAttributeConfig):
+    type_: AcquisitionType = AcquisitionType.DEGREE
+    requires_model_predictions: bool = False
+    higher_is_better: bool = True
+    degree_type: DegreeType = DegreeType.IN
 
 @dataclass(kw_only=True)
 class EnergyAcquisitionConfig(AcquisitionByAttributeConfig):

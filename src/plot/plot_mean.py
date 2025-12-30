@@ -12,6 +12,7 @@ from plot.utils import (
 )
 
 TARGET_RESULTS = [
+    csbm17_b8_degree,
     csbm17_b8_energy,
     csbm17_b8_entropy,
     csbm17_b8_us,
