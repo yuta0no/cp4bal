@@ -9,11 +9,11 @@ from plot.constant import FIG_DIR
 # Constants
 result_dir = Path("/home/members/ono/workspace/cp4bal/out/mean_field_error/")
 exp_names = [
-    "csbm_n16_k3_snr1.5_d4_seed13",
-    "csbm_n16_k3_snr1.5_d4_seed42",
-    "csbm_n16_k3_snr1.5_d4_seed89",
-    "csbm_n16_k3_snr1.5_d4_seed1942",
-    "csbm_n16_k3_snr1.5_d4_seed2001",
+    "csbm_n16_k3_snr3.0_d4_seed13",
+    "csbm_n16_k3_snr3.0_d4_seed42",
+    "csbm_n16_k3_snr3.0_d4_seed89",
+    "csbm_n16_k3_snr3.0_d4_seed1942",
+    "csbm_n16_k3_snr3.0_d4_seed2001",
 ]
 EXTS = ["png", "pdf"]
 cmap = plt.get_cmap("tab10")

@@ -10,16 +10,16 @@ from plot.utils import compute_auc_from_budgets_and_means, get_n_continuous_colo
 # Parameters
 CLASS_NUM = 2
 TARGET_RESULTS = [
-    b_sensitivity_csbm17_b1,
-    b_sensitivity_csbm17_b2,
-    b_sensitivity_csbm17_b4,
-    b_sensitivity_csbm17_b6,
-    b_sensitivity_csbm17_b8,
-    b_sensitivity_csbm17_b12,
-    b_sensitivity_csbm17_b16,
-    b_sensitivity_csbm17_b24,
+    b_sensitivity_csbm18_b1_wocp,
+    b_sensitivity_csbm18_b2_wocp,
+    b_sensitivity_csbm18_b4_wocp,
+    b_sensitivity_csbm18_b8_wocp,
+    b_sensitivity_csbm18_b12_wocp,
+    b_sensitivity_csbm18_b16_wocp,
+    b_sensitivity_csbm18_b24_wocp,
+    b_sensitivity_csbm18_b48_wocp,
 ]
-FIG_NAME = "b_sensitivity_csbm17"
+FIG_NAME = "b_sensitivity_csbm18_wocp"
 # Consants for plot
 EXTS = ["png", "pdf"]
 Y_MAX = 0.725

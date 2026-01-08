@@ -28,6 +28,7 @@ dependencies = [
     "torch-spline-conv>=1.2.2",
     "pyg-lib>=0.4.0",
     "pandas>=2.3.2",
+    "seaborn>=0.13.2",
 ]
 
 [tool.ruff]

@@ -16,10 +16,10 @@ OUT_DIR = Path(__file__).parent.parent.parent / "out" / "mean_field_error"
 
 def main():
     # dataset
-    N = 20  # num nodes
-    K = 2  # num classes
-    SNR = 1.0  # signal to noise ratio
-    D = 8  # expected degree
+    N = 16  # num nodes
+    K = 3  # num classes
+    SNR = 3.0  # signal to noise ratio
+    D = 4  # expected degree
     for seed in [13, 42, 89, 1942, 2001]:
         set_seed(seed)
         init_stream_logger()

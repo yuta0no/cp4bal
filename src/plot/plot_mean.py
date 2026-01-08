@@ -12,17 +12,18 @@ from plot.utils import (
 )
 
 TARGET_RESULTS = [
-    csbm17_b8_degree,
-    csbm17_b8_energy,
-    csbm17_b8_entropy,
-    csbm17_b8_us,
-    csbm17_b8_usp,
-    csbm17_b8_random,
-    csbm17_b8_least_confidence,
-    csbm17_b8_margin,
+    csbm19_b32_degree,
+    csbm19_b32_energy,
+    csbm19_b32_entropy,
+    csbm19_b32_us,
+    csbm19_b32_usp,
+    csbm19_b32_random,
+    csbm19_b32_least_confidence,
+    csbm19_b32_margin,
 ]
-FIG_NAME = "csbm17-b8.png"
-SHOW_STD = False
+EXTS = ["png", "pdf"]
+FIG_NAME = "csbm19-b32-comp"
+SHOW_STD = True
 
 def main():
     fig, ax = plt.subplots(figsize=(8, 6))
@@ -50,10 +51,11 @@ def main():
 
     ax.set_xlabel("#Annotation", fontsize=18)
     ax.set_ylabel("Accuracy", fontsize=18)
-    ax.legend(fontsize=14)
+    ax.legend(fontsize=14, loc="upper left")
     ax.tick_params(axis="both", labelsize=14)
     (FIG_DIR / "accuracy").mkdir(parents=True, exist_ok=True)
-    fig.savefig(FIG_DIR / "accuracy" / FIG_NAME)
+    for ext in EXTS:
+        fig.savefig(FIG_DIR / "accuracy" / f"{FIG_NAME}_accuracy.{ext}", dpi=300)
 
 
 if __name__ == "__main__":
