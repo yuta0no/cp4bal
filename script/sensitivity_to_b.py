@@ -7,7 +7,7 @@ import numpy as np
 import yaml
 
 PROJ_ROOT = Path(__file__).parent.parent
-DATASET_CONFIG_PATH = "config/dataset/csbm-19.yaml"
+DATASET_CONFIG_PATH = "config/dataset/csbm-18.yaml"
 MODEL_CONFIG_PATH = "config/model/bayes_optimal.yaml"
 
 with open(PROJ_ROOT / DATASET_CONFIG_PATH, "r") as f:
@@ -17,16 +17,17 @@ with open(PROJ_ROOT / DATASET_CONFIG_PATH, "r") as f:
 total_budget = 24 * class_num
 
 budget_round_pairs = [
-    (1, total_budget),
-    (2, total_budget // 2),
-    (4, total_budget // 4),
-    (class_num, total_budget // class_num),
-    (2*class_num, total_budget // (2*class_num)),
-    (3*class_num, total_budget // (3*class_num)),
-    (4*class_num, total_budget // (4*class_num)),
-    (6*class_num, total_budget // (6*class_num)),
-    (8*class_num, total_budget // (8*class_num)),
-    (12*class_num, total_budget // (12*class_num)),
+    # (1, total_budget),
+    # (2, total_budget // 2),
+    # (4, total_budget // 4),
+    # (class_num, total_budget // class_num),
+    # (2*class_num, total_budget // (2*class_num)),
+    # (3*class_num, total_budget // (3*class_num)),
+    # (4*class_num, total_budget // (4*class_num)),
+    # (6*class_num, total_budget // (6*class_num)),
+    # (8*class_num, total_budget // (8*class_num)),
+    # (12*class_num, total_budget // (12*class_num)),
+    (24*class_num, total_budget // (24*class_num)),
 ]
 
 try:
