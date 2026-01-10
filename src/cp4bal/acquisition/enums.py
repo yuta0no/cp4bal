@@ -1,9 +1,10 @@
-from enum import Enum, auto, unique
+from enum import Enum, StrEnum, auto, unique
 
 
 @unique
 class AcquisitionType(Enum):
     RANDOM = auto()
+    CORESET_FEATURE = auto()
     DEGREE = auto()
     ENERGY = auto()
     ENTROPY = auto()
@@ -21,6 +22,13 @@ class UncertaintyType(Enum):
     EPISTEMIC = auto()
     ALEATORIC = auto()
     TOTAL = auto()
+
+
+@unique
+class CoresetDistance(StrEnum):
+    LATENT_FEATURES = "latent_space"
+    INPUT_FEATURES = "input_features"
+    APPR = "appr"
 
 
 @unique

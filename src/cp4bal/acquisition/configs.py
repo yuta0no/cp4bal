@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from .enums import AcquisitionType, DegreeType, UncertaintyType
+from .enums import AcquisitionType, CoresetDistance, DegreeType, UncertaintyType
 
 
 # Acquisition
@@ -14,6 +14,20 @@ class AcquisitionConfig:
 class RandomAcquisitionConfig(AcquisitionConfig):
     type_: AcquisitionType = AcquisitionType.RANDOM
     requires_model_predictions: bool = False
+
+
+@dataclass(kw_only=True)
+class CoresetAcquisitionConfig(AcquisitionConfig):
+    type_: AcquisitionType = AcquisitionType.CORESET_FEATURE
+    requires_model_predictions: bool = True
+    coreset_distance: CoresetDistance = CoresetDistance.INPUT_FEATURES
+
+
+@dataclass(kw_only=True)
+class FeatureCoresetAcquisitionConfig(CoresetAcquisitionConfig):
+    type_: AcquisitionType = AcquisitionType.CORESET_FEATURE
+    requires_model_predictions: bool = True
+    coreset_distance: CoresetDistance = CoresetDistance.INPUT_FEATURES
 
 
 @dataclass(kw_only=True)

@@ -15,6 +15,7 @@ from cp4bal.acquisition.configs import (
     DegreeAcquisitionConfig,
     EnergyAcquisitionConfig,
     EntropyAcquisitionConfig,
+    FeatureCoresetAcquisitionConfig,
     LeastConfidenceAcquisitionConfig,
     MarginAcquisitionConfig,
     OracleUncertaintyAcquisitionConfig,
@@ -163,6 +164,8 @@ class ConfigBuilder:
             raise ValueError("Budget must be set and positive before building the config.")
 
         match self._states.acquisition_name.lower():
+            case "coreset_feature":
+                return FeatureCoresetAcquisitionConfig()
             case "degree":
                 return DegreeAcquisitionConfig()
             case "energy":
