@@ -31,6 +31,13 @@ class FeatureCoresetAcquisitionConfig(CoresetAcquisitionConfig):
 
 
 @dataclass(kw_only=True)
+class GraphCoresetAcquisitionConfig(CoresetAcquisitionConfig):
+    type_: AcquisitionType = AcquisitionType.CORESET_GRAPH
+    requires_model_predictions: bool = True
+    coreset_distance: CoresetDistance = CoresetDistance.HOPS
+
+
+@dataclass(kw_only=True)
 class OracleUncertaintyAcquisitionConfig(AcquisitionConfig):
     type_: AcquisitionType = AcquisitionType.ORACLE_UNCERTAINTY
     uncertainty_type: UncertaintyType = UncertaintyType.EPISTEMIC

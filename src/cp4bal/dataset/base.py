@@ -437,6 +437,16 @@ class ActiveLearningDataset(TorchDataset):
     def node_degrees_out(self) -> Int[Tensor, " num_nodes"]:
         return self.data.node_degrees_out
 
+    @property
+    def dense_adjacency_matrix(self) -> Float[Tensor, " num_nodes num_nodes"]:
+        """Returns the adjacency matrix as a dense tensor."""
+        adj = torch.sparse_coo_tensor(
+            self.data.edge_index,
+            torch.ones(self.data.edge_index.size(1), device=self.data.edge_index.device),
+            (self.num_nodes, self.num_nodes),
+        )
+        return adj.to_dense()
+
 
 def sample_from_mask(
     mask: Bool[Tensor, " num_nodes"],

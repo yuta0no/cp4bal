@@ -16,6 +16,7 @@ from cp4bal.acquisition.configs import (
     EnergyAcquisitionConfig,
     EntropyAcquisitionConfig,
     FeatureCoresetAcquisitionConfig,
+    GraphCoresetAcquisitionConfig,
     LeastConfidenceAcquisitionConfig,
     MarginAcquisitionConfig,
     OracleUncertaintyAcquisitionConfig,
@@ -166,6 +167,8 @@ class ConfigBuilder:
         match self._states.acquisition_name.lower():
             case "coreset_feature":
                 return FeatureCoresetAcquisitionConfig()
+            case "coreset_graph":
+                return GraphCoresetAcquisitionConfig()
             case "degree":
                 return DegreeAcquisitionConfig()
             case "energy":

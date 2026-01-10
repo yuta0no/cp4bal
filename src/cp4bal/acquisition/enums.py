@@ -5,6 +5,7 @@ from enum import Enum, StrEnum, auto, unique
 class AcquisitionType(Enum):
     RANDOM = auto()
     CORESET_FEATURE = auto()
+    CORESET_GRAPH = auto()
     DEGREE = auto()
     ENERGY = auto()
     ENTROPY = auto()
@@ -26,9 +27,10 @@ class UncertaintyType(Enum):
 
 @unique
 class CoresetDistance(StrEnum):
-    LATENT_FEATURES = "latent_space"
-    INPUT_FEATURES = "input_features"
     APPR = "appr"
+    HOPS = "hops"
+    INPUT_FEATURES = "input_features"
+    LATENT_FEATURES = "latent_space"
 
 
 @unique

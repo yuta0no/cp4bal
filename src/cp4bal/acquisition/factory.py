@@ -9,6 +9,7 @@ from .configs import (
     EnergyAcquisitionConfig,
     EntropyAcquisitionConfig,
     FeatureCoresetAcquisitionConfig,
+    GraphCoresetAcquisitionConfig,
     LeastConfidenceAcquisitionConfig,
     MarginAcquisitionConfig,
     OracleUncertaintyAcquisitionConfig,
@@ -33,6 +34,10 @@ class AcquisitionFactory:
         match config.type_:
             case AcquisitionType.CORESET_FEATURE:
                 if not isinstance(config, FeatureCoresetAcquisitionConfig):
+                    raise ValueError(f"Invalid config for coreset acquisition: {config}")
+                return CoresetAcquisition(config=config)
+            case AcquisitionType.CORESET_GRAPH:
+                if not isinstance(config, GraphCoresetAcquisitionConfig):
                     raise ValueError(f"Invalid config for coreset acquisition: {config}")
                 return CoresetAcquisition(config=config)
             case AcquisitionType.DEGREE:
