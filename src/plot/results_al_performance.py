@@ -853,6 +853,40 @@ csbm17_b8_margin = ResultPaths(
     ]
 )
 
+csbm18_b4_coreset_feature = ResultPaths(
+    name="coreset feature",
+    method=ALM.CORESET_FEATURE,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/4/coreset_feature/2026-01-10T12:39:28-0018/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/4/coreset_feature/2026-01-10T12:39:28-193b/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/4/coreset_feature/2026-01-10T12:39:42-1fad/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/4/coreset_feature/2026-01-10T12:39:42-3c5d/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/4/coreset_feature/2026-01-10T12:39:42-0993/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/4/coreset_feature/2026-01-10T12:39:42-1838/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/4/coreset_feature/2026-01-10T12:39:42-4539/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/4/coreset_feature/2026-01-10T12:39:48-1bff/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/4/coreset_feature/2026-01-10T12:40:32-82ea/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/4/coreset_feature/2026-01-10T12:40:32-f23c/result.csv",
+    ]
+)
+
+csbm18_b4_coreset_graph = ResultPaths(
+    name="coreset graph",
+    method=ALM.CORESET_GRAPH,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/4/coreset_graph/2026-01-10T13:58:20-2cc1/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/4/coreset_graph/2026-01-10T13:58:20-a5e0/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/4/coreset_graph/2026-01-10T13:58:36-511c/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/4/coreset_graph/2026-01-10T13:58:38-e695/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/4/coreset_graph/2026-01-10T13:58:39-435f/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/4/coreset_graph/2026-01-10T13:58:43-d665/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/4/coreset_graph/2026-01-10T13:58:47-6f0b/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/4/coreset_graph/2026-01-10T13:58:59-e223/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/4/coreset_graph/2026-01-10T13:59:00-0d2d/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/4/coreset_graph/2026-01-10T13:59:00-22e4/result.csv",
+    ]
+)
+
 csbm18_b4_degree = ResultPaths(
     name="degree",
     method=ALM.DEGREE,
@@ -986,6 +1020,40 @@ csbm18_b4_random= ResultPaths(
         "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/4/random/2025-12-29T16:55:44-a1a0/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/4/random/2025-12-29T16:55:50-1d18/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/4/random/2025-12-29T16:55:50-d3ca/result.csv",
+    ]
+)
+
+csbm18_b8_coreset_feature = ResultPaths(
+    name="coreset feature",
+    method=ALM.CORESET_FEATURE,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/8/coreset_feature/2026-01-10T12:39:45-d29c/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/8/coreset_feature/2026-01-10T12:39:48-f8a4/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/8/coreset_feature/2026-01-10T12:39:57-f3a7/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/8/coreset_feature/2026-01-10T12:40:01-a459/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/8/coreset_feature/2026-01-10T12:40:09-e218/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/8/coreset_feature/2026-01-10T12:40:12-19bf/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/8/coreset_feature/2026-01-10T12:40:12-76ee/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/8/coreset_feature/2026-01-10T12:40:12-d577/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/8/coreset_feature/2026-01-10T12:40:14-a003/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/8/coreset_feature/2026-01-10T12:40:32-7834/result.csv",
+    ]
+)
+
+csbm18_b8_coreset_graph = ResultPaths(
+    name="coreset graph",
+    method=ALM.CORESET_GRAPH,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/8/coreset_graph/2026-01-10T13:59:01-39ee/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/8/coreset_graph/2026-01-10T13:59:05-22ee/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/8/coreset_graph/2026-01-10T13:59:11-00e1/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/8/coreset_graph/2026-01-10T13:59:18-a38b/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/8/coreset_graph/2026-01-10T13:59:19-5b2e/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/8/coreset_graph/2026-01-10T13:59:19-5201/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/8/coreset_graph/2026-01-10T13:59:21-d550/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/8/coreset_graph/2026-01-10T13:59:24-7e53/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/8/coreset_graph/2026-01-10T13:59:24-9390/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/8/coreset_graph/2026-01-10T13:59:28-aacd/result.csv",
     ]
 )
 
@@ -1125,6 +1193,40 @@ csbm18_b8_random= ResultPaths(
     ]
 )
 
+csbm18_b12_coreset_feature = ResultPaths(
+    name="coreset feature",
+    method=ALM.CORESET_FEATURE,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/12/coreset_feature/2026-01-10T12:40:11-86da/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/12/coreset_feature/2026-01-10T12:40:11-dbfa/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/12/coreset_feature/2026-01-10T12:40:14-2d3a/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/12/coreset_feature/2026-01-10T12:40:21-868d/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/12/coreset_feature/2026-01-10T12:40:22-8f72/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/12/coreset_feature/2026-01-10T12:40:22-bc5d/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/12/coreset_feature/2026-01-10T12:40:24-0f83/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/12/coreset_feature/2026-01-10T12:40:26-e7ae/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/12/coreset_feature/2026-01-10T12:40:28-8474/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/12/coreset_feature/2026-01-10T12:40:36-0b47/result.csv",
+    ]
+)
+
+csbm18_b12_coreset_graph = ResultPaths(
+    name="coreset graph",
+    method=ALM.CORESET_GRAPH,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/12/coreset_graph/2026-01-10T13:59:26-f18a/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/12/coreset_graph/2026-01-10T13:59:31-a792/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/12/coreset_graph/2026-01-10T13:59:33-9571/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/12/coreset_graph/2026-01-10T13:59:34-0dbc/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/12/coreset_graph/2026-01-10T13:59:40-01d6/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/12/coreset_graph/2026-01-10T13:59:40-8acf/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/12/coreset_graph/2026-01-10T13:59:40-8c7d/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/12/coreset_graph/2026-01-10T13:59:40-0813/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/12/coreset_graph/2026-01-10T13:59:42-d757/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/12/coreset_graph/2026-01-10T13:59:53-214f/result.csv",
+    ]
+)
+
 csbm18_b12_degree = ResultPaths(
     name="degree",
     method=ALM.DEGREE,
@@ -1258,6 +1360,40 @@ csbm18_b12_random= ResultPaths(
         "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/12/random/2025-12-29T16:57:07-0d06/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/12/random/2025-12-29T16:57:09-51d5/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/12/random/2025-12-29T16:57:11-9d0a/result.csv",
+    ]
+)
+
+csbm18_b16_coreset_feature = ResultPaths(
+    name="coreset feature",
+    method=ALM.CORESET_FEATURE,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/16/coreset_feature/2026-01-10T12:40:28-5792/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/16/coreset_feature/2026-01-10T12:40:31-fb46/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/16/coreset_feature/2026-01-10T12:40:32-d750/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/16/coreset_feature/2026-01-10T12:40:32-e745/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/16/coreset_feature/2026-01-10T12:40:36-053d/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/16/coreset_feature/2026-01-10T12:40:39-6057/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/16/coreset_feature/2026-01-10T12:40:39-c74f/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/16/coreset_feature/2026-01-10T12:40:40-5104/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/16/coreset_feature/2026-01-10T12:40:40-e040/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/16/coreset_feature/2026-01-10T12:40:42-143a/result.csv",
+    ]
+)
+
+csbm18_b16_coreset_graph = ResultPaths(
+    name="coreset graph",
+    method=ALM.CORESET_GRAPH,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/16/coreset_graph/2026-01-10T13:59:43-8732/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/16/coreset_graph/2026-01-10T13:59:44-caec/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/16/coreset_graph/2026-01-10T13:59:45-4a11/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/16/coreset_graph/2026-01-10T13:59:46-36f9/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/16/coreset_graph/2026-01-10T13:59:52-2f5a/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/16/coreset_graph/2026-01-10T13:59:52-fd2c/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/16/coreset_graph/2026-01-10T13:59:53-12c5/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/16/coreset_graph/2026-01-10T13:59:58-10c4/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/16/coreset_graph/2026-01-10T13:59:58-e101/result.csv",
+        "/home/members/ono/workspace/cp4bal/out/csbm-18/bayes_optimal/16/coreset_graph/2026-01-10T13:59:58-e892/result.csv",
     ]
 )
 
@@ -1703,6 +1839,40 @@ csbm19_b4_random = ResultPaths(
     ]
 )
 
+csbm19_b8_coreset_feature = ResultPaths(
+    name="coreset feature",
+    method=ALM.CORESET_FEATURE,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/8/coreset_feature/2026-01-10T12:40:42-a0c8/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/8/coreset_feature/2026-01-10T12:40:45-eacc/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/8/coreset_feature/2026-01-10T12:40:50-7945/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/8/coreset_feature/2026-01-10T12:40:50-c44f/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/8/coreset_feature/2026-01-10T12:40:50-ee1b/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/8/coreset_feature/2026-01-10T12:40:51-7324/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/8/coreset_feature/2026-01-10T12:40:51-c978/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/8/coreset_feature/2026-01-10T12:41:04-7851/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/8/coreset_feature/2026-01-10T12:41:10-1df4/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/8/coreset_feature/2026-01-10T12:41:10-ca39/result.csv"
+    ]
+)
+
+csbm19_b8_coreset_graph = ResultPaths(
+    name="coreset graph",
+    method=ALM.CORESET_GRAPH,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/8/coreset_graph/2026-01-10T13:47:14-2502/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/8/coreset_graph/2026-01-10T13:47:14-ffc2/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/8/coreset_graph/2026-01-10T13:47:21-2fd2/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/8/coreset_graph/2026-01-10T13:47:21-6d79/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/8/coreset_graph/2026-01-10T13:47:21-17a6/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/8/coreset_graph/2026-01-10T13:47:21-79eb/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/8/coreset_graph/2026-01-10T13:47:21-9840/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/8/coreset_graph/2026-01-10T13:47:31-1143/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/8/coreset_graph/2026-01-10T13:48:19-74b6/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/8/coreset_graph/2026-01-10T13:48:19-a164/result.csv"
+    ]
+)
+
 csbm19_b8_degree = ResultPaths(
     name="degree",
     method=ALM.DEGREE,
@@ -1836,6 +2006,40 @@ csbm19_b8_random = ResultPaths(
         "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/8/random/2026-01-08T06:35:35-5d59/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/8/random/2026-01-08T06:38:21-a558/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/8/random/2026-01-08T06:41:33-aa78/result.csv",
+    ]
+)
+
+csbm19_b16_coreset_feature = ResultPaths(
+    name="coreset feature",
+    method=ALM.CORESET_FEATURE,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/16/coreset_feature/2026-01-10T12:41:10-9606/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/16/coreset_feature/2026-01-10T12:43:59-527a/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/16/coreset_feature/2026-01-10T12:44:09-9aa9/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/16/coreset_feature/2026-01-10T12:44:45-0981/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/16/coreset_feature/2026-01-10T12:45:16-3e13/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/16/coreset_feature/2026-01-10T12:45:56-ac30/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/16/coreset_feature/2026-01-10T12:46:04-4993/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/16/coreset_feature/2026-01-10T12:46:43-8ff4/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/16/coreset_feature/2026-01-10T12:46:57-4038/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/16/coreset_feature/2026-01-10T12:46:57-cf4e/result.csv"
+    ]
+)
+
+csbm19_b16_coreset_graph = ResultPaths(
+    name="coreset graph",
+    method=ALM.CORESET_GRAPH,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/16/coreset_graph/2026-01-10T13:48:19-bed4/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/16/coreset_graph/2026-01-10T13:50:30-5c4a/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/16/coreset_graph/2026-01-10T13:51:46-50b6/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/16/coreset_graph/2026-01-10T13:52:02-65d9/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/16/coreset_graph/2026-01-10T13:52:08-2f21/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/16/coreset_graph/2026-01-10T13:52:22-26f4/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/16/coreset_graph/2026-01-10T13:52:22-d9ef/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/16/coreset_graph/2026-01-10T13:53:26-02ed/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/16/coreset_graph/2026-01-10T13:54:00-ed6e/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/16/coreset_graph/2026-01-10T13:54:17-dbc4/result.csv"
     ]
 )
 
@@ -1975,6 +2179,40 @@ csbm19_b16_random = ResultPaths(
     ]
 )
 
+csbm19_b24_coreset_feature = ResultPaths(
+    name="coreset feature",
+    method=ALM.CORESET_FEATURE,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/24/coreset_feature/2026-01-10T12:47:05-951c/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/24/coreset_feature/2026-01-10T12:47:07-e028/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/24/coreset_feature/2026-01-10T12:47:16-056d/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/24/coreset_feature/2026-01-10T12:47:17-a30b/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/24/coreset_feature/2026-01-10T12:47:37-c928/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/24/coreset_feature/2026-01-10T12:47:47-22fb/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/24/coreset_feature/2026-01-10T12:47:48-c138/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/24/coreset_feature/2026-01-10T12:48:36-5bc2/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/24/coreset_feature/2026-01-10T12:48:56-8690/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/24/coreset_feature/2026-01-10T12:48:58-8240/result.csv"
+    ]
+)
+
+csbm19_b24_coreset_graph = ResultPaths(
+    name="coreset graph",
+    method=ALM.CORESET_GRAPH,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/24/coreset_graph/2026-01-10T13:54:08-815c/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/24/coreset_graph/2026-01-10T13:54:08-956b/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/24/coreset_graph/2026-01-10T13:54:28-882f/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/24/coreset_graph/2026-01-10T13:54:49-b8de/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/24/coreset_graph/2026-01-10T13:54:53-e4a0/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/24/coreset_graph/2026-01-10T13:55:15-28b8/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/24/coreset_graph/2026-01-10T13:55:20-7098/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/24/coreset_graph/2026-01-10T13:56:20-6821/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/24/coreset_graph/2026-01-10T13:56:21-183a/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/24/coreset_graph/2026-01-10T13:56:30-4f5e/result.csv"
+    ]
+)
+
 csbm19_b24_degree = ResultPaths(
     name="degree",
     method=ALM.DEGREE,
@@ -2108,6 +2346,40 @@ csbm19_b24_random = ResultPaths(
         "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/24/random/2026-01-08T07:07:01-c446/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/24/random/2026-01-08T07:08:18-0768/result.csv",
         "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/24/random/2026-01-08T07:09:37-928b/result.csv",
+    ]
+)
+
+csbm19_b32_coreset_feature = ResultPaths(
+    name="coreset feature",
+    method=ALM.CORESET_FEATURE,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/32/coreset_feature/2026-01-10T12:49:17-7890/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/32/coreset_feature/2026-01-10T12:49:23-a959/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/32/coreset_feature/2026-01-10T12:49:25-2ef2/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/32/coreset_feature/2026-01-10T12:49:37-d0eb/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/32/coreset_feature/2026-01-10T12:49:50-9fb2/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/32/coreset_feature/2026-01-10T12:49:58-6b2f/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/32/coreset_feature/2026-01-10T12:50:12-4513/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/32/coreset_feature/2026-01-10T12:50:16-0a9c/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/32/coreset_feature/2026-01-10T12:50:21-9691/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/32/coreset_feature/2026-01-10T12:50:43-c673/result.csv"
+    ]
+)
+
+csbm19_b32_coreset_graph = ResultPaths(
+    name="coreset graph",
+    method=ALM.CORESET_GRAPH,
+    paths=[
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/32/coreset_graph/2026-01-10T13:56:35-21dc/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/32/coreset_graph/2026-01-10T13:56:37-2b9e/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/32/coreset_graph/2026-01-10T13:56:38-5147/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/32/coreset_graph/2026-01-10T13:56:38-c85d/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/32/coreset_graph/2026-01-10T13:56:42-1fa3/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/32/coreset_graph/2026-01-10T13:57:35-dbee/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/32/coreset_graph/2026-01-10T13:57:38-423a/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/32/coreset_graph/2026-01-10T13:57:47-96ec/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/32/coreset_graph/2026-01-10T13:58:09-7b5b/result.csv"
+        "/home/members/ono/workspace/cp4bal/out/csbm-19/bayes_optimal/32/coreset_graph/2026-01-10T13:58:14-c873/result.csv"
     ]
 )
 

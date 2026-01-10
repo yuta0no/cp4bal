@@ -7,7 +7,7 @@ import numpy as np
 import yaml
 
 PROJ_ROOT = Path(__file__).parent.parent
-DATASET_CONFIG_PATH = "config/dataset/csbm-19.yaml"
+DATASET_CONFIG_PATH = "config/dataset/csbm-18.yaml"
 MODEL_CONFIG_PATH = "config/model/bayes_optimal.yaml"
 
 with open(PROJ_ROOT / DATASET_CONFIG_PATH, "r") as f:
@@ -45,7 +45,7 @@ os.chdir(target_dir)
 seeds = [28, 69, 72, 85, 116, 31, 41, 52, 94, 318]
 # rng = np.random.default_rng(seed=2025)
 # seeds = rng.choice(10000, size=90, replace=False).tolist()
-methods = ["coreset_feature"]
+methods = ["coreset_graph"]
 for budget, round_num in budget_round_pairs:
     for seed in seeds:
         for method in methods:

@@ -52,28 +52,34 @@ def compute_auc_from_budgets_and_means(budgets: list[int], means: list[float]) -
 
 def method_to_color(method: ALM) -> str:
     color_map = {
-        ALM.DEGREE: "dodgerblue",
-        ALM.ENERGY: "tomato",
-        ALM.ENTROPY: "green",
-        ALM.LEAST_CONFIDENCE: "darkorange",
-        ALM.MARGIN: "deeppink",
-        ALM.ORACLE_UNCERTAINTY: "purple",
-        ALM.ORACLE_UNCERTAINTY_CP: "blue",
-        ALM.RANDOM: "gray",
+        ALM.CORESET_FEATURE: "forestgreen",
+        ALM.CORESET_GRAPH: "lightgreen",
+        ALM.DEGREE: "gold",
+        ALM.ENERGY: "orange",
+        ALM.ENTROPY: "tomato",
+        ALM.LEAST_CONFIDENCE: "magenta",
+        ALM.MARGIN: "darkviolet",
+        ALM.ORACLE_UNCERTAINTY: "cyan",
+        ALM.ORACLE_UNCERTAINTY_CP: "mediumblue",
+        ALM.RANDOM: "black",
     }
     return color_map.get(method, "black")
 
 
 def method_to_linestyle(method: ALM) -> str:
     linestyle_map = {
-        ALM.RANDOM: "dashed",
-        ALM.DEGREE: "dotted",
+        ALM.CORESET_FEATURE: "dashed",
+        ALM.CORESET_GRAPH: "dashed",
+        ALM.DEGREE: "dashed",
+        ALM.RANDOM: "dotted",
     }
     return linestyle_map.get(method, "solid")
 
 
 def method_to_marker(method: ALM) -> str:
     marker_map = {
+        ALM.CORESET_FEATURE: "o",
+        ALM.CORESET_GRAPH: "o",
         ALM.DEGREE: "x",
         ALM.ENERGY: "*",
         ALM.ENTROPY: "^",
@@ -88,6 +94,8 @@ def method_to_marker(method: ALM) -> str:
 
 def method_to_name(method: ALM) -> str:
     name_map = {
+        ALM.CORESET_FEATURE: "Coreset-F",
+        ALM.CORESET_GRAPH: "Coreset-G",
         ALM.DEGREE: "Degree",
         ALM.ENERGY: "Energy",
         ALM.ENTROPY: "Entropy",

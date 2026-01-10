@@ -3,6 +3,8 @@ from enum import Enum
 
 
 class ActiveLearningMethod(Enum):
+    CORESET_FEATURE = "coreset_feature"
+    CORESET_GRAPH = "coreset_graph"
     DEGREE = "degree"
     ENERGY = "energy"
     ENTROPY = "entropy"
